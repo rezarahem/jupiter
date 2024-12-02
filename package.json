@@ -6,14 +6,18 @@
     "access": "public"
   },
   "bin": {
-    "ju": "./ju.js"
+    "practice": "./dist/index.js"
   },
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "tsc -w"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": ""
+  "description": "",
+  "devDependencies": {
+    "@types/node": "^22.10.1",
+    "typescript": "^5.7.2"
+  }
 }
