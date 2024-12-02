@@ -14,8 +14,6 @@ export const getDirectoryInfo = (title: string) => {
         'The current directory already contains a Git repository. Aborting the process.'
       );
     }
-
-    console.log(`Using current directory "${appTitle}" as the app title.`);
   } else {
     directory = path.join(process.cwd(), title);
     appTitle = title;

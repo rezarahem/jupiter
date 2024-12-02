@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import { program } from 'commander';
 import inquirer from 'inquirer';
-import { checkGitInstallation } from './utils/git.js';
+import { checkGitInstallation, gitClone } from './utils/git.js';
 import { createDirectory, getDirectoryInfo } from './utils/dic.js';
 import { createEnvFile } from './utils/env.js';
 import { installDependencies } from './utils/npm.js';
@@ -33,6 +33,14 @@ program.action(async () => {
   const { directory, appTitle } = getDirectoryInfo(title);
 
   createDirectory(directory);
+
+  try {
+    const repositoryUrl = 'https://github.com/rezarahem/jupiter-core.git';
+    gitClone(repositoryUrl, directory);
+  } catch (error: any) {
+    console.error(error.message);
+    process.exit(1);
+  }
 
   try {
     // await installDependencies(directory);
