@@ -1,2 +1,11 @@
 #!/usr/bin/env node
-console.log('Wow...');
+
+import { Command } from 'commander';
+
+const program = new Command();
+
+program.action(() => {
+  console.log('commander');
+});
+
+program.parse(process.argv);
