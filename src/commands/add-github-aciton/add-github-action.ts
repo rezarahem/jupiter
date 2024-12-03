@@ -5,8 +5,38 @@ import inquirer from 'inquirer';
 
 export const AddGithubAction = new Command('deploy-workflow')
   .alias('dw')
-  .argument('<secret>', 'Secret used for SSH authentication')
-  .action(async (secret: string) => {
+  .action(async () => {
+    const { secretName, username, ipOrDomain, runnerLabel, sshPort } =
+      await inquirer.prompt([
+        {
+          type: 'input',
+          name: 'secretName',
+          message: 'Enter the name of the deploy SSH secret:',
+        },
+        {
+          type: 'input',
+          name: 'username',
+          message: 'Enter the username for SSH authentication:',
+        },
+        {
+          type: 'input',
+          name: 'ipOrDomain',
+          message: 'Enter the IP address or domain of the VPS:',
+        },
+        {
+          type: 'input',
+          name: 'sshPort',
+          message: 'Enter the IP address or domain of the VPS:',
+          default: '22',
+        },
+        {
+          type: 'input',
+          name: 'runnerLabel',
+          message: 'Enter the runner label (e.g., ubuntu-latest):',
+          default: 'ubuntu-24.04',
+        },
+      ]);
+
     const workflowDir = path.join(process.cwd(), '.github', 'workflows');
     const workflowFile = path.join(workflowDir, 'deploy.yml');
 
@@ -20,7 +50,7 @@ on:
 
 jobs:
   deploy:
-    runs-on: your_linux_version
+    runs-on: ${runnerLabel}
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -30,14 +60,14 @@ jobs:
       - name: Set up SSH
         run: |
           mkdir -p ~/.ssh
-          echo "\${{ secrets.${secret} }}" > ~/.ssh/id_ed25519
+          echo "\${{ secrets.${secretName} }}" > ~/.ssh/id_ed25519
           chmod 600 ~/.ssh/id_ed25519
           ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
-          ssh-keyscan you_vps_ip >> ~/.ssh/known_hosts
+          ssh-keyscan -p ${sshPort} ${ipOrDomain} >> ~/.ssh/known_hosts
 
       - name: Run deploy script on VPS
         run: |
-          ssh username@you_vps_ip "~/deploy.sh"
+          ssh -p ${sshPort} ${username}@${ipOrDomain} "~/deploy.sh"
 `;
 
     // Check if the workflow file already exists
