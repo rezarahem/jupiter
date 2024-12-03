@@ -7,7 +7,7 @@ import { createEnvFile } from './utils/env.js';
 import { installDependencies } from './utils/npm.js';
 import { AddGithubAction } from './commands/add-github-aciton/add-github-action.js';
 
-program.name('jupiter').description('CLI to manage jupiter');
+program.name('jupiter');
 
 // sub commands
 program.addCommand(AddGithubAction);

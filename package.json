@@ -10,7 +10,8 @@
   },
   "type": "module",
   "scripts": {
-    "dev": "tsc -w"
+    "dev": "tsc -w",
+    "build": "tsc"
   },
   "keywords": [],
   "author": "",

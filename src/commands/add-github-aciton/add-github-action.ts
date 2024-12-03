@@ -3,7 +3,8 @@ import fs from 'fs';
 import path from 'path';
 import inquirer from 'inquirer';
 
-export const AddGithubAction = new Command('gw')
+export const AddGithubAction = new Command('deploy-workflow')
+  .alias('dw')
   .argument('<secret>', 'Secret used for SSH authentication')
   .action(async (secret: string) => {
     const workflowDir = path.join(process.cwd(), '.github', 'workflows');
