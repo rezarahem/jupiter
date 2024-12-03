@@ -26,7 +26,7 @@ export const AddGithubAction = new Command('deploy-workflow')
         {
           type: 'input',
           name: 'sshPort',
-          message: 'Enter the IP address or domain of the VPS:',
+          message: 'Enter the SSH port:',
           default: '22',
         },
         {
