@@ -3,9 +3,9 @@ import { program } from 'commander';
 import inquirer from 'inquirer';
 import { checkGitInstallation, gitClone } from './utils/git.js';
 import { createDirectory, getDirectoryInfo } from './utils/dic.js';
-import { createEnvFile } from './utils/env.js';
 import { installDependencies } from './utils/npm.js';
 import { AddGithubAction } from './commands/add-github-aciton/add-github-action.js';
+import { createEnvFile } from './commands/main/create-env-file/create-env-file.js';
 
 program.name('jupiter');
 
@@ -51,7 +51,7 @@ program.action(async () => {
     process.exit(1);
   }
 
-  createEnvFile(directory, appTitle);
+  createEnvFile(directory, appTitle)
 });
 
 program.parse();
