@@ -1,11 +1,11 @@
 #!/usr/bin/env node
 import { program } from 'commander';
 import inquirer from 'inquirer';
-import { checkGitInstallation, gitClone } from './utils/git.js';
-import { createDirectory, getDirectoryInfo } from './utils/dic.js';
-import { installDependencies } from './utils/npm.js';
 import { AddGithubAction } from './commands/add-github-aciton/add-github-action.js';
 import { createEnvFile } from './commands/main/create-env-file/create-env-file.js';
+import { checkGitInstallation } from './commands/main/git.js';
+import { createDirectory, getDirectoryInfo } from './commands/main/dic.js';
+import { installDependencies } from './commands/main/npm.js';
 
 program.name('jupiter');
 
