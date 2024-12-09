@@ -9,17 +9,12 @@ import { getDirectoryInfo } from '../dic.js';
  */
 export const createConfigFile = async () => {
   // Prompt for configuration data
-  const { repo, title, domain, email } = await inquirer.prompt([
+  const { title, domain, email } = await inquirer.prompt([
     {
       type: 'input',
       name: 'title',
       message: 'What is your project named?',
       default: 'Jupiter'
-    },
-    {
-      type: 'input',
-      name: 'repo',
-      message: 'Enter the repository name:',
     },
     {
       type: 'input',
@@ -37,7 +32,6 @@ export const createConfigFile = async () => {
 
   // Generate the configuration object
   const juConfig = {
-    repo,
     dir: appTitle,
     image: appTitle,
     net: appTitle,

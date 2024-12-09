@@ -2,7 +2,6 @@
 
 import { execSync } from 'child_process';
 import { program } from 'commander';
-import inquirer from 'inquirer';
 import { AddGithubAction } from './commands/add-github-aciton/add-github-action.js';
 import { createEnvFile } from './commands/main/create-env-file/create-env-file.js';
 import { checkGitInstallation, gitClone } from './commands/main/git.js';
