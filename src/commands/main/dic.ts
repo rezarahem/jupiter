@@ -3,11 +3,11 @@ import path from 'path';
 
 export const getDirectoryInfo = (title: string) => {
   let directory;
-  let appTitle;
+  let app;
 
   if (title === '.') {
     directory = process.cwd();
-    appTitle = path.basename(directory);
+    app = path.basename(directory);
 
     if (fs.existsSync(path.join(directory, '.git'))) {
       throw new Error(
@@ -16,10 +16,10 @@ export const getDirectoryInfo = (title: string) => {
     }
   } else {
     directory = path.join(process.cwd(), title);
-    appTitle = title;
+    app = title;
   }
 
-  return { directory, appTitle };
+  return { directory, app };
 };
 
 export const createDirectory = (directory: string) => {
