@@ -7,6 +7,7 @@ import { AddGithubAction } from './commands/add-github-aciton/add-github-action.
 import { createEnvFile } from './commands/main/create-env-file/create-env-file.js';
 import { checkGitInstallation } from './commands/main/git.js';
 import { createDirectory, getDirectoryInfo } from './commands/main/dic.js';
+import { createConfigFile } from './commands/main/create-jupiter-config/create-jupiter-config.js';
 
 
 program.name('jupiter');
@@ -23,36 +24,38 @@ program.action(async () => {
     process.exit(1);
   }
 
-  const { title } = await inquirer.prompt([
-    {
-      type: 'input',
-      name: 'title',
-      message: 'What is your project named?',
-      default: 'Jupiter',
-    },
-  ]);
+  createConfigFile()
 
-  const { directory, appTitle } = getDirectoryInfo(title);
+  // const { title } = await inquirer.prompt([
+  //   {
+  //     type: 'input',
+  //     name: 'title',
+  //     message: 'What is your project named?',
+  //     default: 'Jupiter',
+  //   },
+  // ]);
 
-  createDirectory(directory);
+  // const { directory, appTitle } = getDirectoryInfo(title);
 
-  try {
-    const repositoryUrl = 'https://github.com/rezarahem/jupiter-core.git';
-    gitClone(repositoryUrl, directory);
-  } catch (error: any) {
-    console.error(error.message);
-    process.exit(1);
-  }
+  // createDirectory(directory);
+
+  // try {
+  //   const repositoryUrl = 'https://github.com/rezarahem/jupiter-core.git';
+  //   gitClone(repositoryUrl, directory);
+  // } catch (error: any) {
+  //   console.error(error.message);
+  //   process.exit(1);
+  // }
   
-  try {
-    execSync('npm install', { stdio: 'inherit', cwd: directory });
-    console.log('Dependencies installed successfully!');
-  } catch (error) {
-    console.error(
-      'Failed to install dependencies. Please run "npm install" manually in the project directory.'
-    );
-    process.exit(1);
-  }
+  // try {
+  //   execSync('npm install', { stdio: 'inherit', cwd: directory });
+  //   console.log('Dependencies installed successfully!');
+  // } catch (error) {
+  //   console.error(
+  //     'Failed to install dependencies. Please run "npm install" manually in the project directory.'
+  //   );
+  //   process.exit(1);
+  // }
 
   createEnvFile(directory, appTitle)
 });
