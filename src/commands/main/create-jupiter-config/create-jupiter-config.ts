@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import inquirer from 'inquirer';
 import { createFile } from '../../../utils/create-file.js';
+import { getDirectoryInfo } from '../dic.js';
 
 /**
  * Function to create the config.json file with user input.
@@ -32,12 +33,14 @@ export const createConfigFile = async () => {
     },
   ]);
 
+  const { directory, appTitle } = getDirectoryInfo(title);
+
   // Generate the configuration object
   const juConfig = {
     repo,
-    dir: title,
-    image: title,
-    net: title,
+    dir: appTitle,
+    image: appTitle,
+    net: appTitle,
     domain,
     email,
   };
@@ -49,4 +52,6 @@ export const createConfigFile = async () => {
   const rootDir = path.resolve(__dirname); // Resolves to the root directory of your project
   const filename = 'config.json';
   await createFile(rootDir, filename, configContent);
+
+  return { directory, title: appTitle }
 };
