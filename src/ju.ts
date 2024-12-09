@@ -1,11 +1,13 @@
 #!/usr/bin/env node
+
+import { execSync } from 'child_process';
 import { program } from 'commander';
 import inquirer from 'inquirer';
 import { AddGithubAction } from './commands/add-github-aciton/add-github-action.js';
 import { createEnvFile } from './commands/main/create-env-file/create-env-file.js';
 import { checkGitInstallation } from './commands/main/git.js';
 import { createDirectory, getDirectoryInfo } from './commands/main/dic.js';
-import { installDependencies } from './commands/main/npm.js';
+
 
 program.name('jupiter');
 
@@ -41,13 +43,14 @@ program.action(async () => {
     console.error(error.message);
     process.exit(1);
   }
-
+  
   try {
-    // await installDependencies(directory);
-    installDependencies(directory);
+    execSync('npm install', { stdio: 'inherit', cwd: directory });
     console.log('Dependencies installed successfully!');
-  } catch (error: any) {
-    console.error(error.message);
+  } catch (error) {
+    console.error(
+      'Failed to install dependencies. Please run "npm install" manually in the project directory.'
+    );
     process.exit(1);
   }
 
