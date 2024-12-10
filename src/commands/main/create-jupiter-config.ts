@@ -1,6 +1,3 @@
-import fs from 'fs';
-import path from 'path';
-import inquirer from 'inquirer';
 import { createFile } from '../../utils/create-file.js';
 
 type CreateConfigFileProps = {
@@ -22,7 +19,7 @@ export const createConfigFile = async ({
     email,
     domain,
   };
-  const configContent = JSON.stringify(juConfig, null, 2);
+  const content = JSON.stringify(juConfig, null, 2);
   const filename = 'jupiter.config.json';
-  await createFile(directory, filename, configContent);
+  await createFile({ directory, filename, content });
 };

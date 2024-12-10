@@ -2,6 +2,12 @@ import fs from 'fs';
 import path from 'path';
 import inquirer from 'inquirer';
 
+type Props = {
+  directory: string;
+  filename: string;
+  content: string;
+};
+
 /**
  * Creates a file with the specified content in the given directory.
  * If the file already exists, prompts the user for permission to overwrite it.
@@ -9,7 +15,7 @@ import inquirer from 'inquirer';
  * @param filename - The name of the file to be created.
  * @param content - The content to write to the file.
  */
-export const createFile = async (directory: string, filename: string, content: string) => {
+export const createFile = async ({ content, directory, filename }: Props) => {
   const filePath = path.join(directory, filename);
 
   if (fs.existsSync(filePath)) {
@@ -24,10 +30,13 @@ export const createFile = async (directory: string, filename: string, content: s
 
     if (!overwrite) {
       console.log(`File "${filename}" was not overwritten.`);
-      process.exit(1);
+      // process.exit(1);
+    } else {
+      fs.writeFileSync(filePath, content, 'utf8');
+      console.log(`File "${filename}" has been created successfully.`);
     }
+  } else {
+    fs.writeFileSync(filePath, content, 'utf8');
+    console.log(`File "${filename}" has been created successfully.`);
   }
-
-  fs.writeFileSync(filePath, content, 'utf8');
-  console.log(`File "${filename}" has been created successfully.`);
 };
