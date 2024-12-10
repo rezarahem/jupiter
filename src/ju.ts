@@ -16,16 +16,20 @@ program.addCommand(AddGithubAction);
 program.action(async () => {
   const { directory, app, domain, email } = await getUserInput();
 
-  await createDockerComposeBase({ directory, app });
+  const { privateConnectionUrl } = await createDockerComposeBase({
+    directory,
+    app,
+  });
 
   await createConfigFile({
     app,
     directory,
     domain,
     email,
+    privateConnectionUrl,
   });
 
-  await createEnvFile({ directory, app });
+  // await createEnvFile({ directory, privateConnectionUrl });
 });
 
 program.parse();

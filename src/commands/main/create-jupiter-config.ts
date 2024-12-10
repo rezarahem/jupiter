@@ -5,12 +5,14 @@ type CreateConfigFileProps = {
   app: string;
   domain: string;
   email: string;
+  privateConnectionUrl: string;
 };
 export const createConfigFile = async ({
   app,
   directory,
   domain,
   email,
+  privateConnectionUrl,
 }: CreateConfigFileProps) => {
   const juConfig = {
     dir: app,
@@ -18,6 +20,7 @@ export const createConfigFile = async ({
     net: app,
     email,
     domain,
+    privateConnectionUrl,
   };
   const content = JSON.stringify(juConfig, null, 2);
   const filename = 'jupiter.config.json';

@@ -8,6 +8,7 @@ const domainSchema = z
     /^[a-zA-Z0-9-]+\.[a-zA-Z]{2,}$/,
     'Invalid domain name (must follow the format "example.com")'
   );
+
 const emailSchema = z.string().email('Invalid email address');
 
 export const getUserInput = async () => {

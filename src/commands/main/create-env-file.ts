@@ -2,14 +2,17 @@ import { createFile } from '../../utils/create-file.js';
 
 type CreateEnvFileProps = {
   directory: string;
-  app: string;
+  privateConnectionUrl: string;
 };
 
-export const createEnvFile = async ({ directory, app }: CreateEnvFileProps) => {
+export const createEnvFile = async ({
+  directory,
+  privateConnectionUrl,
+}: CreateEnvFileProps) => {
   const content = `#! never ever commit this file 💀
 # Add your environment variables here
 
-NEXT_PUBLIC_APP = ${app.charAt(0).toUpperCase() + app.slice(1)}
+DATABASE_URI = ${privateConnectionUrl}
 `;
 
   await createFile({ directory, filename: '.env', content });
