@@ -1,56 +1,40 @@
 import inquirer from 'inquirer';
 import { getDirectoryInfo } from './dic.js';
-import { z } from 'zod';
-
-const domainSchema = z
-  .string()
-  .regex(
-    /^[a-zA-Z0-9-]+\.[a-zA-Z]{2,}$/,
-    'Invalid domain name (must follow the format "example.com")'
-  );
-
-const emailSchema = z.string().email('Invalid email address');
+import { userInput } from '../../utils/user-input.js';
+import {
+  domainSchema,
+  emailSchema,
+  sshPortSchema,
+  vpsIpSchema,
+  vpsUsernameSchema,
+} from '../../zod/index.js';
 
 export const getUserInput = async () => {
-  let domain: string;
+  const domain = await userInput({
+    prompt: 'Enter the domain name:',
+    schema: domainSchema,
+  });
 
-  while (true) {
-    const { domainInput } = await inquirer.prompt([
-      {
-        type: 'input',
-        name: 'domainInput',
-        message: 'Enter the domain name:',
-      },
-    ]);
+  const email = await userInput({
+    prompt: 'Enter the email address:',
+    schema: emailSchema,
+  });
 
-    try {
-      domainSchema.parse(domainInput);
-      domain = domainInput;
-      break;
-    } catch (e: any) {
-      console.error(e.errors[0].message);
-    }
-  }
+  const vpsUsername = await userInput({
+    prompt: 'Enter your VPS username account:',
+    schema: vpsUsernameSchema,
+  });
 
-  let email: string;
+  const vpsIp = await userInput({
+    prompt: 'Enter your VPS IP number:',
+    schema: vpsIpSchema,
+  });
 
-  while (true) {
-    const { emailInput } = await inquirer.prompt([
-      {
-        type: 'input',
-        name: 'emailInput',
-        message: 'Enter the email address:',
-      },
-    ]);
-
-    try {
-      emailSchema.parse(emailInput);
-      email = emailInput;
-      break;
-    } catch (e: any) {
-      console.error(e.errors[0].message);
-    }
-  }
+  const sshPort = await userInput({
+    prompt: 'Enter your SSH port number:',
+    schema: sshPortSchema,
+    defaultValue: '22',
+  });
 
   const { directory, app } = getDirectoryInfo('.');
 
@@ -59,5 +43,8 @@ export const getUserInput = async () => {
     domain,
     email,
     directory,
+    sshPort,
+    vpsIp,
+    vpsUsername
   };
 };

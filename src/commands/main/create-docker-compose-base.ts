@@ -13,7 +13,7 @@ export const createDockerComposeBase = async ({ directory, app }: Props) => {
 
   const content = `services:
  postgres:
-   image: 17.2-alpine
+   image: postgres:17.2-alpine
    container_name: postdb
    environment:
       POSTGRES_USER: ${user}
@@ -36,6 +36,6 @@ volumes:
   await createFile({ directory, filename: 'docker-compose.base.yml', content });
 
   return {
-    privateConnectionUrl: `postgresql://${user}:${password}@127.0.0.1:5432/${db}`,
+    databaseUrl: `postgresql://${user}:${password}@127.0.0.1:5432/${db}`,
   };
 };

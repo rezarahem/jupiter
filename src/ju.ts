@@ -14,22 +14,28 @@ program.addCommand(AddGithubAction);
 
 // main commmand
 program.action(async () => {
-  const { directory, app, domain, email } = await getUserInput();
+  const { directory, app, domain, email, sshPort, vpsIp, vpsUsername } =
+    await getUserInput();
 
-  const { privateConnectionUrl } = await createDockerComposeBase({
+  const { databaseUrl } = await createDockerComposeBase({
     directory,
     app,
   });
+
+  const dbRemoteSsh = `ssh -L 5432:localhost:5432 -p ${sshPort} ${vpsUsername}@${vpsIp}`;
 
   await createConfigFile({
     app,
     directory,
     domain,
     email,
-    privateConnectionUrl,
+    databaseUrl,
+    sshPort,
+    vpsIp,
+    dbRemoteSsh,
   });
 
-  // await createEnvFile({ directory, privateConnectionUrl });
+  await createEnvFile({ directory, databaseUrl });
 });
 
 program.parse();
