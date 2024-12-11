@@ -10,15 +10,15 @@ import {
 } from '../../zod/index.js';
 
 export const getUserInput = async () => {
-  const domain = await userInput({
-    prompt: 'Enter the domain name:',
-    schema: domainSchema,
-  });
+  // const domain = await userInput({
+  //   prompt: 'Enter the domain name:',
+  //   schema: domainSchema,
+  // });
 
-  const email = await userInput({
-    prompt: 'Enter the email address:',
-    schema: emailSchema,
-  });
+  // const email = await userInput({
+  //   prompt: 'Enter the email address:',
+  //   schema: emailSchema,
+  // });
 
   const vpsUsername = await userInput({
     prompt: 'Enter your VPS username account:',
@@ -39,12 +39,10 @@ export const getUserInput = async () => {
   const { directory, app } = getDirectoryInfo('.');
 
   return {
-    app,
-    domain,
-    email,
     directory,
     sshPort,
+    app,
     vpsIp,
-    vpsUsername
+    vpsUsername,
   };
 };

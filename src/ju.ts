@@ -14,8 +14,7 @@ program.addCommand(AddGithubAction);
 
 // main commmand
 program.action(async () => {
-  const { directory, app, domain, email, sshPort, vpsIp, vpsUsername } =
-    await getUserInput();
+  const { directory, sshPort, vpsIp, vpsUsername, app } = await getUserInput();
 
   const { databaseUrl } = await createDockerComposeBase({
     directory,
@@ -25,10 +24,7 @@ program.action(async () => {
   const dbRemoteSsh = `ssh -L 5432:localhost:5432 -p ${sshPort} ${vpsUsername}@${vpsIp}`;
 
   await createConfigFile({
-    app,
     directory,
-    domain,
-    email,
     databaseUrl,
     sshPort,
     vpsIp,
