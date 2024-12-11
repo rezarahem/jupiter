@@ -18,6 +18,11 @@ type Props = {
 export const createFile = async ({ content, directory, filename }: Props) => {
   const filePath = path.join(directory, filename);
 
+  // Ensure the directory exists, create it if it doesn't
+  if (!fs.existsSync(directory)) {
+    fs.mkdirSync(directory, { recursive: true });
+  }
+
   if (fs.existsSync(filePath)) {
     const { overwrite } = await inquirer.prompt([
       {

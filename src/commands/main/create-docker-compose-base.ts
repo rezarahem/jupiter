@@ -33,7 +33,11 @@ networks:
 volumes:
   postdb_volume:`;
 
-  await createFile({ directory, filename: 'docker-compose.base.yml', content });
+  await createFile({
+    directory: 'docker',
+    filename: 'docker-compose.base.yml',
+    content,
+  });
 
   return {
     databaseUrl: `postgresql://${user}:${password}@127.0.0.1:5432/${db}`,
