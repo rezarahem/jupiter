@@ -43,6 +43,6 @@ export const getUserInput = async () => {
     sshPort,
     app,
     vpsIp,
-    vpsUsername,
+    vpsUsername: vpsUsername.toLowerCase(),
   };
 };

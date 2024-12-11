@@ -9,11 +9,6 @@ export const getDirectoryInfo = (title: string) => {
     directory = process.cwd();
     app = path.basename(directory);
 
-    if (fs.existsSync(path.join(directory, '.git'))) {
-      throw new Error(
-        'The current directory already contains a Git repository. Aborting the process.'
-      );
-    }
   } else {
     directory = path.join(process.cwd(), title);
     app = title;

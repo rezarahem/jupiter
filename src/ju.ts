@@ -28,6 +28,7 @@ program.action(async () => {
     databaseUrl,
     sshPort,
     vpsIp,
+    vpsUsername,
     dbRemoteSsh,
   });
 
