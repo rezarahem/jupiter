@@ -8,13 +8,15 @@ import { createConfigFile } from './commands/main/create-jupiter-config.js';
 import { createEnvFile } from './commands/main/create-env-file.js';
 import { createDockerIgnore } from './commands/main/create-docker-ingore.js';
 import { createDockerfileNext } from './commands/main/create-dockerfile-next.js';
-
-program.name('jupiter');
+import { Deploy } from './commands/deploy/deploy.js';
 
 // sub commands
 program.addCommand(AddGithubAction);
+program.addCommand(Deploy);
 
+// *** //
 // main commmand
+program.name('jupiter');
 program.action(async () => {
   const { directory, sshPort, vpsIp, vpsUsername, app, email, domain } =
     await getUserInput();
@@ -40,7 +42,7 @@ program.action(async () => {
     DB_REMOTE_SSH: dbRemoteSsh,
   });
 
-  await createEnvFile({ directory, databaseUrl, dbRemoteSsh });
+  await createEnvFile({ directory, databaseUrl });
 });
 
 program.parse();
