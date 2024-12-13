@@ -9,10 +9,12 @@ import { createEnvFile } from './commands/main/create-env-file.js';
 import { createDockerIgnore } from './commands/main/create-docker-ingore.js';
 import { createDockerfileNext } from './commands/main/create-dockerfile-next.js';
 import { Deploy } from './commands/deploy/deploy.js';
+import { Setup } from './commands/setup/setup.js';
 
 // sub commands
-program.addCommand(AddGithubAction);
+program.addCommand(Setup);
 program.addCommand(Deploy);
+program.addCommand(AddGithubAction);
 
 // *** //
 // main commmand
