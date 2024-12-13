@@ -24,6 +24,7 @@ export const createDockerComposeBase = async ({ app }: Props) => {
      - postdb_volume:/var/lib/postgresql/data
    networks:
      - ${app}
+   restart: always  
 
 networks:
   ${app}:
