@@ -2,11 +2,10 @@ import { createFile } from '../../utils/create-file.js';
 import { faker } from '@faker-js/faker';
 
 type Props = {
-  directory: string;
   app: string;
 };
 
-export const createDockerComposeBase = async ({ directory, app }: Props) => {
+export const createDockerComposeBase = async ({ app }: Props) => {
   const user = faker.person.firstName().toLowerCase();
   const password = faker.internet.password();
   const db = faker.person.lastName().toLowerCase();
