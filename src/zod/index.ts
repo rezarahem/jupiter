@@ -42,3 +42,10 @@ export const vpsUsernameSchema = z
     message:
       'Username can only contain letters, numbers, hyphens, and underscores.',
   });
+
+export const githubSshCloneString = z
+  .string()
+  .regex(/^git@github\.com:[A-Za-z0-9_-]+\/[A-Za-z0-9_-]+\.git$/, {
+    message:
+      'The provided GitHub SSH clone string is not valid. It should follow the pattern: git@github.com:username/repository.git',
+  });

@@ -18,31 +18,24 @@ program.addCommand(Deploy);
 // main commmand
 program.name('jupiter');
 program.action(async () => {
-  const { directory, sshPort, vpsIp, vpsUsername, app, email, domain } =
-    await getUserInput();
+  const userInput = await getUserInput();
 
   const { databaseUrl } = await createDockerComposeBase({
-    app,
+    app: userInput.app,
   });
 
-  await createDockerIgnore({ directory });
+  await createDockerIgnore({ directory: userInput.directory });
 
   await createDockerfileNext();
 
-  const dbRemoteSsh = `ssh -L 5432:localhost:5432 -p ${sshPort} ${vpsUsername}@${vpsIp}`;
+  const dbRemoteSsh = `ssh -L 5432:localhost:5432 -p ${userInput.sshPort} ${userInput.vpsUsername}@${userInput.vpsIp}`;
 
   await createConfigFile({
-    directory,
-    DATABASE_URL: databaseUrl,
-    SSH_PORT: sshPort,
-    VPS_IP: vpsIp,
-    VPS_USERNAME: vpsUsername,
-    EMAIL: email,
-    DOMAIN: domain,
-    DB_REMOTE_SSH: dbRemoteSsh,
+    ...userInput,
+    dbRemoteSsh,
   });
 
-  await createEnvFile({ directory, databaseUrl });
+  await createEnvFile({ directory: userInput.directory, databaseUrl });
 });
 
 program.parse();
