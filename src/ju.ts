@@ -31,13 +31,13 @@ program.action(async () => {
 
   await createConfigFile({
     directory,
-    databaseUrl,
-    sshPort,
-    vpsIp,
-    vpsUsername,
-    dbRemoteSsh,
-    email,
-    domain,
+    DATABASE_URL: databaseUrl,
+    SSH_PORT: sshPort,
+    VPS_IP: vpsIp,
+    VPS_USERNAME: vpsUsername,
+    DB_REMOTE_SSH: dbRemoteSsh,
+    EMAIL: email,
+    DOMAIN: domain,
   });
 
   await createEnvFile({ directory, databaseUrl });
