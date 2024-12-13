@@ -35,12 +35,12 @@ program.action(async () => {
     SSH_PORT: sshPort,
     VPS_IP: vpsIp,
     VPS_USERNAME: vpsUsername,
-    DB_REMOTE_SSH: dbRemoteSsh,
     EMAIL: email,
     DOMAIN: domain,
+    DB_REMOTE_SSH: dbRemoteSsh,
   });
 
-  await createEnvFile({ directory, databaseUrl });
+  await createEnvFile({ directory, databaseUrl, dbRemoteSsh });
 });
 
 program.parse();
