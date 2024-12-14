@@ -1,5 +1,15 @@
 import { z } from 'zod';
 
+export const appNameSchema = z
+  .string()
+  .trim()
+  .min(3, { message: 'App name must be at least 3 characters long.' })
+  .max(50, { message: 'App name must not exceed 50 characters.' })
+  .regex(/^[a-zA-Z0-9\-_]+$/, {
+    message:
+      'App name can only contain letters, numbers, hyphens, and underscores (no spaces).',
+  });
+
 export const domainSchema = z
   .string()
   .regex(

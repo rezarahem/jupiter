@@ -1,56 +1,52 @@
-import { getDirectoryInfo } from './dic.js';
-import { userInput } from '../../utils/user-input.js';
 import {
   domainSchema,
   emailSchema,
+  githubSshCloneString,
   sshPortSchema,
   vpsIpSchema,
   vpsUsernameSchema,
 } from '../../zod/index.js';
+import { userInput } from '../../utils/user-input.js';
 
 export const getUserInput = async () => {
   const repo = await userInput({
     prompt:
       'Enter your GitHub SSH repository clone URL (e.g., git@github.com:username/repository.git): ',
-    schema: domainSchema,
+    schema: githubSshCloneString,
   });
 
   const domain = await userInput({
-    prompt: 'Enter the domain name:',
+    prompt: 'Enter the domain name: ',
     schema: domainSchema,
   });
 
   const email = await userInput({
-    prompt: 'Enter the email address:',
+    prompt: 'Enter the email address: ',
     schema: emailSchema,
   });
 
   const vpsUsername = await userInput({
-    prompt: 'Enter your VPS username account:',
+    prompt: 'Enter your VPS username account: ',
     schema: vpsUsernameSchema,
   });
 
   const vpsIp = await userInput({
-    prompt: 'Enter your VPS IP number:',
+    prompt: 'Enter your VPS IP number: ',
     schema: vpsIpSchema,
   });
 
   const sshPort = await userInput({
-    prompt: 'Enter your SSH port number:',
+    prompt: 'Enter your SSH port number: ',
     schema: sshPortSchema,
     defaultValue: '22',
   });
 
-  const { directory, app } = getDirectoryInfo('.');
-
   return {
-    directory,
-    sshPort,
-    app,
-    vpsIp,
-    repo,
-    email: email.toLowerCase(),
-    domain: domain.toLowerCase(),
-    vpsUsername: vpsUsername.toLowerCase(),
+    REPO: repo,
+    VPS_IP: vpsIp,
+    SSH_PORT: sshPort,
+    EMAIL: email.toLowerCase(),
+    DOMAIN: domain.toLowerCase(),
+    VPS_USERNAME: vpsUsername.toLowerCase(),
   };
 };

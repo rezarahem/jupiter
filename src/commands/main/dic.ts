@@ -8,7 +8,6 @@ export const getDirectoryInfo = (title: string) => {
   if (title === '.') {
     directory = process.cwd();
     app = path.basename(directory);
-
   } else {
     directory = path.join(process.cwd(), title);
     app = title;

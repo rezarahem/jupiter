@@ -6,21 +6,25 @@ type Props = {
   directory: string;
   filename: string;
   content: string;
+  force?: boolean;
 };
 
-/**
- * Creates a file with the specified content in the given directory.
- * If the file already exists, prompts the user for permission to overwrite it.
- * @param directory - The target directory where the file will be created.
- * @param filename - The name of the file to be created.
- * @param content - The content to write to the file.
- */
-export const createFile = async ({ content, directory, filename }: Props) => {
+export const createFile = async ({
+  content,
+  directory,
+  filename,
+  force = false,
+}: Props) => {
   const filePath = path.join(directory, filename);
-
   // Ensure the directory exists, create it if it doesn't
   if (!fs.existsSync(directory)) {
     fs.mkdirSync(directory, { recursive: true });
+  }
+
+  if (force) {
+    fs.writeFileSync(filePath, content, 'utf8');
+    console.log(`File "${filename}" has been updated successfully.`);
+    return;
   }
 
   if (fs.existsSync(filePath)) {
