@@ -16,7 +16,9 @@ export const getAppName = async () => {
     });
 
     const spinner = ora(
-      `Checking if the app name "${capitalizeFirstLetter(app)}" is available...`
+      `Checking if the app name "${capitalizeFirstLetter(
+        app
+      )}" is available...\n`
     ).start();
 
     try {
@@ -24,7 +26,9 @@ export const getAppName = async () => {
         `bash ./jupiter/check-app.sh ${app.toLowerCase()}`
       );
 
-      spinner.stop();
+      spinner.succeed(
+        `The app ${capitalizeFirstLetter(app)} created successfully`
+      );
     } catch (error) {
       spinner.fail('Failed to check app name');
       res = '';
