@@ -3,6 +3,7 @@ import { readConfig } from './read-config.js';
 import { join } from 'path';
 import { homedir } from 'os';
 import { readFileSync } from 'fs';
+import dotenv from 'dotenv';
 
 const ssh = new NodeSSH();
 
@@ -10,21 +11,17 @@ export const streamMultiCommands = async (
   commands: string[]
 ): Promise<void> => {
   try {
-    const config = readConfig();
-
-    if (!config) {
-      console.error('Config not found');
-      return;
-    }
-
-    const { vpsIp, sshPort, vpsUsername } = config;
+    dotenv.config({ path: '.jupiter' });
+    const vpsUsername = process.env.VPS_USERNAME;
+    const vpsIP = process.env.VPS_IP;
+    const sshPort = process.env.SSH_PORT;
 
     const privateKeyPath = join(homedir(), '.ssh', 'id_ed25519');
 
-    console.log(`Connecting to ${vpsIp}...`);
+    console.log(`Connecting to ${vpsIP}...`);
 
     await ssh.connect({
-      host: vpsIp,
+      host: vpsIP,
       username: vpsUsername,
       port: sshPort,
       privateKey: readFileSync(privateKeyPath, 'utf-8'),

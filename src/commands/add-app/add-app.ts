@@ -4,26 +4,29 @@ import { createJupiterFile } from './fn/create-jupiter-file.js';
 import { newAppInputs } from './fn/get-user-input.js';
 import { addEnvVar } from '../../utils/add-env-var.js';
 import { getAppName } from './fn/get-app-name.js';
+import { downloadScripts } from './fn/download-scripts.js';
 
 export const AddApp = new Command('add-app')
   .alias('a')
   .description('Creates a new app configuration for deployment.')
   .action(async () => {
-    const currentDic = process.cwd();
+    // const currentDic = process.cwd();
 
-    gitIint();
+    // gitIint();
 
-    createJupiterFile();
+    // createJupiterFile();
 
-    const userInput = await newAppInputs();
+    // const userInput = await newAppInputs();
 
-    await addEnvVar({
-      directory: currentDic,
-      variables: {
-        ...userInput,
-        TECH: 'nextjs',
-      },
-    });
+    // await addEnvVar({
+    //   directory: currentDic,
+    //   variables: {
+    //     ...userInput,
+    //     TECH: 'nextjs',
+    //   },
+    // });
 
-    await getAppName();
+    await downloadScripts();
+
+    // await getAppName();
   });
