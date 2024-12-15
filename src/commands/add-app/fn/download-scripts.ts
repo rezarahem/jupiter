@@ -2,8 +2,8 @@ import { streamMultiCommands } from '../../../utils/stream-multi-commands.js';
 
 export const downloadScripts = async () => {
   const link =
-    'https://github.com/rezarahem/jupiter-cli/blob/main/sh/scripts.tar.gz';
-  const file = 'scripts.tar.gz';
+    'https://raw.githubusercontent.com/rezarahem/jupiter-cli/refs/heads/main/sh/test.tar.gz?token=GHSAT0AAAAAACY2FQMB44WBXJST333I2222Z27ACFA';
+  const file = 'test.tar.gz';
 
   const cmds = [
     `curl -o ${file} -L ${link}`,

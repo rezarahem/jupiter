@@ -10,7 +10,7 @@ check_folder_exists() {
     echo ""
   else
     mkdir "$folder_path"
-    echo "1"
+    echo "The ${folder_name^} directory created successfully"
   fi
 }
 

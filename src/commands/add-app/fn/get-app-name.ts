@@ -1,7 +1,9 @@
 import { addEnvVar } from '../../../utils/add-env-var.js';
+import { capitalizeFirstLetter } from '../../../utils/capitalize-first-letter.js';
 import { streamCommand } from '../../../utils/stream-command.js';
 import { userInput } from '../../../utils/user-input.js';
 import { appNameSchema } from '../../../zod/index.js';
+import ora from 'ora';
 
 export const getAppName = async () => {
   let app: string;
@@ -13,11 +15,26 @@ export const getAppName = async () => {
       schema: appNameSchema,
     });
 
-    res = await streamCommand(`bash check-app.sh ${app.toLowerCase()}`);
+    const spinner = ora(
+      `Checking if the app name "${capitalizeFirstLetter(app)}" is available...`
+    ).start();
+
+    try {
+      res = await streamCommand(
+        `bash ./jupiter/check-app.sh ${app.toLowerCase()}`
+      );
+
+      spinner.stop();
+    } catch (error) {
+      spinner.fail('Failed to check app name');
+      res = '';
+    }
 
     if (!res) {
       console.log(
-        `The app name "${app}" is already in use. Please choose a different name.`
+        `The app name "${capitalizeFirstLetter(
+          app
+        )}" is already in use. Please choose a different name.`
       );
     }
   } while (!res);
