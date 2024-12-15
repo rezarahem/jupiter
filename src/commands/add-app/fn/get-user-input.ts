@@ -5,10 +5,10 @@ import {
   sshPortSchema,
   vpsIpSchema,
   vpsUsernameSchema,
-} from '../../zod/index.js';
-import { userInput } from '../../utils/user-input.js';
+} from '../../../zod/index.js';
+import { userInput } from '../../../utils/user-input.js';
 
-export const getUserInput = async () => {
+export const newAppInputs = async () => {
   const repo = await userInput({
     prompt:
       'Enter your GitHub SSH repository clone URL (e.g., git@github.com:username/repository.git): ',

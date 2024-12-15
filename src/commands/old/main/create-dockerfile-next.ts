@@ -1,4 +1,4 @@
-import { createFile } from '../../utils/create-file.js';
+import { createFile } from '../../../utils/create-file.js';
 
 export const createDockerfileNext = async () => {
   const content = `#1

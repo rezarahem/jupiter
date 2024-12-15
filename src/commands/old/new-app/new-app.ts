@@ -1,8 +1,8 @@
 import { Command } from 'commander';
-import { userInput } from '../../utils/user-input.js';
-import { appNameSchema } from '../../zod/index.js';
-import { addEnvVar } from '../../utils/add-env-var.js';
-import { streamCommand } from '../../utils/stream-command.js';
+import { userInput } from '../../../utils/user-input.js';
+import { appNameSchema } from '../../../zod/index.js';
+import { addEnvVar } from '../../../utils/add-env-var.js';
+import { streamCommand } from '../../../utils/stream-command.js';
 
 export const NewApp = new Command('new-app').alias('n').action(async () => {
   let app: string;

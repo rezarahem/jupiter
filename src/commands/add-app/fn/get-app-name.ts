@@ -1,7 +1,7 @@
-import { addEnvVar } from '../../utils/add-env-var.js';
-import { streamCommand } from '../../utils/stream-command.js';
-import { userInput } from '../../utils/user-input.js';
-import { appNameSchema } from '../../zod/index.js';
+import { addEnvVar } from '../../../utils/add-env-var.js';
+import { streamCommand } from '../../../utils/stream-command.js';
+import { userInput } from '../../../utils/user-input.js';
+import { appNameSchema } from '../../../zod/index.js';
 
 export const getAppName = async () => {
   let app: string;

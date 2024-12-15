@@ -1,4 +1,4 @@
-import { createFile } from '../../utils/create-file.js';
+import { createFile } from '../../../utils/create-file.js';
 import { faker } from '@faker-js/faker';
 
 type Props = {

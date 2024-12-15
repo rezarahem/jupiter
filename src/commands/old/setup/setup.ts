@@ -1,6 +1,6 @@
 import { Command } from 'commander';
-import { readConfig } from '../../utils/read-config.js';
-import { streamMultiCommands } from '../../utils/stream-multi-commands.js';
+import { readConfig } from '../../../utils/read-config.js';
+import { streamMultiCommands } from '../../../utils/stream-multi-commands.js';
 
 export const Setup = new Command('setup-vps').alias('sv').action(async () => {
   const config = readConfig();

@@ -2,7 +2,7 @@ import { execSync } from 'child_process';
 import { appendFileSync, existsSync, readFileSync, writeFileSync } from 'fs';
 import path from 'path';
 
-export const getIint = () => {
+export const gitIint = () => {
   const dir = process.cwd();
   const gitDir = path.join(dir, '.git');
   const gitignorePath = path.join(dir, '.gitignore');

@@ -29,7 +29,7 @@ export const userInput = async <T>({
       input = i;
       break;
     } catch (e: any) {
-      console.error(e.errors[0].message);
+      // console.error(e.errors[0].message);
     }
   }
 
