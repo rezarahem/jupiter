@@ -15,7 +15,7 @@
     "build": "tsc"
   },
   "keywords": [],
-  "license": "ISC",
+  "license": "MIT",
   "description": "",
   "devDependencies": {
     "@types/inquirer": "^9.0.7",
