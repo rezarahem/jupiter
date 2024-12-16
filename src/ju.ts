@@ -3,7 +3,7 @@
 import { program } from 'commander';
 import { AddApp } from './commands/add-app/add-app.js';
 
-program.name('jupiter');
+program.name('Jupiter');
 
 program.addCommand(AddApp);
 
