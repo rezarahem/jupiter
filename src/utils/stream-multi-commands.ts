@@ -1,5 +1,4 @@
 import { NodeSSH } from 'node-ssh';
-import { readConfig } from './read-config.js';
 import { join } from 'path';
 import { homedir } from 'os';
 import { readFileSync } from 'fs';
