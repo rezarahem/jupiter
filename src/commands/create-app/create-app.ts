@@ -5,9 +5,11 @@ import { newAppInputs } from './fn/get-user-input.js';
 import { addEnvVar } from '../../utils/add-env-var.js';
 import { getAppName } from './fn/get-app-name.js';
 
-export const AddApp = new Command('add-app')
-  .alias('a')
-  .description('Creates a new app configuration for deployment.')
+export const CreateApp = new Command('create-app')
+  .alias('c')
+  .description(
+    'Configures the initial setup for a new application, including its environment and any required configurations.'
+  )
   .action(async () => {
     const currentDic = process.cwd();
 
@@ -21,7 +23,6 @@ export const AddApp = new Command('add-app')
       directory: currentDic,
       variables: {
         ...userInput,
-        TECH: 'nextjs',
       },
     });
 
