@@ -22,7 +22,7 @@ check_folder_exists() {
 
 # Ensure the script is receiving an argument
 if [ -z "$1" ]; then
-  echo "Please provide a folder name."
+  echo "Please provide an app name."
   exit 1
 fi
 

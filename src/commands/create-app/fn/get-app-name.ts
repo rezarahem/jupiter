@@ -1,4 +1,3 @@
-import { SSHExecCommandResponse } from 'node-ssh';
 import { addEnvVar } from '../../../utils/add-env-var.js';
 import { capitalizeFirstLetter } from '../../../utils/capitalize-first-letter.js';
 import { streamCommand } from '../../../utils/stream-command.js';
@@ -23,9 +22,9 @@ export const getAppName = async () => {
     ).start();
 
     try {
-      res = (await streamCommand(
-        `bash ./jux/check-app.sh ${app.toLowerCase()}`
-      )).stdout;
+      res = (
+        await streamCommand(`bash ./jux/check-app.sh ${app.toLowerCase()}`)
+      ).stdout;
 
       spinner.succeed(
         `The app ${capitalizeFirstLetter(app)} created successfully`

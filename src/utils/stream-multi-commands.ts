@@ -17,7 +17,7 @@ export const streamMultiCommands = async (
 
     const privateKeyPath = join(homedir(), '.ssh', 'id_ed25519');
 
-    console.log(`Connecting to ${vpsIP}...`);
+    // console.log(`Connecting to ${vpsIP}...`);
 
     await ssh.connect({
       host: vpsIP,
@@ -27,7 +27,7 @@ export const streamMultiCommands = async (
     });
 
     for (const command of commands) {
-      console.log(`Executing: ${command}`);
+      // console.log(`Executing: ${command}`);
 
       const result = await ssh.execCommand(command, {
         onStdout: chunk => process.stdout.write(chunk.toString()),
@@ -35,16 +35,16 @@ export const streamMultiCommands = async (
       });
 
       if (result.code !== 0) {
-        console.error(`Command failed: ${command}`);
-        console.error(`Error: ${result.stderr}`);
+        // console.error(`Command failed: ${command}`);
+        // console.error(`Error: ${result.stderr}`);
         throw new Error(`Command failed with exit code ${result.code}`);
       }
     }
   } catch (error) {
-    console.error('Error:', error);
+    // console.error('Error:', error);
     throw error;
   } finally {
     ssh.dispose();
-    console.log('Connection closed.');
+    // console.log('Connection closed.');
   }
 };

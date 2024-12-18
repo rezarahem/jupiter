@@ -7,7 +7,8 @@ import dotenv from 'dotenv';
 const ssh = new NodeSSH();
 
 export const streamCommand = async (
-  command: string
+  command: string,
+  skipLog: boolean = false
 ): Promise<SSHExecCommandResponse> => {
   try {
     dotenv.config({ path: '.jupiter' });
@@ -25,26 +26,22 @@ export const streamCommand = async (
       privateKey: readFileSync(privateKeyPath, 'utf-8'),
     });
 
-    // console.log(`Executing: ${command}`);
-
-    const result = await ssh.execCommand(command, {
-      onStdout: chunk => process.stdout.write(chunk.toString()),
-      onStderr: chunk => process.stderr.write(chunk.toString()),
-    });
+    const result = skipLog
+      ? await ssh.execCommand(command)
+      : await ssh.execCommand(command, {
+          onStdout: chunk => process.stdout.write(chunk.toString()),
+          onStderr: chunk => process.stderr.write(chunk.toString()),
+        });
 
     if (result.code !== 0) {
-      //   console.error(`Command failed: ${command}`);
-      //   console.error(`Error: ${result.stderr}`);
       throw new Error(`Command failed with exit code ${result.code}`);
     }
 
-    // return result.stdout; // Return the command output as a string
-    return result; // Return the command output as a string
+    return result;
   } catch (error) {
     console.error('Error:', error);
     throw error;
   } finally {
     ssh.dispose();
-    // console.log('Connection closed.');
   }
 };

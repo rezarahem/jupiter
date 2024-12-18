@@ -4,6 +4,8 @@ import { program } from 'commander';
 import { up } from './src/commands/up/up.js';
 import { CreateApp } from './src/commands/create-app/create-app.js';
 import { AddDep } from './src/commands/add-dep/add-dep.js';
+import { RemoveApp } from './src/commands/remove-app/remove-app.js';
+import { ListApps } from './src/commands/list-apps/list-apps.js';
 
 program
   .name('Jupiter')
@@ -12,13 +14,9 @@ program
   );
 
 program.addCommand(up);
+program.addCommand(RemoveApp);
+program.addCommand(ListApps);
 program.addCommand(CreateApp);
 program.addCommand(AddDep);
-
-//   // download sh scripts on the vps
-//   // install docker
-//   // install nginx
-//   // deploy
-// });
 
 program.parse();
