@@ -1,15 +1,15 @@
 #!/bin/bash
 
-# Function to check if the folder exists in the current directory
+# Function to check if the folder exists inside the jupiter folder
 check_folder_exists() {
   local folder_name=$1
-  local folder_path="./$folder_name"  # Use relative path from current directory
+  local folder_path="./jupiter/$folder_name"  # Use relative path inside jupiter folder
   
   # Check if the folder exists
   if [ -d "$folder_path" ]; then
     echo ""
   else
-    mkdir "$folder_path"
+    mkdir -p "$folder_path"  # Create the folder, including any necessary parent directories
     echo "${folder_name^}"
   fi
 }
@@ -20,5 +20,3 @@ if [ -z "$1" ]; then
   exit 1
 fi
 
-# Example usage: Pass the folder name as an argument to the function
-check_folder_exists "$1"

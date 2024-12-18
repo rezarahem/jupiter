@@ -10,7 +10,8 @@ export const createJupiterFile = (): void => {
   }
 
   const content = `# ❗ This is only for development purposes
-  # 💀 Don't commit or deploy this file  ⚠`;
+  # 💀 Don't commit or deploy this file  ⚠
+  `;
 
   fs.writeFileSync(filePath, content, { encoding: 'utf-8' });
   console.log('.jupiter file created with the development comment!');

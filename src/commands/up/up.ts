@@ -9,7 +9,7 @@ export const up = new Command('up')
   .action(async () => {
     console.log('Starting the update process...');
     try {
-      await streamCommand('bash ./jupiter/up.sh');
+      await streamCommand('bash ./jux/up.sh');
       console.log('Update process completed successfully.');
     } catch (error) {
       console.error('An error occurred during the update process:', error);

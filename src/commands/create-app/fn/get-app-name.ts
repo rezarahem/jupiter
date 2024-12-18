@@ -23,7 +23,7 @@ export const getAppName = async () => {
 
     try {
       res = await streamCommand(
-        `bash ./jupiter/check-app.sh ${app.toLowerCase()}`
+        `bash ./jux/check-app.sh ${app.toLowerCase()}`
       );
 
       spinner.succeed(
@@ -50,4 +50,6 @@ export const getAppName = async () => {
       APP: app,
     },
   });
+
+  return app.toLowerCase();
 };
