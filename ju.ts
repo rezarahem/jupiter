@@ -13,10 +13,10 @@ program
     'Jupiter is an in-progress CLI tool designed to simplify the process of building, deploying, and managing modern web applications.'
   );
 
-program.addCommand(up);
-program.addCommand(RemoveApp);
-program.addCommand(ListApps);
 program.addCommand(CreateApp);
 program.addCommand(AddDep);
+program.addCommand(ListApps);
+program.addCommand(RemoveApp);
+program.addCommand(up);
 
 program.parse();
