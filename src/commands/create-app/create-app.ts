@@ -18,7 +18,7 @@ export const CreateApp = new Command('create-app')
     gitIint();
 
     await createDockerignore(currentDic);
-    
+
     createJupiterFile();
 
     const userInput = await newAppInputs();

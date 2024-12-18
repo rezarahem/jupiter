@@ -1,4 +1,4 @@
-import { NodeSSH } from 'node-ssh';
+import { NodeSSH, SSHExecCommandResponse } from 'node-ssh';
 import { join } from 'path';
 import { homedir } from 'os';
 import { readFileSync } from 'fs';
@@ -6,7 +6,9 @@ import dotenv from 'dotenv';
 
 const ssh = new NodeSSH();
 
-export const streamCommand = async (command: string): Promise<string> => {
+export const streamCommand = async (
+  command: string
+): Promise<SSHExecCommandResponse> => {
   try {
     dotenv.config({ path: '.jupiter' });
 
@@ -36,7 +38,8 @@ export const streamCommand = async (command: string): Promise<string> => {
       throw new Error(`Command failed with exit code ${result.code}`);
     }
 
-    return result.stdout; // Return the command output as a string
+    // return result.stdout; // Return the command output as a string
+    return result; // Return the command output as a string
   } catch (error) {
     console.error('Error:', error);
     throw error;

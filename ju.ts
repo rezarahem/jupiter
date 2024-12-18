@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 
 import { program } from 'commander';
-import { up } from './commands/up/up.js';
-import { CreateApp } from './commands/create-app/create-app.js';
-import { AddDep } from './commands/add-dep/add-dep.js';
+import { up } from './src/commands/up/up.js';
+import { CreateApp } from './src/commands/create-app/create-app.js';
+import { AddDep } from './src/commands/add-dep/add-dep.js';
 
 program
   .name('Jupiter')
