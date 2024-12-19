@@ -2,7 +2,11 @@
   "name": "ju",
   "version": "0.0.0-dev.001",
   "main": "index.js",
-  "author": "Reza Rahem reza.rahem224@gmail.com (rahem.dev)",
+  "author": "Reza Rahem <reza.rahem224@gmail.com> (https://github.com/rezarahem/)",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rezarahem/jupiter"
+  },
   "publishConfig": {
     "access": "public"
   },
