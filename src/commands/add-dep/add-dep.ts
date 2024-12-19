@@ -1,5 +1,5 @@
 import { Command } from 'commander';
-import { checkbox, Separator } from '@inquirer/prompts';
+import { checkbox } from '@inquirer/prompts';
 
 export const AddDep = new Command('add-dep')
   .alias('a')

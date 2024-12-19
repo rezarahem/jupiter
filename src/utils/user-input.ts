@@ -1,4 +1,4 @@
-import inquirer from 'inquirer';
+import { input } from '@inquirer/prompts';
 import { z } from 'zod';
 
 type Props<T> = {
@@ -12,26 +12,22 @@ export const userInput = async <T>({
   prompt,
   schema,
 }: Props<T>): Promise<string> => {
-  let input: string;
+  let finalInput;
 
   while (true) {
-    const { i } = await inquirer.prompt([
-      {
-        type: 'input',
-        name: 'i',
-        message: prompt,
-        default: defaultValue,
-      },
-    ]);
+    const currentInput = await input({
+      message: prompt,
+      default: defaultValue,
+    });
 
     try {
-      schema.parse(i);
-      input = i;
+      schema.parse(currentInput);
+      finalInput = currentInput;
       break;
     } catch (e: any) {
       console.error(e.errors[0].message);
     }
   }
 
-  return input;
+  return finalInput;
 };

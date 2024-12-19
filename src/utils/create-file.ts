@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import inquirer from 'inquirer';
+import { confirm } from '@inquirer/prompts';
 
 type Props = {
   directory: string;
@@ -16,7 +16,6 @@ export const createFile = async ({
   force = false,
 }: Props) => {
   const filePath = path.join(directory, filename);
-  // Ensure the directory exists, create it if it doesn't
   if (!fs.existsSync(directory)) {
     fs.mkdirSync(directory, { recursive: true });
   }
@@ -28,14 +27,10 @@ export const createFile = async ({
   }
 
   if (fs.existsSync(filePath)) {
-    const { overwrite } = await inquirer.prompt([
-      {
-        type: 'confirm',
-        name: 'overwrite',
-        message: `The file "${filename}" already exists. Do you want to overwrite it?`,
-        default: false,
-      },
-    ]);
+    const overwrite = await confirm({
+      message: `The file "${filename}" already exists. Do you want to overwrite it?`,
+      default: false,
+    });
 
     if (!overwrite) {
       console.log(`File "${filename}" was not overwritten.`);
