@@ -1,15 +1,14 @@
 import fs from 'fs';
 import path from 'path';
 import yaml from 'yaml';
-import { addNextjs } from './add-nextjs.js';
 import { addPostgres } from './add-postgres.js';
 
 const allChoices = [
-  {
-    name: 'Nextjs',
-    value: 'nextjs',
-    handler: addNextjs,
-  },
+  // {
+  //   name: 'Nextjs',
+  //   value: 'nextjs',
+  //   handler: addNextjs,
+  // },
   {
     name: 'PostgreSQL',
     value: 'postgres',
@@ -34,17 +33,17 @@ export const checkDeps = async () => {
   }
 
   // check nextjs
-  const dockerFilePath = path.join(
-    process.cwd(),
-    'docker',
-    'Dockerfile.nextjs'
-  );
-  try {
-    await fs.promises.access(dockerFilePath);
-    existingDeps.push('nextjs');
-  } catch (error) {
-    // File does not exist or cannot be accessed
-  }
+  // const dockerFilePath = path.join(
+  //   process.cwd(),
+  //   'docker',
+  //   'Dockerfile.nextjs'
+  // );
+  // try {
+  //   await fs.promises.access(dockerFilePath);
+  //   existingDeps.push('nextjs');
+  // } catch (error) {
+  //   // File does not exist or cannot be accessed
+  // }
 
   const allowedChoices = allChoices.filter(
     choice => !existingDeps.includes(choice.value)
