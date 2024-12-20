@@ -1,12 +1,6 @@
 import { Command } from 'commander';
 import { checkbox } from '@inquirer/prompts';
-import { addNextjs } from './fn/add-nextjs.js';
-import { addPostgres } from './fn/add-postgres.js';
-
-const depHandlers: { [key: string]: () => Promise<void> } = {
-  nextjs: addNextjs,
-  postgres: addPostgres,
-};
+import { checkDeps } from './fn/check-deps.js';
 
 export const AddDep = new Command('add-dep')
   .alias('a')
@@ -14,20 +8,16 @@ export const AddDep = new Command('add-dep')
     'Adds dependencies, such as databases or storage, to the current application.'
   )
   .action(async () => {
-    const choices = [
-      {
-        name: 'Nextjs',
-        value: 'nextjs',
-      },
-      {
-        name: 'PostgreSQL',
-        value: 'postgres',
-      },
-    ];
+    const { allowedChoices, depHandlers } = await checkDeps();
+
+    if (allowedChoices.length === 0) {
+      console.log('All available dependencies have already been added.');
+      process.exit(0);
+    }
 
     const deps = await checkbox({
       message: 'Select dependncies you need',
-      choices,
+      choices: allowedChoices,
     });
 
     for (const dep of deps) {
