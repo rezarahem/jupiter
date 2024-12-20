@@ -1,5 +1,12 @@
 import { Command } from 'commander';
 import { checkbox } from '@inquirer/prompts';
+import { addNextjs } from './fn/add-nextjs.js';
+import { addPostgres } from './fn/add-postgres.js';
+
+const depHandlers: { [key: string]: () => Promise<void> } = {
+  nextjs: addNextjs,
+  postgres: addPostgres,
+};
 
 export const AddDep = new Command('add-dep')
   .alias('a')
@@ -12,6 +19,10 @@ export const AddDep = new Command('add-dep')
         name: 'Nextjs',
         value: 'nextjs',
       },
+      {
+        name: 'PostgreSQL',
+        value: 'postgres',
+      },
     ];
 
     const deps = await checkbox({
@@ -19,16 +30,12 @@ export const AddDep = new Command('add-dep')
       choices,
     });
 
-
-    deps.forEach(async (d) => {
-      await handleDep(d)
-    })
+    for (const dep of deps) {
+      const handler = depHandlers[dep];
+      if (handler) {
+        await handler();
+      } else {
+        console.log(`No handler found for dependency: ${dep}`);
+      }
+    }
   });
-
-const handleDep = async (dep: string) => {
-  switch (dep) {
-    case 'nextjs':
-      console.log('nextjs');
-      break;
-  }
-};

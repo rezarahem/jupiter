@@ -1,14 +1,18 @@
-// import dotenv from 'dotenv';
 import { createFile } from '../../../utils/create-file.js';
+import yaml from 'yaml';
 
 export const createDockerComposeBase = async (appName: string) => {
-  const content = `networks:
-  ${appName}:
-    driver: bridge`;
+  const content = yaml.stringify({
+    networks: {
+      [appName]: {
+        driver: 'bridge',
+      },
+    },
+  });
 
   await createFile({
     content,
-    directory: 'docker',
-    filename: 'docker-compose.base.yml',
+    directory: process.cwd(),
+    filename: 'docker-compose.yml',
   });
 };

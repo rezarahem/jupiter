@@ -22,12 +22,12 @@ export const addEnvVar = async ({
   }
 
   const envMap = new Map<string, string>();
-  const comments: string[] = []; // To store comment lines
+  const comments: string[] = [];
 
   if (existingContent) {
     existingContent.split('\n').forEach(line => {
       if (line.startsWith('#')) {
-        comments.push(line); // Store comments
+        comments.push(line);
       } else {
         const [key, ...valueParts] = line.split('=');
         if (key && key.trim()) {
@@ -37,18 +37,14 @@ export const addEnvVar = async ({
     });
   }
 
-  // Add or update variables
   Object.entries(variables).forEach(([key, value]) => {
     envMap.set(key, value);
   });
 
-  // Combine comments and environment variables
   const newContent = [
     ...comments,
     ...Array.from(envMap.entries()).map(([key, value]) => `${key}=${value}`),
   ].join('\n');
 
-  // Create or overwrite the file with the new content
   await createFile({ directory, filename, content: newContent, force: true });
 };
-

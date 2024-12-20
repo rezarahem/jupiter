@@ -16,6 +16,7 @@ export const createFile = async ({
   force = false,
 }: Props) => {
   const filePath = path.join(directory, filename);
+  
   if (!fs.existsSync(directory)) {
     fs.mkdirSync(directory, { recursive: true });
   }
