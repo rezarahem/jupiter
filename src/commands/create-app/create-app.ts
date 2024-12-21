@@ -15,13 +15,7 @@ export const CreateApp = new Command('create-app')
     'Configures the initial setup for a new application, including its environment and any required configurations.'
   )
   .action(async () => {
-    if (!isNextJsProject()) {
-      console.log(
-        'Jupiter currently only supports Next.js projects. Please create a Next.js app using the command: npx create-next-app'
-      );
-      process.exit(1);
-    }
-
+  
     await addNextjs();
 
     const currentDic = process.cwd();

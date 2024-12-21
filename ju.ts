@@ -6,6 +6,9 @@ import { CreateApp } from './src/commands/create-app/create-app.js';
 import { AddDep } from './src/commands/add-dep/add-dep.js';
 import { RemoveApp } from './src/commands/remove-app/remove-app.js';
 import { ListApps } from './src/commands/list-apps/list-apps.js';
+import { checkApp } from './src/utils/check-app.js';
+
+await checkApp()
 
 program
   .name('Jupiter')
