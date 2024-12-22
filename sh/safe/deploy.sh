@@ -50,4 +50,22 @@ else
   exit 1
 fi
 
+# Change directory to the project folder
+cd ./jupiter/$APP
+if [ $? -eq 0 ]; then
+  echo "Changed directory to ./jupiter/$APP"
+else
+  echo "Error: Failed to change directory to ./jupiter/$APP"
+  exit 1
+fi
+
+# Start Docker containers
+sudo docker-compose up -d
+if [ $? -eq 0 ]; then
+  echo "Docker containers started successfully"
+else
+  echo "Error: Failed to start Docker containers"
+  exit 1
+fi
+
 # ...additional deployment steps...
