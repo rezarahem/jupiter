@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [[ -z "$DOMAIN" || -z "$EMAIL" || -z "$APP" || -z "$REPO" ]]; then
+if [[ -z "$DOMAIN" || -z "$EMAIL" || -z "$APP" || -z "$REPO" || -z $WEB ]]; then
   echo "Error: Missing required environment variables."
   echo "Please ensure DOMAIN, EMAIL, and APP are set."
   exit 1
@@ -60,7 +60,7 @@ if [ -d "$APP" ]; then
 else
   echo "Cloning repository from $REPO..."
   git clone "$REPO" "$APP"
-  cd "$DIR"
+  cd "$APP"
 fi
 
 # Start Docker containers
@@ -77,7 +77,7 @@ LAST_IMAGE_ID=$(docker images --filter=reference="$APP:latest" --format "{{.ID}}
 
 # Build a new Docker image for the application
 echo "Building the Docker image..."
-docker build -t "$APP" -f docker/Dockerfile.nextjs .
+docker build -t "$APP" -f docker/Dockerfile.$WEB .
 
 # If there was a previous image, tag it as a backup
 if [ -n "$LAST_IMAGE_ID" ]; then
