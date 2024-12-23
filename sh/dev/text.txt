@@ -1,5 +1,0 @@
-scp -P username@ip:~/scripts.tar.gz ~/Downloads/scripts.tar.gz
-
-
-
-rm deploy.sh docker.sh refresh.sh setup.sh nginx.sh spinup.sh
