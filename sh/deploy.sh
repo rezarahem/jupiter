@@ -54,14 +54,14 @@ fi
 # Change directory to the project folder
 cd ./jupiter
 
-if [ -d "$APP" ]; then
-  echo "Directory $APP already exists. Pulling latest changes..."
-  cd "$APP" && git pull
+if [ -d ".git" ]; then
+  echo "Git repository already exists. Pulling latest changes..."
+  git pull
 else
-  echo "Cloning repository from $REPO..."
-  git clone "$REPO" "$APP"
-  cd "$APP"
+  echo "Cloning repository from $REPO into the current directory..."
+  git clone "$REPO" .
 fi
+
 
 # Start Docker containers
 sudo docker-compose up -d
