@@ -74,6 +74,7 @@ fi
 
 # Get the ID of the last built Docker image for the application
 LAST_IMAGE_ID=$(docker images --filter=reference="$APP:latest" --format "{{.ID}}")
+LAST_BACKUP_IMAGE_ID=$(docker images --filter=reference="$APP:backup" --format "{{.ID}}")
 
 # Build a new Docker image for the application
 echo "Building the Docker image..."
@@ -85,6 +86,13 @@ if [ -n "$LAST_IMAGE_ID" ]; then
   echo "Backup image tagged as $APP:backup"
 else
   echo "No existing 'latest' image found, skipping making backup image."
+fi
+
+if [ -n "$LAST_BACKUP_IMAGE_ID" ]; then
+  docker rmi "$LAST_BACKUP_IMAGE_ID"
+  echo "Removed previous backup image with ID $LAST_BACKUP_IMAGE_ID"
+else
+  echo "No existing backup image found, skipping removal."
 fi
 
 
