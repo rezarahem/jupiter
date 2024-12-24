@@ -64,7 +64,7 @@ fi
 
 
 # Start Docker containers
-sudo docker-compose up -d
+sudo docker-compose up -d 
 if [ $? -eq 0 ]; then
   echo "Docker containers started successfully"
 else

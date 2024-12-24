@@ -22,7 +22,7 @@ export const addPostgres = async () => {
   const configContent = `
   services:
     postgres:
-      image: 17.2-alpine
+      image: postgres:17.2-alpine
       container_name: postdb
       environment:
         POSTGRES_USER: ${user}
