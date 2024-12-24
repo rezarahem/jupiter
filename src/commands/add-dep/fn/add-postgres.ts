@@ -41,6 +41,7 @@ export const addPostgres = async () => {
     `;
 
   await updateDockerCompose(app, configContent);
+  
   const dataBaseUrl = `postgresql://${user}:${password}@localhost:5432/${db}`;
 
   await addEnvVar({

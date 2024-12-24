@@ -114,7 +114,7 @@ handle_container() {
   local port=$1
   local nickname=$2
 
-  echo "Handling container on port $port..."
+  echo "Handling container ($nickname) on port $port..."
 
   # Stop and remove any existing container
   local current=$(docker ps --filter "publish=$port" --format "{{.ID}}")
@@ -126,7 +126,7 @@ handle_container() {
 
   # Start new container with the 'latest' tag
   sudo docker run --rm -d -p "$port:$port" --network "$APP" --name "$nickname" "$APP:latest"
-  echo "Started new container with the 'latest' image."
+  echo "Started new container ($nickname) with the 'latest' image."
 
   # Allow time for the container to start
   sleep 5
@@ -177,6 +177,8 @@ handle_container() {
 }
 
 handle_container 3000 "apollo"
+
+sleep 5
 
 handle_container 3001 "artemis"
 
