@@ -14,14 +14,23 @@ export const Deploy = new Command('deploy')
   .alias('d')
   .description('Deploy the application to the specified environment')
   .action(async () => {
-    const WEBAPP = await checkApp();
+    const WEB = await checkApp();
     dotenv.config({ path: '.jupiter' });
-    const APP = process.env.APP || 'defaultAppName';
-    const EMAIL = process.env.EMAIL || 'defaultEmail';
-    const DOMAIN = process.env.DOMAIN || 'defaultDomain';
+
+    const APP = process.env.APP;
+    const EMAIL = process.env.EMAIL;
+    const DOMAIN = process.env.DOMAIN;
+    const REPO = process.env.REPO;
+
+    if (!APP || !EMAIL || !DOMAIN || !REPO) {
+      console.error(
+        'Missing required environment variables: APP, EMAIL, or DOMAIN'
+      );
+      process.exit(1);
+    }
 
     const cmd = command({
-      variables: { APP, EMAIL, DOMAIN, WEBAPP },
+      variables: { APP, EMAIL, DOMAIN, WEB, REPO },
     });
 
     await streamCommand(cmd);
