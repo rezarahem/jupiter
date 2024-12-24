@@ -52,7 +52,7 @@ fi
 
 
 # Change directory to the project folder
-cd ./jupiter
+cd ./jupiter/$APP
 
 if [ -d ".git" ]; then
   echo "Git repository already exists. Pulling latest changes..."
