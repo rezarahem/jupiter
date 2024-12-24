@@ -176,10 +176,7 @@ handle_container() {
   return 0
 }
 
-handle_container 3001 "artemis"
-
 handle_container 3000 "apollo"
-
-
+handle_container 3001 "artemis"
 echo "All containers started and are healthy. Successful Deployment."
 
