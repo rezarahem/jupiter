@@ -125,7 +125,7 @@ handle_container() {
   fi
 
   # Start new container with the 'latest' tag
-  sudo docker run --rm -d -p "$port:$port" --network "$APP" --name "$nickname" "$APP:latest"
+  sudo docker run --rm -d -p "3000:$port" --network "$APP" --name "$nickname" "$APP:latest"
   echo "Started new container ($nickname) with the 'latest' image."
 
   # Allow time for the container to start
@@ -176,11 +176,10 @@ handle_container() {
   return 0
 }
 
+handle_container 3001 "artemis"
+
 handle_container 3000 "apollo"
 
-sleep 5
-
-handle_container 3001 "artemis"
 
 echo "All containers started and are healthy. Successful Deployment."
 
