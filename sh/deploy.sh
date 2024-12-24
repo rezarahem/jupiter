@@ -125,7 +125,7 @@ handle_container() {
   fi
 
   # Start new container with the 'latest' tag
-  sudo docker run --rm -d -p "3000:$port" --network "$APP" --name "$nickname" "$APP:latest"
+  sudo docker run --rm -d -p "$port:3000" --network "$APP" --name "$nickname" "$APP:latest"
   echo "Started new container ($nickname) with the 'latest' image."
 
   # Allow time for the container to start
