@@ -84,6 +84,8 @@ docker build -t "$APP" -f docker/Dockerfile.$WEB .
 if [ -n "$LAST_IMAGE_ID" ]; then
   docker tag "$LAST_IMAGE_ID" "$APP:backup"
   echo "Backup image tagged as $APP:backup"
+else
+  echo "No existing 'latest' image found, skipping making backup image."
 fi
 
 if [ -n "$LAST_BACKUP_IMAGE_ID" ]; then
