@@ -7,6 +7,7 @@ import { AddDep } from './src/commands/add-dep/add-dep.js';
 import { RemoveApp } from './src/commands/remove-app/remove-app.js';
 import { ListApps } from './src/commands/list-apps/list-apps.js';
 import { Deploy } from './src/commands/deploy/deploy.js';
+import { nc } from './src/commands/nc/nc.js';
 
 program
   .name('Jupiter')
@@ -14,6 +15,7 @@ program
     'Jupiter is an in-progress CLI tool designed to simplify the process of building, deploying, and managing modern web applications.'
   );
 
+program.addCommand(nc);
 program.addCommand(CreateApp);
 program.addCommand(Deploy);
 program.addCommand(AddDep);
