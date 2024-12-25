@@ -1,7 +1,7 @@
 import { Command } from 'commander';
 import { checkApp } from '../../utils/check-app.js';
-import dotenv from 'dotenv';
 import { streamCommand } from '../../utils/stream-command.js';
+import dotenv from 'dotenv';
 
 const command = ({ variables }: { variables: Record<string, string> }) => {
   const envVars = Object.entries(variables)
