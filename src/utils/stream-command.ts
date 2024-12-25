@@ -16,7 +16,6 @@ export const streamCommand = async (
     const vpsUsername = process.env.VPS_USERNAME;
     const vpsIP = process.env.VPS_IP;
     const sshPort = process.env.SSH_PORT;
-
     const privateKeyPath = join(homedir(), '.ssh', 'id_ed25519');
 
     await ssh.connect({

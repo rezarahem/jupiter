@@ -6,8 +6,10 @@ import { appNameSchema } from '../../../zod/index.js';
 import ora from 'ora';
 
 export const getAppName = async () => {
+  let shouldBreak = false;
   let app: string;
-  let res: string;
+  let port1: string = '';
+  let port2: string = '';
 
   do {
     app = await userInput({
@@ -22,32 +24,52 @@ export const getAppName = async () => {
     ).start();
 
     try {
-      res = (
-        await streamCommand(`bash ./jux/check-app.sh ${app.toLowerCase()}`)
+      const res = (
+        await streamCommand(
+          `bash -c "bash ~/jux/check-app.sh ${app.toLowerCase()}"`
+        )
       ).stdout;
 
-      spinner.succeed(
-        `The app ${capitalizeFirstLetter(app)} created successfully`
-      );
+      const code = res.split('@')[0];
+
+      switch (code) {
+        case '409':
+          spinner.fail(
+            `The app name "${capitalizeFirstLetter(
+              app
+            )}" is already in use. Please choose a different name.`
+          );
+          break;
+        case '200':
+          const ports = res.split('@')[1]?.split(':');
+          port1 = ports?.[0] as string;
+          port2 = ports?.[1] as string;
+          spinner.succeed(
+            `The app ${capitalizeFirstLetter(app)} created successfully.`
+          );
+          shouldBreak = true;
+          break;
+        case '206':
+          spinner.fail('No available ports found within the defined range.');
+          shouldBreak = true;
+          break;
+      }
     } catch (error) {
-      spinner.fail('Failed to check app name');
-      res = '';
+      spinner.fail('Something went wrong.');
     }
 
-    if (!res) {
-      console.log(
-        `The app name "${capitalizeFirstLetter(
-          app
-        )}" is already in use. Please choose a different name.`
-      );
+    if (shouldBreak) {
+      break;
     }
-  } while (!res);
+  } while (true);
 
   await addEnvVar({
     directory: process.cwd(),
     filename: '.jupiter',
     variables: {
       APP: app,
+      APOLLO: port1,
+      ARTEMIS: port2,
     },
   });
 

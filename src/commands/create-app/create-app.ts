@@ -18,11 +18,16 @@ export const CreateApp = new Command('create-app')
     '-n, --nextjs',
     'Only add Next.js configurations, skip other configurations'
   )
+  .option('-r, --remote')
   .action(async options => {
-    
     if (options.nextjs) {
       await addNextjs();
       console.log('Nextjs configs added successfully');
+      process.exit(0);
+    }
+
+    if (options.remote) {
+      await getAppName();
       process.exit(0);
     }
 
