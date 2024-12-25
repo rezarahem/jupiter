@@ -13,9 +13,9 @@ remove_folder() {
 
 }
 
-if [ -z "$1" ]; then
+if [ -z "$APP" || -z "$DOMAIN" || -z $WEB ]; then
   echo "Please provide an app name."
   exit 1
 fi
 
-remove_folder $1
+remove_folder $APP
