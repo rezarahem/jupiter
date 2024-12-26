@@ -5,7 +5,7 @@ import { userInput } from '../../../utils/user-input.js';
 import { appNameSchema } from '../../../zod/index.js';
 import ora from 'ora';
 
-export const getAppName = async () => {
+export const getAppNameAndPorts = async () => {
   let shouldBreak = false;
   let app: string;
   let port1: string = '';
