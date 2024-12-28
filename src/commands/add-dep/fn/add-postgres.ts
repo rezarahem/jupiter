@@ -7,6 +7,7 @@ export const addPostgres = async () => {
   //0
   dotenv.config({ path: '.jupiter' });
   const app = process.env.APP;
+  
   if (!app) {
     console.log(
       'No application found. Please initialize an application with the command: ju create'
@@ -23,7 +24,7 @@ export const addPostgres = async () => {
   services:
     postgres:
       image: postgres:17.2-alpine
-      container_name: postdb
+      container_name: ${app}_postdb
       environment:
         POSTGRES_USER: ${user}
         POSTGRES_PASSWORD: ${password}
@@ -31,14 +32,13 @@ export const addPostgres = async () => {
       ports:
         - '5432:5432'
       volumes:
-        - db_volume:/var/lib/postgresql/data
+        - ${app}_db_volume:/var/lib/postgresql/data
       networks:
         - ${app}  
       restart: always    
 
   volumes:
-    db_volume:
-    `;
+    ${app}_db_volume:`;
 
   await updateDockerCompose(app, configContent);
   
