@@ -32,7 +32,7 @@ export const CreateApp = new Command('create-app')
     const currentDic = process.cwd();
 
     gitIint();
-
+    
     await createDockerignore(currentDic);
 
     createJupiterFile();
@@ -41,6 +41,7 @@ export const CreateApp = new Command('create-app')
 
     await addEnvVar({
       directory: currentDic,
+      filename: '.jupiter',
       variables: {
         ...userInput,
       },
