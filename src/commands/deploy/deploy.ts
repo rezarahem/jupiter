@@ -2,6 +2,7 @@ import { Command } from 'commander';
 import { checkApp } from '../../utils/check-app.js';
 import { streamCommand } from '../../utils/stream-command.js';
 import dotenv from 'dotenv';
+import { hasServices } from './fn/has-service.js';
 
 const command = ({ variables }: { variables: Record<string, string> }) => {
   const envVars = Object.entries(variables)
@@ -23,8 +24,18 @@ export const Deploy = new Command('deploy')
     const REPO = process.env.REPO;
     const APOLLO = process.env.APOLLO;
     const ARTEMIS = process.env.ARTEMIS;
+    const DOCKER_COMPOSE = hasServices() ? '1' : '0';
 
-    if (!APP || !EMAIL || !DOMAIN || !REPO || !APOLLO || !ARTEMIS || !WEB) {
+    if (
+      !APP ||
+      !EMAIL ||
+      !DOMAIN ||
+      !REPO ||
+      !APOLLO ||
+      !ARTEMIS ||
+      !WEB ||
+      !DOCKER_COMPOSE
+    ) {
       console.error(
         'Missing required environment variables: APP, EMAIL, or DOMAIN'
       );
@@ -32,7 +43,16 @@ export const Deploy = new Command('deploy')
     }
 
     const cmd = command({
-      variables: { APP, EMAIL, DOMAIN, WEB, REPO, APOLLO, ARTEMIS },
+      variables: {
+        APP,
+        EMAIL,
+        DOMAIN,
+        WEB,
+        REPO,
+        APOLLO,
+        ARTEMIS,
+        DOCKER_COMPOSE,
+      },
     });
 
     await streamCommand(cmd);

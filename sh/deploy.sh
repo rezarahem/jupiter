@@ -1,9 +1,19 @@
 #!/bin/bash
 
-if [[ -z "$DOMAIN" || -z "$EMAIL" || -z "$APP" || -z "$REPO" || -z $WEB || -z $APOLLO || -z $ARTEMIS ]]; then
+if [[ 
+  -z "$DOMAIN" || 
+  -z "$EMAIL" || 
+  -z "$APP" || 
+  -z "$REPO" || 
+  -z "$WEB" || 
+  -z "$APOLLO" || 
+  -z "$ARTEMIS" || 
+  -z "$DOCKER_COMPOSE" 
+]]; then
   echo "Error: Missing required environment variables."
   exit 1
 fi
+
 
 # Check if SSL certificate exists for the given domain
 if [ ! -f /etc/letsencrypt/live/$DOMAIN/fullchain.pem ]; then
@@ -75,15 +85,18 @@ else
   fi
 fi
 
+if [ "$DOCKER_COMPOSE" == "1" ]; then
+  # Start Docker containers
+  sudo docker-compose up -d
 
-# Start Docker containers
-sudo docker-compose up -d 
-if [ $? -eq 0 ]; then
-  echo "Docker containers started successfully"
-else
-  echo "Error: Failed to start Docker containers"
-  exit 1
+  if [ $? -eq 0 ]; then
+    echo "Docker containers started successfully"
+  else
+    echo "Error: Failed to start Docker containers"
+    exit 1
+  fi
 fi
+
 
 # Get the ID of the last built Docker image for the application
 LAST_IMAGE_ID=$(docker images --filter=reference="$APP:latest" --format "{{.ID}}")
