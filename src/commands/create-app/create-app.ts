@@ -14,17 +14,7 @@ export const CreateApp = new Command('create-app')
   .description(
     'Configures the initial setup for a new application, including its environment and any required configurations.'
   )
-  .option(
-    '-n, --nextjs',
-    'Only add Next.js configurations, skip other configurations'
-  )
-  .action(async options => {
-    if (options.nextjs) {
-      await addNextjs();
-      console.log('Nextjs configs added successfully');
-      process.exit(0);
-    }
-
+  .action(async () => {
     await checkApp();
 
     await addNextjs();
@@ -32,7 +22,7 @@ export const CreateApp = new Command('create-app')
     const currentDic = process.cwd();
 
     gitIint();
-    
+
     await createDockerignore(currentDic);
 
     createJupiterFile();
