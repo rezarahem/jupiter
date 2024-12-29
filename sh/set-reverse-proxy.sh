@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [[ $# -ne 2 ]]; then
+if [[ $# -ne 4 ]]; then
   echo "Usage: $0 <domain> <app>"
   exit 1
 fi
@@ -15,7 +15,6 @@ sudo systemctl stop nginx
 
 # Create Nginx config with reverse proxy, SSL support, rate limiting, and streaming support
 sudo cat > /etc/nginx/sites-available/$APP <<EOL
-limit_req_zone \$binary_remote_addr zone=mylimit:10m rate=10r/s;
 
 server {
     listen 80;
@@ -64,3 +63,6 @@ sudo ln -s /etc/nginx/sites-available/$APP /etc/nginx/sites-enabled/$APP
 
 # Restart Nginx to apply the new configuration
 sudo systemctl restart nginx
+
+
+# limit_req_zone \$binary_remote_addr zone=mylimit:10m rate=10r/s;
