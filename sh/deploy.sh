@@ -61,6 +61,20 @@ else
   git clone "$REPO" .
 fi
 
+# Check if the network exists
+if docker network ls --format "{{.Name}}" | grep -q "^$APP$"; then
+  echo "Docker network $APP already exists."
+else
+  # Create the network if it doesn't exist
+  docker network create "$APP"
+  if [ $? -eq 0 ]; then
+    echo "Docker network $APP has been created successfully."
+  else
+    echo "Failed to create Docker network $APP."
+    exit 1
+  fi
+fi
+
 
 # Start Docker containers
 sudo docker-compose up -d 
@@ -132,7 +146,7 @@ handle_container() {
   fi
 
   # Start new container with the 'latest' tag
-  sudo docker run --rm -d -p "$port:3000" --network "$APP" --name "$APP_$nickname" "$APP:latest"
+  sudo docker run --rm -d -p "$port:3000" --network "$APP" --name "$nickname" "$APP:latest"
   echo "Started new container ($nickname) with the 'latest' image."
 
   # Allow time for the container to start
@@ -183,7 +197,7 @@ handle_container() {
   return 0
 }
 
-handle_container $APOLLO "apollo"
-handle_container $ARTEMIS "artemis"
+handle_container $APOLLO "${APP}_apollo"
+handle_container $ARTEMIS "${APP}_artemis"
 echo "All containers started and are healthy. Successful Deployment."
 
