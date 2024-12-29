@@ -21,8 +21,10 @@ export const Deploy = new Command('deploy')
     const EMAIL = process.env.EMAIL;
     const DOMAIN = process.env.DOMAIN;
     const REPO = process.env.REPO;
+    const APOLLO = process.env.APOLLO;
+    const ARTEMIS = process.env.ARTEMIS;
 
-    if (!APP || !EMAIL || !DOMAIN || !REPO) {
+    if (!APP || !EMAIL || !DOMAIN || !REPO || !APOLLO || !ARTEMIS || !WEB) {
       console.error(
         'Missing required environment variables: APP, EMAIL, or DOMAIN'
       );
@@ -30,7 +32,7 @@ export const Deploy = new Command('deploy')
     }
 
     const cmd = command({
-      variables: { APP, EMAIL, DOMAIN, WEB, REPO },
+      variables: { APP, EMAIL, DOMAIN, WEB, REPO, APOLLO, ARTEMIS },
     });
 
     await streamCommand(cmd);
