@@ -7,6 +7,8 @@ fi
 
 DOMAIN=$1
 APP=$2
+APOLLO=$3
+ARTEMIS=$4
 
 # Stop Nginx temporarily to allow configuration changes
 sudo systemctl stop nginx
@@ -25,9 +27,9 @@ server {
 
 upstream $APP {
     # Apollo
-    server localhost:3000 max_fails=3 fail_timeout=10s; 
+    server localhost:$APOLLO max_fails=3 fail_timeout=10s; 
     # Artemis
-    server localhost:3001 max_fails=3 fail_timeout=10s;
+    server localhost:$ARTEMIS max_fails=3 fail_timeout=10s;
 }
 
 server {

@@ -1,8 +1,7 @@
 #!/bin/bash
 
-if [[ -z "$DOMAIN" || -z "$EMAIL" || -z "$APP" || -z "$REPO" || -z $WEB || -z APOLLO || -z ARTEMIS ]]; then
+if [[ -z "$DOMAIN" || -z "$EMAIL" || -z "$APP" || -z "$REPO" || -z $WEB || -z $APOLLO || -z $ARTEMIS ]]; then
   echo "Error: Missing required environment variables."
-  echo "Please ensure DOMAIN, EMAIL, and APP are set."
   exit 1
 fi
 
@@ -30,7 +29,7 @@ fi
 
 # Check if reverse proxy configuration exists for the given domain
 if [ ! -f /etc/nginx/sites-available/$APP ]; then
-  ./jux/set-reverse-proxy.sh $DOMAIN $APP
+  ./jux/set-reverse-proxy.sh $DOMAIN $APP $APOLLO $ARTEMIS
   if [ $? -eq 0 ]; then
     echo "Reverse proxy successfully configured for $APP"
   else
@@ -184,7 +183,7 @@ handle_container() {
   return 0
 }
 
-handle_container 3000 "apollo"
-handle_container 3001 "artemis"
+handle_container $APOLLO "apollo"
+handle_container $ARTEMIS "artemis"
 echo "All containers started and are healthy. Successful Deployment."
 

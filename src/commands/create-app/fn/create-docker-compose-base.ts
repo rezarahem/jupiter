@@ -5,7 +5,7 @@ export const createDockerComposeBase = async (appName: string) => {
   const content = yaml.stringify({
     networks: {
       [appName]: {
-        name: [appName],
+        name: appName,
         driver: 'bridge',
       },
     },
