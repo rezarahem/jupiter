@@ -44,7 +44,7 @@ export const newAppInputs = async () => {
   });
 
   const sshPublicKey = await userInput({
-    prompt: 'Enter your SSH public key handle: ',
+    prompt: 'Enter your SSH public key handle (e.g., key_name.pub): ',
     schema: sshKeyHandleSchema,
   });
 
