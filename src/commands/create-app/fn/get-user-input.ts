@@ -2,6 +2,7 @@ import {
   domainSchema,
   emailSchema,
   githubSshCloneString,
+  sshKeyHandleSchema,
   sshPortSchema,
   vpsIpSchema,
   vpsUsernameSchema,
@@ -28,6 +29,7 @@ export const newAppInputs = async () => {
   const vpsUsername = await userInput({
     prompt: 'Enter your VPS username account: ',
     schema: vpsUsernameSchema,
+    defaultValue: 'root',
   });
 
   const vpsIp = await userInput({
@@ -41,6 +43,11 @@ export const newAppInputs = async () => {
     defaultValue: '22',
   });
 
+  const sshPublicKey = await userInput({
+    prompt: 'Enter your SSH public key handle: ',
+    schema: sshKeyHandleSchema,
+  });
+
   return {
     REPO: repo,
     VPS_IP: vpsIp,
@@ -48,5 +55,6 @@ export const newAppInputs = async () => {
     EMAIL: email.toLowerCase(),
     DOMAIN: domain.toLowerCase(),
     VPS_USERNAME: vpsUsername.toLowerCase(),
+    SSH_PUBLIC_KEY_HANDLE: sshPublicKey,
   };
 };

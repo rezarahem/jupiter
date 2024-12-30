@@ -15,9 +15,11 @@ export const streamMultiCommands = async (
     const vpsIP = process.env.VPS_IP;
     const sshPort = process.env.SSH_PORT;
 
-    const privateKeyPath = join(homedir(), '.ssh', 'id_ed25519');
+    const sshPublicKeyHandle = process.env.SSH_PUBLIC_KEY_HANDLE;
 
-    // console.log(`Connecting to ${vpsIP}...`);
+    if (!sshPublicKeyHandle) process.exit(1);
+
+    const privateKeyPath = join(homedir(), '.ssh', sshPublicKeyHandle);
 
     await ssh.connect({
       host: vpsIP,
