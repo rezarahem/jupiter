@@ -26,6 +26,7 @@ if [ ! -f "$rate_limit_config" ]; then
     # Reload nginx to apply the changes
     echo "Reloading Nginx to apply changes..."
     sudo systemctl reload nginx
+    sleep 2
 else
     echo "Rate limit configuration already exists at $rate_limit_config"
 fi
@@ -35,6 +36,7 @@ if [ ! -f /etc/nginx/sites-available/$APP ]; then
   ./jux/set-reverse-proxy.sh $DOMAIN $APP $APOLLO $ARTEMIS
   if [ $? -eq 0 ]; then
     echo "Reverse proxy successfully configured for $APP"
+    sleep 2
   else
     echo "Error: Failed to configure reverse proxy for $APP"
     exit 1
@@ -58,6 +60,7 @@ if [ ! -f /etc/letsencrypt/live/$DOMAIN/fullchain.pem ]; then
   ./jux/set-ssl.sh $DOMAIN $EMAIL
   if [ $? -eq 0 ]; then
     echo "SSL certificate successfully created for $DOMAIN"
+    sleep 2
   else
     echo "Error: Failed to create SSL certificate for $DOMAIN"
     exit 1
@@ -88,6 +91,8 @@ else
   git clone "$REPO" .
 fi
 
+
+
 # Check if the network exists
 if docker network ls --format "{{.Name}}" | grep -q "^$APP$"; then
   echo "Docker network $APP already exists."
@@ -108,6 +113,7 @@ if [ "$DOCKER_COMPOSE" == "1" ]; then
 
   if [ $? -eq 0 ]; then
     echo "Docker containers started successfully"
+    sleep 5
   else
     echo "Error: Failed to start Docker containers"
     exit 1

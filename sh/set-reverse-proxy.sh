@@ -65,4 +65,4 @@ sudo ln -s /etc/nginx/sites-available/$APP /etc/nginx/sites-enabled/$APP
 sudo systemctl restart nginx
 
 
-# limit_req_zone \$binary_remote_addr zone=mylimit:10m rate=10r/s;
+
