@@ -14,6 +14,29 @@ if [[
   exit 1
 fi
 
+# Check if SSL certificate exists for the given domain
+if [ ! -f /etc/letsencrypt/live/$DOMAIN/fullchain.pem ]; then
+  ./jux/set-ssl.sh $DOMAIN $EMAIL
+  if [ $? -eq 0 ]; then
+    echo "SSL certificate successfully created for $DOMAIN"
+    sleep 2
+  else
+    echo "Error: Failed to create SSL certificate for $DOMAIN"
+    exit 1
+  fi
+else
+  echo "SSL certificate already exists for $DOMAIN"
+fi
+
+# Verify SSL certificate
+openssl x509 -in /etc/letsencrypt/live/$DOMAIN/fullchain.pem -noout -text > /dev/null 2>&1
+if [ $? -eq 0 ]; then
+  echo "SSL certificate for $DOMAIN is valid"
+else
+  echo "Error: SSL certificate for $DOMAIN is invalid"
+  exit 1
+fi
+
 # Define the path to the rate limit config file in conf.d
 rate_limit_config="/etc/nginx/conf.d/rate_limit.conf"
 # Check if the rate limit configuration file exists
@@ -53,32 +76,6 @@ else
   echo "Error: Nginx configuration test failed"
   exit 1
 fi
-
-
-# Check if SSL certificate exists for the given domain
-if [ ! -f /etc/letsencrypt/live/$DOMAIN/fullchain.pem ]; then
-  ./jux/set-ssl.sh $DOMAIN $EMAIL
-  if [ $? -eq 0 ]; then
-    echo "SSL certificate successfully created for $DOMAIN"
-    sleep 2
-  else
-    echo "Error: Failed to create SSL certificate for $DOMAIN"
-    exit 1
-  fi
-else
-  echo "SSL certificate already exists for $DOMAIN"
-fi
-
-# Verify SSL certificate
-openssl x509 -in /etc/letsencrypt/live/$DOMAIN/fullchain.pem -noout -text > /dev/null 2>&1
-if [ $? -eq 0 ]; then
-  echo "SSL certificate for $DOMAIN is valid"
-else
-  echo "Error: SSL certificate for $DOMAIN is invalid"
-  exit 1
-fi
-
-
 
 # Change directory to the project folder
 cd ./jupiter/$APP
