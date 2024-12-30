@@ -43,8 +43,8 @@ export const newAppInputs = async () => {
     defaultValue: '22',
   });
 
-  const sshPublicKey = await userInput({
-    prompt: 'Enter your SSH public key handle (e.g., key_name.pub): ',
+  const sshPrivateKeyHandle = await userInput({
+    prompt: 'Enter your SSH private key handle: ',
     schema: sshKeyHandleSchema,
   });
 
@@ -55,6 +55,6 @@ export const newAppInputs = async () => {
     EMAIL: email.toLowerCase(),
     DOMAIN: domain.toLowerCase(),
     VPS_USERNAME: vpsUsername.toLowerCase(),
-    SSH_PUBLIC_KEY_HANDLE: sshPublicKey,
+    SSH_PRIVATE_KEY_HANDLE: sshPrivateKeyHandle,
   };
 };
