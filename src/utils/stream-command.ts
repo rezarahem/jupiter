@@ -9,7 +9,7 @@ const ssh = new NodeSSH();
 export const streamCommand = async (
   command: string,
   skipLog: boolean = false
-): Promise<SSHExecCommandResponse> => {
+) => {
   try {
     dotenv.config({ path: '.jupiter' });
 
@@ -42,8 +42,8 @@ export const streamCommand = async (
 
     return result;
   } catch (error) {
-    console.error('Error:', error);
-    throw error;
+    console.error(error);
+    process.exit(1);
   } finally {
     ssh.dispose();
   }
