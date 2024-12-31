@@ -13,8 +13,9 @@ RUN apk add --no-cache curl
 FROM base AS build 
 ENV NODE_ENV=build
 RUN npm config set registry https://registry.npmmirror.com
+RUN npm config set audit false
 COPY package.json package-lock.json ./
-RUN npm ci --verbose --no-audit 
+RUN npm ci --verbose 
 COPY . .
 RUN npm run build
 
