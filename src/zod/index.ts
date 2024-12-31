@@ -18,7 +18,7 @@ export const appNameSchema = z
 export const domainSchema = z
   .string()
   .regex(
-    /^(?:[a-zA-Z0-9-]+\.)+[a-zA-Z0-9-]+\.[a-zA-Z]{2,}$/,
+    /^(?:[a-zA-Z0-9-]+\.)*[a-zA-Z0-9-]+\.[a-zA-Z]{2,}$/,
     'Invalid domain name (must follow the format "example.com" or "sub.example.com")'
   );
 
