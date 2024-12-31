@@ -14,7 +14,7 @@ FROM base AS build
 ENV NODE_ENV=build
 RUN npm config set registry https://registry.npmmirror.com
 COPY package.json package-lock.json ./
-RUN npm ci --verbose 
+RUN npm ci --verbose --no-audit 
 COPY . .
 RUN npm run build
 
