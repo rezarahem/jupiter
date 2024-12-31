@@ -7,6 +7,11 @@
     "type": "git",
     "url": "https://github.com/rezarahem/jupiter"
   },
+  "files": [
+    "dist",
+    "license.md",
+    "README.md"
+  ],
   "publishConfig": {
     "access": "public"
   },
