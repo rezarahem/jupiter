@@ -12,5 +12,5 @@
     "skipLibCheck": true,
     "moduleResolution": "node16"
   },
-  "include": ["src", "ju.ts", "no-need-now/remove-app", "no-need-now/list-apps"]
+  "include": ["src", "ju.ts"]
 }
