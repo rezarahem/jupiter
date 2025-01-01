@@ -88,6 +88,8 @@ else
   git clone "$REPO" .
 fi
 
+
+
 # Check if the network exists
 if docker network ls --format "{{.Name}}" | grep -q "^$APP$"; then
   echo "Docker network $APP already exists."

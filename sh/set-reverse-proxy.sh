@@ -65,4 +65,3 @@ sudo ln -s /etc/nginx/sites-available/$APP /etc/nginx/sites-enabled/$APP
 sudo systemctl restart nginx
 
 
-
