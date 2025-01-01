@@ -16,31 +16,31 @@ export const CreateApp = new Command('create-app')
     'Configures the initial setup for a new application, including its environment and any required configurations.'
   )
   .action(async () => {
-    // await checkApp();
+    await checkApp();
 
-    // await addNextjs();
+    await addNextjs();
 
-    // const currentDic = process.cwd();
+    const currentDic = process.cwd();
 
-    // gitIint();
+    gitIint();
 
-    // await createDockerignore(currentDic);
+    await createDockerignore(currentDic);
 
-    // createJupiterFile();
+    createJupiterFile();
 
-    // const userInput = await newAppInputs();
+    const userInput = await newAppInputs();
 
-    // await addEnvVar({
-    //   directory: currentDic,
-    //   filename: '.jupiter',
-    //   variables: {
-    //     ...userInput,
-    //   },
-    // });
+    await addEnvVar({
+      directory: currentDic,
+      filename: '.jupiter',
+      variables: {
+        ...userInput,
+      },
+    });
 
     await createBashScripts();
 
-    // const app = await getAppNameAndPorts();
+    const app = await getAppNameAndPorts();
 
-    // await createDockerComposeBase(app);
+    await createDockerComposeBase(app);
   });
