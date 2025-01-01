@@ -14,7 +14,6 @@ export const streamMultiCommands = async (
     const vpsUsername = process.env.VPS_USERNAME;
     const vpsIP = process.env.VPS_IP;
     const sshPort = process.env.SSH_PORT;
-
     const sshHandle = process.env.SSH_PRIVATE_KEY_HANDLE;
 
     if (!sshHandle) process.exit(1);
