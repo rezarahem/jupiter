@@ -16,4 +16,4 @@ Jupiter is an in-progress CLI tool designed to simplify the process of deploying
 
 1. **SSH Connection**
 
-    Before we start using the CLI, we need to make sure that the SSH connection is properly configured on both our local machine and the VPS.
+    Before we start using `Jupiter`, we need to make sure that the SSH connection is properly configured on both our local machine and the VPS.
