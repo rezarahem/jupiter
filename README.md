@@ -13,3 +13,7 @@ Jupiter is an in-progress CLI tool designed to simplify the process of deploying
     Using Cloudflare's DNS service is recommended, as it also provides DDoS attack protection.
 
 ## Quick Start
+
+1. **SSH Connection**
+
+    Before we start using the CLI, we need to make sure that the SSH connection is properly configured on both our local machine and the VPS.
