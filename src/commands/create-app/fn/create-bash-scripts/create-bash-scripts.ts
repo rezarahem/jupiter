@@ -7,7 +7,7 @@ import { fileURLToPath } from 'url';
 
 const ssh = new NodeSSH();
 
-export const createBashScripts = async () => {
+export const createBashScripts = async (update: boolean = false) => {
   try {
     // Load environment variables
     const result = dotenv.config({ path: '.jupiter' });
@@ -51,9 +51,24 @@ export const createBashScripts = async () => {
         process.exit(1);
       }
     }
-
-    // Create Jux directory if not exists
+    
     const jux = 'jux';
+
+    if (update) {
+      const juxCmdUp = `test -d ${jux} && echo "exists" || echo "not exists"`;
+      const checkJuxUp = await ssh.execCommand(juxCmdUp);
+
+      if (checkJuxUp.stdout.trim() === 'exists') {
+        const cmd = `rm -rf ${jux}`;
+        const res = await ssh.execCommand(cmd);
+        if (res.code === 0) {
+        } else {
+          console.log('Failed to update scripts');
+          process.exit(1);
+        }
+      }
+    }
+
     const juxCmd = `test -d ${jux} && echo "exists" || echo "not exists"`;
     const checkJux = await ssh.execCommand(juxCmd);
 

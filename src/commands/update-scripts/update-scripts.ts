@@ -5,5 +5,5 @@ export const UpdateScript = new Command('update-scripts')
   .alias('us')
   .description('Updates the bash scripts on the remote VPS.')
   .action(async () => {
-    await createBashScripts();
+    await createBashScripts(true);
   });
