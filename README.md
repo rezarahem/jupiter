@@ -113,4 +113,4 @@ Jupiter is an in-progress CLI tool designed to simplify the process of deploying
 
    CI/CD is coming soon—just need to lay the foundation first! It’s like building a house, you can't skip the groundwork. 🏗️
 
-That's it! This is Jupiter's easy deployment process. I have tons of features in mind, but I need to make these first two commands stable before moving on to the rest. In the meantime, feel free to share any feedback—tell me what you like, or just tell me what you like. 😄 Peace, love you all! 🤟
+That's it! This is Jupiter's easy deployment process. I have tons of features in mind, but I need to make these first two commands stable before moving on to the rest. In the meantime, feel free to share any feedback—tell me what you like, or... nah, just tell me what you like😄. Peace, love you all! 🤟
