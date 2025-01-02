@@ -4,15 +4,16 @@ import { homedir } from 'os';
 import { readFileSync } from 'fs';
 import dotenv from 'dotenv';
 import { fileURLToPath } from 'url';
+import ora, { Ora } from 'ora';
 
 const ssh = new NodeSSH();
 
 export const createBashScripts = async (update: boolean = false) => {
+  const spinner = ora('Uploading scripts...').start();
   try {
-    // Load environment variables
     const result = dotenv.config({ path: '.jupiter' });
     if (result.error) {
-      console.error('Failed to load environment variables from .jupiter');
+      spinner.fail('Failed to load environment variables from .jupiter');
       process.exit(1);
     }
 
@@ -22,12 +23,13 @@ export const createBashScripts = async (update: boolean = false) => {
     const sshHandle = process.env.SSH_PRIVATE_KEY_HANDLE;
 
     if (!vpsUsername || !vpsIP || !sshPort || !sshHandle) {
-      console.error('Missing environment variables');
+      spinner.fail('Missing environment variables');
       process.exit(1);
     }
 
     const privateKeyPath = join(homedir(), '.ssh', sshHandle);
 
+    spinner.text = 'Connecting to Host...';
     await ssh.connect({
       host: vpsIP,
       username: vpsUsername,
@@ -41,13 +43,12 @@ export const createBashScripts = async (update: boolean = false) => {
     const checkJupiter = await ssh.execCommand(jupiterCmd);
 
     if (checkJupiter.stdout.trim() === 'not exists') {
+      spinner.text = `Creating folder ${jupiter}...`;
       const res = await ssh.execCommand(`mkdir -p ${jupiter}`);
       if (res.code === 0) {
-        console.log(`Folder ${jupiter} created successfully.`);
+        spinner.text = `Folder ${jupiter} created successfully.`;
       } else {
-        console.error(
-          `Failed to create folder ${jupiter}. Error: ${res.stderr}`
-        );
+        spinner.fail(`Failed to create folder ${jupiter}. Error: ${res.stderr}`);
         process.exit(1);
       }
     }
@@ -59,11 +60,11 @@ export const createBashScripts = async (update: boolean = false) => {
       const checkJuxUp = await ssh.execCommand(juxCmdUp);
 
       if (checkJuxUp.stdout.trim() === 'exists') {
+        spinner.text = `Updating folder ${jux}...`;
         const cmd = `rm -rf ${jux}`;
         const res = await ssh.execCommand(cmd);
-        if (res.code === 0) {
-        } else {
-          console.log('Failed to update scripts');
+        if (res.code !== 0) {
+          spinner.fail('Failed to update scripts');
           process.exit(1);
         }
       }
@@ -73,20 +74,25 @@ export const createBashScripts = async (update: boolean = false) => {
     const checkJux = await ssh.execCommand(juxCmd);
 
     if (checkJux.stdout.trim() === 'not exists') {
+      spinner.text = `Creating folder ${jux}...`;
       const res = await ssh.execCommand(`mkdir -p ${jux}`);
       if (res.code === 0) {
-        console.log(`Folder ${jux} created successfully.`);
-        await uploadToJux(ssh);
+        spinner.text = `Folder ${jux} created successfully.`;
+        await uploadToJux(ssh, spinner);
+        // spinner.text = 'Scripts uploaded successfully.';
+        // spinner.succeed('scri');
       } else {
-        console.error(`Failed to create folder ${jux}. Error: ${res.stderr}`);
+        spinner.fail(`Failed to create folder ${jux}. Error: ${res.stderr}`);
         process.exit(1);
       }
     }
   } catch (error) {
-    console.error('Error occurred:', error);
+    spinner.fail('Error occurred');
+    console.log(error);
     process.exit(1);
   } finally {
     ssh.dispose();
+    // spinner.stop();
   }
 };
 
@@ -104,23 +110,32 @@ const createFileList = (localAlias: string, remoteAlias: string) =>
     })
   );
 
-export const uploadToJux = async (ssh: NodeSSH) => {
+export const uploadToJux = async (ssh: NodeSSH, spinner: Ora) => {
   try {
+    spinner.text = 'Uploading scripts...';
+
     const localAlias = '../../../../../sh';
     const remoteAlias = './jux';
+
     const files = createFileList(localAlias, remoteAlias);
+
     await ssh.putFiles(files);
+
+
     const chmodCommands = files.map(file =>
       ssh.execCommand(`chmod +x ${remoteAlias}/${path.basename(file.local)}`)
     );
 
     await Promise.all(chmodCommands);
 
-    console.log(
-      'Successfully uploaded and made the following files executable on Jux:',
-      files.map(f => path.basename(f.local)).join(', ')
-    );
+    spinner.succeed('Successfully uploaded and made the following files executable on Jux: ' + files.map(f => path.basename(f.local)).join(', '))
+    
+    // console.log(
+    //   'Successfully uploaded and made the following files executable on Jux:',
+    //   files.map(f => path.basename(f.local)).join(', ')
+    // );
   } catch (error) {
+    spinner.fail('Failed to upload scripts');
     console.log(error);
   }
 };
