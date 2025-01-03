@@ -26,7 +26,7 @@ Jupiter is an in-progress CLI tool designed to simplify the process of deploying
    ssh-keygen -t ed25519 -C "your_email@example.com" -f ~/.ssh/key_name
    ```
 
-   **Note**: Ensure that the key pair is generated inside the `~/.ssh` directory on your local machine. Generating the keys outside `.ssh` may cause configuration issues.
+   **Note**: Ensure that the key pair is generated inside the (homedirectory) `~/.ssh` directory on your local machine. Generating the keys outside `.ssh` may cause configuration issues.
 
    **Retrieve the Public Key**
 
