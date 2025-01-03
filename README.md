@@ -74,7 +74,7 @@ Jupiter is an in-progress CLI tool designed to simplify the process of deploying
    create-next-app@latest
    ```
 
-   Next, push your project to a remote repository, as we need to retrieve the source code from there.
+   Next, push your project to a remote repository (like Github), as we need to retrieve the source code from there.
 
    Then, use the Jupiter CLI to generate the configuration files required for deployment by running the following command:
 
