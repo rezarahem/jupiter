@@ -12,7 +12,128 @@ Jupiter is an in-progress CLI tool designed to simplify the process of deploying
 
    Using Cloudflare's DNS service is recommended, as it also provides DDoS attack protection.
 
-## Setup
+## Setup the VPS
+
+Jupiter relies heavily on Docker, so it is essential to have Docker installed on your VPS for Jupiter to containerize your applications effectively. Additionally, you need Nginx for reverse proxying and Certbot to obtain SSL certificates for secure communication.
+
+Follow these steps to install the required dependencies on your VPS:
+
+1. **Upgrate Pakages**
+
+   Before installing any packages on your VPS, it's a good practice to ensure that the currently installed packages are up-to-date. This helps avoid compatibility issues and ensures you're using the latest security patches.
+
+   This command fetches the latest list of available packages and updates the local cache.
+
+   ```
+   sudo apt update
+   ```
+
+   This command upgrades all installed packages to their latest versions based on the updated package list.
+
+   ```
+   sudo apt upgrade
+   ```
+
+2. **Docker Installation**
+
+   [You can also follow Docker's official documentation for installation on Ubuntu](https://docs.docker.com/engine/install/ubuntu/)
+
+   **Update and Install Prerequisites**
+
+   This ensures that the system is ready to add Docker's official GPG key and repository.
+
+   ```
+   sudo apt update
+   sudo apt install -y ca-certificates curl
+   ```
+
+   **Add Docker's GPG Key**
+
+   The GPG key ensures that the Docker packages are from a trusted source.
+
+   ```
+   sudo install -m 0755 -d /etc/apt/keyrings
+
+   sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+
+   sudo chmod a+r /etc/apt/keyrings/docker.asc
+   ```
+
+   ** Add Docker's Repository**
+
+   This step adds Docker's official repository to your system for package installation.
+
+   ```
+   echo \
+   "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
+   $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
+   sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+   sudo apt-get update
+   ```
+
+   **Install Docker and Related Packages**
+
+   ```
+   sudo apt update -y
+   sudo apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin docker-compose
+   sudo apt install -y docker-compose
+   ```
+
+3. **Nginx and Cerbot**
+
+   Installing and setting up Nginx and Certbot is straightforward compared to Docker. Simply copy and paste the commands below.
+
+   **Nginx**
+
+   ```
+   sudo apt-get install nginx -y
+   sudo systemctl start nginx
+   sudo systemctl enable nginx
+   ```
+
+   **Certbot**
+
+   ```
+   sudo apt-get install software-properties-common -y
+   sudo add-apt-repository universe -y
+   sudo apt-get update -y
+   sudo apt-get install certbot python3-certbot-nginx -y
+   ```
+
+Once everything is installed, you can verify that Docker, Docker Compose, Nginx, and Certbot were installed successfully by running the following commands:
+
+```
+echo "Docker version:"
+docker --version
+
+echo "Docker Compose version:"
+docker-compose --version
+
+echo "Nginx version:"
+nginx -v
+
+echo "Certbot version:"
+certbot --version
+```
+
+Below is an example of what the output might look like:
+
+```
+Docker version:
+Docker version 24.0.5, build 123456
+
+Docker Compose version:
+Docker Compose version v2.20.2
+
+Nginx version:
+nginx version: nginx/1.25.2
+
+Certbot version:
+certbot 2.6.0
+```
+
+## Getting Started with Jupiter
 
 1. **SSH Connection**
 
