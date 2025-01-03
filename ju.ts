@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import { program } from 'commander';
-import { CreateApp } from './src/commands/create-app/create-app.js';
+import { InitApp } from './src/commands/init-app/init-app.js';
 import { Deploy } from './src/commands/deploy/deploy.js';
 import { UpdateScript } from './src/commands/update-scripts/update-scripts.js';
 
@@ -12,7 +12,7 @@ program
   )
   .version('0.0.0-dev.5', '-v, --version', 'Output the version number');
 
-program.addCommand(CreateApp);
+program.addCommand(InitApp);
 program.addCommand(Deploy);
 program.addCommand(UpdateScript);
 

@@ -1,6 +1,6 @@
 import fs from 'fs';
 import yaml from 'yaml';
-import { createDockerComposeBase } from '../commands/create-app/fn/create-docker-compose-base.js';
+import { createDockerComposeBase } from '../commands/init-app/fn/create-docker-compose-base.js';
 import { createFile } from './create-file.js';
 import path from 'path';
 

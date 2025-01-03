@@ -10,8 +10,8 @@ import { addNextjs } from './fn/add-next/add-nextjs.js';
 import { checkApp } from '../../utils/check-app.js';
 import { createBashScripts } from './fn/create-bash-scripts/create-bash-scripts.js';
 
-export const CreateApp = new Command('create-app')
-  .alias('c')
+export const InitApp = new Command('initialize-app')
+  .alias('init')
   .description(
     'Configures the initial setup for a new application, including its environment and any required configurations.'
   )

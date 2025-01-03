@@ -79,10 +79,10 @@ Jupiter is an in-progress CLI tool designed to simplify the process of deploying
    Then, use the Jupiter CLI to generate the configuration files required for deployment by running the following command:
 
    ```
-   ju c
+   ju init
    ```
 
-   This command, `ju create` or `ju c`, will prompt you with several questions, as follows:
+   This command, `ju initialize-app` or `ju init`, will prompt you with several questions, as follows:
 
    ```
    - Enter your GitHub SSH repository clone URL:
@@ -111,6 +111,8 @@ Jupiter is an in-progress CLI tool designed to simplify the process of deploying
 
    **Note** This command, `ju deploy`, deploys from your remote repository, not from your local machine. Don't be confused if you see an older version after deployment; this typically happens if you haven't pushed the latest changes to the remote repository before running the command. Make sure your remote repository is up-to-date before deploying.
 
-   CI/CD is coming soon—just need to lay the foundation first! It’s like building a house, you can't skip the groundwork. 🏗️
+   CI/CD is coming soon—just need to lay the foundation first! It’s like building a house, you can't skip the groundwork.
 
-That's it! This is Jupiter's easy deployment process. I have tons of features in mind, but I need to make these first two commands stable before moving on to the rest. In the meantime, feel free to share any feedback—tell me what you like, or... nah, just tell me what you like😄. Peace, love you all! 🤟
+That's it! This is Jupiter's easy deployment process. I have tons of features in mind, but I need to make these first two commands stable before moving on to the rest.
+
+In the meantime, I'd love to hear your thoughts! Let me know what works for you, what could be better, or what features you'd love to see in the future. Your feedback will shape Jupiter into the tool we all need!

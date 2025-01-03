@@ -1,5 +1,5 @@
 import { Command } from 'commander';
-import { createBashScripts } from '../create-app/fn/create-bash-scripts/create-bash-scripts.js';
+import { createBashScripts } from '../init-app/fn/create-bash-scripts/create-bash-scripts.js';
 
 export const UpdateScript = new Command('update-scripts')
   .alias('us')
