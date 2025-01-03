@@ -59,7 +59,7 @@ Follow these steps to install the required dependencies on your VPS:
    sudo chmod a+r /etc/apt/keyrings/docker.asc
    ```
 
-   ** Add Docker's Repository**
+   **Add Docker's Repository**
 
    This step adds Docker's official repository to your system for package installation.
 
@@ -80,7 +80,7 @@ Follow these steps to install the required dependencies on your VPS:
    sudo apt install -y docker-compose
    ```
 
-3. **Nginx and Cerbot**
+3. **Nginx and Certbot**
 
    Installing and setting up Nginx and Certbot is straightforward compared to Docker. Simply copy and paste the commands below.
 
