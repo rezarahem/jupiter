@@ -10,7 +10,7 @@ export const createJupiterignoreFile = (): void => {
   }
 
   const content = `.jupiter
-  node_modules
+node_modules
 `;
 
   fs.writeFileSync(filePath, content, { encoding: 'utf-8' });
