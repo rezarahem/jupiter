@@ -8,29 +8,28 @@ Jupiter is a CLI tool to simplify deploying modern web applications.
 
 ## Prerequisites
 
-1. **VPS running Ubuntu 24.04 or 22.04**  
+1. **VPS running Ubuntu 24.04 or 22.04**
 2. **Domain with DNS pointing to the VPS**  
    Cloudflare DNS is recommended for DDoS protection.
 
 ## VPS Setup
 
-Jupiter relies on Docker, Nginx, and Certbot.  
+Jupiter relies on Docker, Nginx, and Certbot.
 
 ### Install Required Packages
 
-Run the following to set up Docker, Nginx, and Certbot:  
-
+Run the following to set up Docker, Nginx, and Certbot:
 
 ```bash
 apt update && apt upgrade -y
-for pkg in docker.io docker-doc docker-compose docker-compose-v2 podman-docker containerd runc; do 
-sudo apt-get remove -y "$pkg" 
+for pkg in docker.io docker-doc docker-compose docker-compose-v2 podman-docker containerd runc; do
+sudo apt-get remove -y "$pkg"
 done
 sudo apt update
 sudo apt install -y ca-certificates curl
-sudo install -m 0755 -d /etc/apt/keyrings 
-sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc 
-sudo chmod a+r /etc/apt/keyrings/docker.asc 
+sudo install -m 0755 -d /etc/apt/keyrings
+sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+sudo chmod a+r /etc/apt/keyrings/docker.asc
 echo \
 "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
 $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
@@ -48,7 +47,8 @@ sudo apt-get update -y
 sudo apt-get install certbot python3-certbot-nginx -y
 ```
 
-Verify installations:  
+Verify installations:
+
 ```bash
 docker --version && docker-compose --version && nginx -v && certbot --version
 ```
@@ -56,30 +56,37 @@ docker --version && docker-compose --version && nginx -v && certbot --version
 ## Getting Started
 
 1. **Configure SSH**  
-   Generate an SSH key:  
+   Generate an SSH key:
+
    ```bash
-   ssh-keygen -t ed25519 -C "your_email@example.com" -f ~/.ssh/key_name
-   ```  
+   ssh-keygen -t ed25519 -C "your_email@example.com"
+   ```
+
    Add the public key to the VPS in `~/.ssh/authorized_keys`.
 
-2. **Install Jupiter CLI**  
+2. **Install Jupiter CLI**
+
    ```bash
    npm i -g ju
    ```
 
 3. **Initialize a Project**  
-   Create or use an existing Next.js project:  
+   Create or use an existing Next.js project:
+
    ```bash
    create-next-app@latest
-   ```  
-   Push to a remote repo, then initialize with:  
+   ```
+
+   Push to a remote repo, then initialize with:
+
    ```bash
    ju init
-   ```  
+   ```
+
    Follow the prompts to configure your deployment.
 
 4. **Deploy**  
-   Push your latest changes to the repo, then deploy with:  
+   Push your latest changes to the repo, then deploy with:
    ```bash
    ju d
    ```
