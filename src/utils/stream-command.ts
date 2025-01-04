@@ -1,34 +1,12 @@
-import { NodeSSH, SSHExecCommandResponse } from 'node-ssh';
-import { join } from 'path';
-import { homedir } from 'os';
-import { readFileSync } from 'fs';
-import dotenv from 'dotenv';
-
-const ssh = new NodeSSH();
+import { getSshConnection } from './get-ssh-connection.js';
 
 export const streamCommand = async (
   command: string,
   skipLog: boolean = false
 ) => {
+  const ssh = await getSshConnection();
+
   try {
-    dotenv.config({ path: '.jupiter' });
-
-    const vpsUsername = process.env.VPS_USERNAME;
-    const vpsIP = process.env.VPS_IP;
-    const sshPort = process.env.SSH_PORT;
-    const sshHandle = process.env.SSH_PRIVATE_KEY_HANDLE;
-
-    if (!sshHandle) process.exit(1);
-
-    const privateKeyPath = join(homedir(), '.ssh', sshHandle);
-
-    await ssh.connect({
-      host: vpsIP,
-      username: vpsUsername,
-      port: sshPort,
-      privateKey: readFileSync(privateKeyPath, 'utf-8'),
-    });
-
     const result = skipLog
       ? await ssh.execCommand(command)
       : await ssh.execCommand(command, {
