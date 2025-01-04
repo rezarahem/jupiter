@@ -34,104 +34,60 @@ Follow these steps to install the required dependencies on your VPS:
    sudo apt upgrade
    ```
 
-2. **Docker Installation**
+2. **Install Required Dependencies**
 
-   [You can also follow Docker's official documentation for installation on Ubuntu](https://docs.docker.com/engine/install/ubuntu/)
-
-   **Update and Install Prerequisites**
-
-   This ensures that the system is ready to add Docker's official GPG key and repository.
+   To set up the required environment, you will need to install Docker, Nginx, and Certbot. Use the snippet below for an easy installation:
 
    ```
+   for pkg in docker.io docker-doc docker-compose docker-compose-v2 podman-docker containerd runc; do 
+   sudo apt-get remove -y "$pkg" 
+   done
+
    sudo apt update
    sudo apt install -y ca-certificates curl
-   ```
+   sudo install -m 0755 -d /etc/apt/keyrings 
+   sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc 
+   sudo chmod a+r /etc/apt/keyrings/docker.asc 
 
-   **Add Docker's GPG Key**
-
-   The GPG key ensures that the Docker packages are from a trusted source.
-
-   ```
-   sudo install -m 0755 -d /etc/apt/keyrings
-
-   sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
-
-   sudo chmod a+r /etc/apt/keyrings/docker.asc
-   ```
-
-   **Add Docker's Repository**
-
-   This step adds Docker's official repository to your system for package installation.
-
-   ```
    echo \
    "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
    $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
    sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 
-   sudo apt-get update
-   ```
-
-   **Install Docker and Related Packages**
-
-   ```
    sudo apt update -y
    sudo apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin docker-compose
    sudo apt install -y docker-compose
-   ```
 
-3. **Nginx and Certbot**
+   sudo apt-get update -y
 
-   Installing and setting up Nginx and Certbot is straightforward compared to Docker. Simply copy and paste the commands below.
-
-   **Nginx**
-
-   ```
    sudo apt-get install nginx -y
+
    sudo systemctl start nginx
    sudo systemctl enable nginx
-   ```
 
-   **Certbot**
-
-   ```
    sudo apt-get install software-properties-common -y
    sudo add-apt-repository universe -y
    sudo apt-get update -y
    sudo apt-get install certbot python3-certbot-nginx -y
    ```
 
-Once everything is installed, you can verify that Docker, Docker Compose, Nginx, and Certbot were installed successfully by running the following commands:
+   Once everything is installed, you can verify that Docker, Docker Compose, Nginx, and Certbot were installed successfully by running the following commands:
 
-```
-echo "Docker version:"
-docker --version
+   ```
+   docker --version
+   docker-compose --version
+   nginx -v
+   certbot --version
+   ```
 
-echo "Docker Compose version:"
-docker-compose --version
+   Below is an example of what the output might look like:
 
-echo "Nginx version:"
-nginx -v
-
-echo "Certbot version:"
-certbot --version
-```
-
-Below is an example of what the output might look like:
-
-```
-Docker version:
-Docker version 24.0.5, build 123456
-
-Docker Compose version:
-Docker Compose version v2.20.2
-
-Nginx version:
-nginx version: nginx/1.25.2
-
-Certbot version:
-certbot 2.6.0
-```
+   ```
+   Docker version 24.0.5, build 123456
+   Docker Compose version v2.20.2
+   nginx version: nginx/1.25.2
+   certbot 2.6.0
+   ```
 
 ## Getting Started with Jupiter
 
@@ -154,7 +110,7 @@ certbot 2.6.0
    Once the key pair is generated, retrieve the public key by running:
 
    ```
-   cat ~/.shh/key_name.pub
+   cat ~/.ssh/key_name.pub
    ```
 
    **Add the Public Key to the VPS**
