@@ -13,5 +13,5 @@ export const createJupiterFile = (): void => {
 # 💀 Don't commit or deploy this file  ⚠`;
 
   fs.writeFileSync(filePath, content, { encoding: 'utf-8' });
-  console.log('.jupiter file created with the development comment!');
+  console.log('.jupiter file created');
 };
