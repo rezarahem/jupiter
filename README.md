@@ -19,21 +19,35 @@ Jupiter relies on Docker, Nginx, and Certbot.
 ### Install Required Packages
 
 Run the following to set up Docker, Nginx, and Certbot:  
+
 ```bash
 apt update && apt upgrade -y
-for pkg in docker.io docker-doc docker-compose docker-compose-v2 podman-docker containerd runc; do 
-  sudo apt-get remove -y "$pkg"; 
-done
-sudo apt update && sudo apt install -y ca-certificates curl
-sudo install -m 0755 -d /etc/apt/keyrings
-sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
-sudo chmod a+r /etc/apt/keyrings/docker.asc
-echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-sudo apt update && sudo apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin docker-compose
-sudo apt-get update -y && sudo apt-get install -y nginx software-properties-common certbot python3-certbot-nginx
-sudo systemctl start nginx && sudo systemctl enable nginx
-sudo add-apt-repository universe -y && sudo apt-get update -y
+```
 
+```bash
+for pkg in docker.io docker-doc docker-compose docker-compose-v2 podman-docker containerd runc; do 
+sudo apt-get remove -y "$pkg" 
+done
+sudo apt update
+sudo apt install -y ca-certificates curl
+sudo install -m 0755 -d /etc/apt/keyrings 
+sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc 
+sudo chmod a+r /etc/apt/keyrings/docker.asc 
+echo \
+"deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
+$(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
+sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+sudo apt update -y
+sudo apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin docker-compose
+sudo apt install -y docker-compose
+sudo apt-get update -y
+sudo apt-get install nginx -y
+sudo systemctl start nginx
+sudo systemctl enable nginx
+sudo apt-get install software-properties-common -y
+sudo add-apt-repository universe -y
+sudo apt-get update -y
+sudo apt-get install certbot python3-certbot-nginx -y
 ```
 
 Verify installations:  
