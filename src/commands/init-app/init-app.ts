@@ -17,7 +17,7 @@ export const InitApp = new Command('initialize-app')
     'Configures the initial setup for a new application, including its environment and any required configurations.'
   )
   .action(async () => {
-    await checkApp();
+    const web = await checkApp();
 
     await addNextjs();
 
@@ -28,7 +28,7 @@ export const InitApp = new Command('initialize-app')
     await createDockerignore(currentDic);
 
     createJupiterFile();
-    createJupiterignoreFile();
+    createJupiterignoreFile(web);
 
     const userInput = await newAppInputs();
 
