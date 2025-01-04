@@ -8,7 +8,8 @@ if [[
   -z "$WEB" || 
   -z "$APOLLO" || 
   -z "$ARTEMIS" || 
-  -z "$DOCKER_COMPOSE" 
+  -z "$DOCKER_COMPOSE" ||
+  -z "$MANUAL"
 ]]; then
   echo "Error: Missing required environment variables."
   exit 1
@@ -80,15 +81,15 @@ fi
 # Change directory to the project folder
 cd ./jupiter/$APP
 
-if [ -d ".git" ]; then
-  echo "Git repository already exists. Pulling latest changes..."
-  git pull
-else
-  echo "Cloning repository from $REPO into the current directory..."
-  git clone "$REPO" .
+if [ "$MANUAL" == '0']; then
+  if [ -d ".git" ]; then
+    echo "Git repository already exists. Pulling latest changes..."
+    git pull
+  else
+    echo "Cloning repository from $REPO into the current directory..."
+    git clone "$REPO" .
+  fi
 fi
-
-
 
 # Check if the network exists
 if docker network ls --format "{{.Name}}" | grep -q "^$APP$"; then

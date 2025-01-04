@@ -5,7 +5,6 @@ export const streamCommand = async (
   skipLog: boolean = false
 ) => {
   const ssh = await getSshConnection();
-
   try {
     const result = skipLog
       ? await ssh.execCommand(command)
