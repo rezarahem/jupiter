@@ -44,10 +44,10 @@ const uploadToJux = async (ssh: NodeSSH, spinner: Ora) => {
     console.log(error);
   }
 };
-const ssh = await getSshConnection();
 
 export const createBashScripts = async (update: boolean = false) => {
   const spinner = ora('Uploading scripts...').start();
+  const ssh = await getSshConnection();
   try {
     const jupiter = 'jupiter';
     const jupiterCmd = `test -d ${jupiter} && echo "exists" || echo "not exists"`;

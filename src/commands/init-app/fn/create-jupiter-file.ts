@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 
-export const createJupiterFile = (): void => {
+export const createJupiterFile = () => {
   const filePath = path.join(process.cwd(), '.jupiter');
 
   if (fs.existsSync(filePath)) {

@@ -15,5 +15,4 @@ program
 program.addCommand(InitApp);
 program.addCommand(Deploy);
 program.addCommand(UpdateScript);
-
 program.parse();

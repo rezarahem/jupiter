@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 
-export const createJupiterignoreFile = (web: 'nextjs' | 'nuxtjs'): void => {
+export const createJupiterignoreFile = (web: 'nextjs' | 'nuxtjs') => {
   const filePath = path.join(process.cwd(), '.jupiterignore');
 
   if (fs.existsSync(filePath)) {

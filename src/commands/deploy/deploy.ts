@@ -18,7 +18,6 @@ export const Deploy = new Command('deploy')
   .action(async () => {
     // const WEB = await checkApp();
     // dotenv.config({ path: '.jupiter' });
-
     // const APP = process.env.APP;
     // const EMAIL = process.env.EMAIL;
     // const DOMAIN = process.env.DOMAIN;
@@ -26,7 +25,6 @@ export const Deploy = new Command('deploy')
     // const APOLLO = process.env.APOLLO;
     // const ARTEMIS = process.env.ARTEMIS;
     // const DOCKER_COMPOSE = hasServices() ? '1' : '0';
-
     // if (
     //   !APP ||
     //   !EMAIL ||
@@ -42,7 +40,6 @@ export const Deploy = new Command('deploy')
     //   );
     //   process.exit(1);
     // }
-
     // const cmd = command({
     //   variables: {
     //     APP,
@@ -55,7 +52,6 @@ export const Deploy = new Command('deploy')
     //     DOCKER_COMPOSE,
     //   },
     // });
-
-    await cloneSource();
+    // await cloneSource();
     // await streamCommand(cmd);
   });

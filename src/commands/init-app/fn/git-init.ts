@@ -52,7 +52,7 @@ Thumbs.db`;
     console.log('.gitignore file already exists.');
   }
 
-  // If Git and .gitignore exist, add .env.jupiter to the .gitignore
+  // If Git and .gitignore exist, add .jupiter to the .gitignore
   if (existsSync(gitDir) && existsSync(gitignorePath)) {
     try {
       const gitignoreContent = readFileSync(gitignorePath, 'utf-8');
