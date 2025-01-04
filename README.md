@@ -20,6 +20,7 @@ Jupiter relies on Docker, Nginx, and Certbot.
 
 Run the following to set up Docker, Nginx, and Certbot:  
 ```bash
+apt update && apt upgrade -y
 for pkg in docker.io docker-doc docker-compose docker-compose-v2 podman-docker containerd runc; do 
   sudo apt-get remove -y "$pkg"; 
 done
