@@ -2,6 +2,10 @@
 
 Jupiter is a CLI tool to simplify deploying modern web applications.
 
+- 🔒 **SSL certificates** for secure communication.
+- 🚀 **Zero downtime** during deployments.
+- 🐳 **Docker-based architecture** for containerization and scalability.
+
 ## Prerequisites
 
 1. **VPS running Ubuntu 24.04 or 22.04**  
