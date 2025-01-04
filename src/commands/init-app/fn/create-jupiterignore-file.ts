@@ -9,9 +9,14 @@ export const createJupiterignoreFile = (): void => {
     return;
   }
 
-  const content = `.jupiter
-node_modules
-`;
+  const content = `node_modules
+.next
+out
+build
+.jupiter
+.env*
+.gitignore
+.git`;
 
   fs.writeFileSync(filePath, content, { encoding: 'utf-8' });
   console.log('.jupiterignore file created');

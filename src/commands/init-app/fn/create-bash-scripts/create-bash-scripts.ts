@@ -129,11 +129,6 @@ export const uploadToJux = async (ssh: NodeSSH, spinner: Ora) => {
     await Promise.all(chmodCommands);
 
     spinner.succeed('Successfully uploaded and made the following files executable on Jux: ' + files.map(f => path.basename(f.local)).join(', '))
-    
-    // console.log(
-    //   'Successfully uploaded and made the following files executable on Jux:',
-    //   files.map(f => path.basename(f.local)).join(', ')
-    // );
   } catch (error) {
     spinner.fail('Failed to upload scripts');
     console.log(error);

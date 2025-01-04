@@ -1,12 +1,11 @@
 import { NodeSSH } from 'node-ssh';
-import path, { dirname, join } from 'path';
+import path, { join } from 'path';
 import { homedir } from 'os';
-import { readFileSync, existsSync } from 'fs';
-import { readFile } from 'fs/promises';
+import { readFileSync } from 'fs';
+import { readFile, readdir } from 'fs/promises';
 import dotenv from 'dotenv';
-import { fileURLToPath } from 'url';
 import ora, { Ora } from 'ora';
-import { glob } from 'glob';
+import { existsSync } from 'fs';
 
 const ssh = new NodeSSH();
 
@@ -20,23 +19,46 @@ const getIgnorePatterns = async (): Promise<string[]> => {
     .filter(line => line && !line.startsWith('#'));
 };
 
+const getFiles = async (
+  dir: string,
+  ignorePatterns: string[]
+): Promise<string[]> => {
+  const files: string[] = [];
+  const items = await readdir(dir, { withFileTypes: true });
+
+  for (const item of items) {
+    const fullPath = path.join(dir, item.name);
+    if (item.isDirectory()) {
+      const subFiles = await getFiles(fullPath, ignorePatterns);
+      files.push(...subFiles);
+    } else if (!ignorePatterns.some(pattern => fullPath.includes(pattern))) {
+      files.push(fullPath);
+    }
+  }
+
+  return files;
+};
+
 const upload = async (ssh: NodeSSH, spinner: Ora, remoteDir: string) => {
   try {
     spinner.text = 'Gathering files to upload...';
     const ignorePatterns = await getIgnorePatterns();
-    const files = glob.sync('**/*', {
-      nodir: true,
-      ignore: ignorePatterns,
-      dot: true,
-    });
+
+    const files = await getFiles('.', ignorePatterns);
 
     const uploads = files.map(file => ({
       local: path.resolve(file),
       remote: join(remoteDir, file),
     }));
 
-    for (const { local, remote } of uploads) {
-      await ssh.putFile(local, remote);
+    // spinner.text = 'Uploading files...';
+    // await ssh.putFiles(uploads);
+
+    spinner.text = 'Uploading files...';
+    for (const upload of uploads) {
+      spinner.text = `Uploading: ${upload.local}`;
+      // console.log(`Uploading: ${upload.local}`); // Log file name
+      await ssh.putFile(upload.local, upload.remote);
     }
 
     spinner.succeed(`Source files uploaded successfully.`);
