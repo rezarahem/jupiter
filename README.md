@@ -20,14 +20,19 @@ Jupiter relies on Docker, Nginx, and Certbot.
 
 Run the following to set up Docker, Nginx, and Certbot:  
 ```bash
-sudo apt update && sudo apt upgrade -y
-for pkg in docker.io docker-doc docker-compose docker-compose-v2 podman-docker containerd runc; do sudo apt-get remove -y "$pkg"; done
-sudo apt install -y ca-certificates curl nginx software-properties-common
-sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo tee /etc/apt/keyrings/docker.asc > /dev/null
-echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | sudo tee /etc/apt/sources.list.d/docker.list
-sudo apt update
-sudo apt install -y docker-ce docker-ce-cli containerd.io docker-compose certbot python3-certbot-nginx
-sudo systemctl enable nginx && sudo systemctl start nginx
+for pkg in docker.io docker-doc docker-compose docker-compose-v2 podman-docker containerd runc; do 
+  sudo apt-get remove -y "$pkg"; 
+done
+sudo apt update && sudo apt install -y ca-certificates curl
+sudo install -m 0755 -d /etc/apt/keyrings
+sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+sudo chmod a+r /etc/apt/keyrings/docker.asc
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+sudo apt update && sudo apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin docker-compose
+sudo apt-get update -y && sudo apt-get install -y nginx software-properties-common certbot python3-certbot-nginx
+sudo systemctl start nginx && sudo systemctl enable nginx
+sudo add-apt-repository universe -y && sudo apt-get update -y
+
 ```
 
 Verify installations:  
