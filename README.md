@@ -26,7 +26,7 @@ Jupiter relies on Docker, Nginx, and Certbot.
 
 Run the following to set up Docker, Nginx, and Certbot:
 
-**Docke**
+**Docker**
 
 ```bash
 sudo apt-get update
@@ -97,6 +97,7 @@ docker --version && nginx -v && certbot --version
    Follow the prompts to configure your deployment.
 
 4. **Deploy**
+
    Finally, deploy your project:
 
    ```bash
