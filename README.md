@@ -59,7 +59,7 @@ sudo apt-get install certbot python3-certbot-nginx -y
 Verify installations:
 
 ```bash
-docker --version && docker-compose --version && nginx -v && certbot --version
+docker --version && nginx -v && certbot --version
 ```
 
 ## Getting Started
