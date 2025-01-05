@@ -27,7 +27,6 @@ export const Deploy = new Command('deploy')
     const SSH_PORT = process.env.SSH_PORT;
     const EMAIL = process.env.EMAIL;
     const DOMAIN = process.env.DOMAIN;
-    // const REPO = process.env.REPO;
     const APOLLO = process.env.APOLLO;
     const ARTEMIS = process.env.ARTEMIS;
     const DOCKER_COMPOSE = hasServices() ? '1' : '0';
@@ -38,7 +37,6 @@ export const Deploy = new Command('deploy')
       !SSH_PORT ||
       !EMAIL ||
       !DOMAIN ||
-      // !REPO ||
       !APOLLO ||
       !ARTEMIS ||
       !WEB ||
@@ -58,7 +56,6 @@ export const Deploy = new Command('deploy')
         EMAIL,
         DOMAIN,
         WEB,
-        // REPO,
         APOLLO,
         ARTEMIS,
         DOCKER_COMPOSE,
@@ -67,8 +64,8 @@ export const Deploy = new Command('deploy')
     });
 
     await cloneSource(APP);
+    await streamCommand(cmd);
+
     // if (MANUAL === '1') {
     // }
-
-    // await streamCommand(cmd);
   });

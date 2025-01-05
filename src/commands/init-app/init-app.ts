@@ -9,7 +9,6 @@ import { createDockerComposeBase } from './fn/create-docker-compose-base.js';
 import { addNextjs } from './fn/add-next/add-nextjs.js';
 import { checkApp } from '../../utils/check-app.js';
 import { createBashScripts } from './fn/create-bash-scripts/create-bash-scripts.js';
-import { createJupiterignoreFile } from './fn/create-jupiterignore-file.js';
 
 export const InitApp = new Command('initialize-app')
   .alias('init')
