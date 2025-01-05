@@ -3,7 +3,7 @@
 import { program } from 'commander';
 import { InitApp } from './src/commands/init-app/init-app.js';
 import { Deploy } from './src/commands/deploy/deploy.js';
-import { UpdateScript } from './src/commands/update-scripts/update-scripts.js';
+import { UpdateHost } from './src/commands/update-host/update-host.js';
 
 program
   .name('Jupiter')
@@ -14,5 +14,5 @@ program
 
 program.addCommand(InitApp);
 program.addCommand(Deploy);
-program.addCommand(UpdateScript);
+program.addCommand(UpdateHost);
 program.parse();

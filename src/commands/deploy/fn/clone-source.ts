@@ -54,10 +54,6 @@ const upload = async (ssh: NodeSSH, spinner: Ora, remoteDir: string) => {
 
     spinner.text = 'Uploading files...';
     await ssh.putFiles(uploads)
-    // for (const upload of uploads) {
-    //   spinner.text = `Uploading: ${upload.local}`;
-    //   await ssh.putFile(upload.local, upload.remote);
-    // }
 
     spinner.succeed(`Source files uploaded successfully.`);
   } catch (error) {

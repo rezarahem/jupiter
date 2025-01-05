@@ -9,7 +9,6 @@ export const gitIint = () => {
   const envJupiter = '.jupiter';
   const envLocalPattern = '.env.*.local';
 
-  // Initialize Git if not initialized
   if (!existsSync(gitDir)) {
     console.log('Git is not initialized. Initializing now...');
     try {
@@ -22,7 +21,6 @@ export const gitIint = () => {
     console.log('Git is already initialized.');
   }
 
-  // Create .gitignore if it doesn't exist
   if (!existsSync(gitignorePath)) {
     const gitignoreContent = `# Node.js
 node_modules/
@@ -52,36 +50,27 @@ Thumbs.db`;
     console.log('.gitignore file already exists.');
   }
 
-  // If Git and .gitignore exist, add .jupiter to the .gitignore
   if (existsSync(gitDir) && existsSync(gitignorePath)) {
     try {
       const gitignoreContent = readFileSync(gitignorePath, 'utf-8');
 
-      // Check if .env.*.local exists and add .env.jupiter after it
       if (gitignoreContent.includes(envLocalPattern)) {
         const lines = gitignoreContent.split('\n');
         const index = lines.findIndex(line => line.includes(envLocalPattern));
 
-        // Insert .env.jupiter after .env.*.local if it isn't already there
         if (index !== -1 && !lines.slice(index + 1).includes(envJupiter)) {
           lines.splice(index + 1, 0, envJupiter);
           writeFileSync(gitignorePath, lines.join('\n'));
-          // console.log('.env.jupiter added to .gitignore after .env.*.local.');
         } else {
-          console
-            .log
-            // '.env.jupiter is already in the correct place in .gitignore.'
-            ();
+          console.log();
         }
       } else if (!gitignoreContent.includes(envJupiter)) {
-        // If .env.*.local doesn't exist, append .env.jupiter at the end
         appendFileSync(gitignorePath, `\n${envJupiter}`);
-        // console.log('.env.jupiter added to .gitignore at the end.');
       } else {
-        // console.log('.env.jupiter is already in .gitignore.');
+        console.log();
       }
     } catch (error) {
-      // console.error('Error updating .gitignore:', error);
+      console.log(error);
     }
   }
 };

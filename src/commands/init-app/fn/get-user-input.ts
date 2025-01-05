@@ -1,8 +1,6 @@
 import {
   domainSchema,
   emailSchema,
-  // githubSshCloneString,
-  sshKeyHandleSchema,
   sshPortSchema,
   vpsIpSchema,
   vpsUsernameSchema,
@@ -10,12 +8,6 @@ import {
 import { userInput } from '../../../utils/user-input.js';
 
 export const newAppInputs = async () => {
-  // const repo = await userInput({
-  //   prompt:
-  //     'Enter your GitHub SSH repository clone URL (e.g., git@github.com:username/repository.git): ',
-  //   schema: githubSshCloneString,
-  // });
-
   const domain = await userInput({
     prompt: 'Enter the domain name: ',
     schema: domainSchema,
@@ -43,18 +35,12 @@ export const newAppInputs = async () => {
     defaultValue: '22',
   });
 
-  // const sshPrivateKeyHandle = await userInput({
-  //   prompt: 'Enter your SSH private key handle: ',
-  //   schema: sshKeyHandleSchema,
-  // });
 
   return {
-    // REPO: repo,
     VPS_IP: vpsIp,
     SSH_PORT: sshPort,
     EMAIL: email.toLowerCase(),
     DOMAIN: domain.toLowerCase(),
     VPS_USERNAME: vpsUsername.toLowerCase(),
-    // SSH_PRIVATE_KEY_HANDLE: sshPrivateKeyHandle,
   };
 };
