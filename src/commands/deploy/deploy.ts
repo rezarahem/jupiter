@@ -3,7 +3,8 @@ import { checkApp } from '../../utils/check-app.js';
 import { streamCommand } from '../../utils/stream-command.js';
 import dotenv from 'dotenv';
 import { hasServices } from './fn/has-service.js';
-import { cloneSource } from './fn/clone-source.js';
+import { cloneSource } from './fn/clone/clone-source.js';
+import { getFiles } from './fn/clone/get-files.js';
 
 const command = ({ variables }: { variables: Record<string, string> }) => {
   const envVars = Object.entries(variables)
@@ -59,9 +60,10 @@ export const Deploy = new Command('deploy')
       },
     });
 
+
     if (MANUAL === '1') {
       await cloneSource(APP);
     }
 
-    await streamCommand(cmd);
+    // await streamCommand(cmd);
   });
