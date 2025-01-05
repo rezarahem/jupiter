@@ -23,7 +23,7 @@ export const Deploy = new Command('deploy')
     const APP = process.env.APP;
     const EMAIL = process.env.EMAIL;
     const DOMAIN = process.env.DOMAIN;
-    const REPO = process.env.REPO;
+    // const REPO = process.env.REPO;
     const APOLLO = process.env.APOLLO;
     const ARTEMIS = process.env.ARTEMIS;
     const DOCKER_COMPOSE = hasServices() ? '1' : '0';
@@ -31,7 +31,7 @@ export const Deploy = new Command('deploy')
       !APP ||
       !EMAIL ||
       !DOMAIN ||
-      !REPO ||
+      // !REPO ||
       !APOLLO ||
       !ARTEMIS ||
       !WEB ||
@@ -51,7 +51,7 @@ export const Deploy = new Command('deploy')
         EMAIL,
         DOMAIN,
         WEB,
-        REPO,
+        // REPO,
         APOLLO,
         ARTEMIS,
         DOCKER_COMPOSE,
@@ -60,7 +60,7 @@ export const Deploy = new Command('deploy')
     });
 
     if (MANUAL === '1') {
-      await cloneSource();
+      await cloneSource(APP);
     }
 
     await streamCommand(cmd);

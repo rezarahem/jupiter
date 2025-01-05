@@ -4,7 +4,7 @@ if [[
   -z "$DOMAIN" || 
   -z "$EMAIL" || 
   -z "$APP" || 
-  -z "$REPO" || 
+  # -z "$REPO" || 
   -z "$WEB" || 
   -z "$APOLLO" || 
   -z "$ARTEMIS" || 
@@ -81,15 +81,15 @@ fi
 # Change directory to the project folder
 cd ./jupiter/$APP
 
-if [ "$MANUAL" == '0']; then
-  if [ -d ".git" ]; then
-    echo "Git repository already exists. Pulling latest changes..."
-    git pull
-  else
-    echo "Cloning repository from $REPO into the current directory..."
-    git clone "$REPO" .
-  fi
-fi
+# if [ "$MANUAL" == '0']; then
+#   if [ -d ".git" ]; then
+#     echo "Git repository already exists. Pulling latest changes..."
+#     git pull
+#   else
+#     echo "Cloning repository from $REPO into the current directory..."
+#     git clone "$REPO" .
+#   fi
+# fi
 
 # Check if the network exists
 if docker network ls --format "{{.Name}}" | grep -q "^$APP$"; then

@@ -6,6 +6,7 @@ import { readFile, readdir } from 'fs/promises';
 import dotenv from 'dotenv';
 import ora, { Ora } from 'ora';
 import { existsSync } from 'fs';
+import { getSshConnection } from '../../../utils/get-ssh-connection.js';
 
 const ssh = new NodeSSH();
 
@@ -57,7 +58,6 @@ const upload = async (ssh: NodeSSH, spinner: Ora, remoteDir: string) => {
     spinner.text = 'Uploading files...';
     for (const upload of uploads) {
       spinner.text = `Uploading: ${upload.local}`;
-      // console.log(`Uploading: ${upload.local}`); // Log file name
       await ssh.putFile(upload.local, upload.remote);
     }
 
@@ -68,37 +68,11 @@ const upload = async (ssh: NodeSSH, spinner: Ora, remoteDir: string) => {
   }
 };
 
-export const cloneSource = async (update: boolean = false) => {
+export const cloneSource = async (app: string) => {
   const spinner = ora('Uploading directory...').start();
+  spinner.text = 'Connecting to Host...';
+  const ssh = await getSshConnection();
   try {
-    const result = dotenv.config({ path: '.jupiter' });
-    if (result.error) {
-      spinner.fail('Failed to load environment variables from .jupiter');
-      process.exit(1);
-    }
-
-    const vpsUsername = process.env.VPS_USERNAME;
-    const vpsIP = process.env.VPS_IP;
-    const sshPort = process.env.SSH_PORT;
-    const sshHandle = process.env.SSH_PRIVATE_KEY_HANDLE;
-    const app = process.env.APP;
-
-    if (!vpsUsername || !vpsIP || !sshPort || !sshHandle) {
-      spinner.fail('Missing environment variables');
-      process.exit(1);
-    }
-
-    const privateKeyPath = join(homedir(), '.ssh', sshHandle);
-
-    spinner.text = 'Connecting to Host...';
-
-    await ssh.connect({
-      host: vpsIP,
-      username: vpsUsername,
-      port: sshPort,
-      privateKey: readFileSync(privateKeyPath, 'utf-8'),
-    });
-
     const remoteDir = `./jupiter/${app}`;
     await upload(ssh, spinner, remoteDir);
   } catch (error) {
