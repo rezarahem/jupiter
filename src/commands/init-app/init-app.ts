@@ -18,9 +18,9 @@ export const InitApp = new Command('initialize-app')
   )
   .action(async () => {
     const web = await checkApp();
-
+    
     await addNextjs();
-
+    
     const currentDic = process.cwd();
 
     gitIint();

@@ -1,6 +1,7 @@
 import { createFile } from '../../../../utils/create-file.js';
 
 export const docker = async () => {
+  
   const content = `#1
 FROM node:22-alpine AS base 
 WORKDIR /prod
@@ -31,9 +32,11 @@ EXPOSE 3000
 CMD ["node", "server.js"]
 `;
 
+  const currentDic = process.cwd();
+
   await createFile({
     content,
-    directory: 'docker',
-    filename: 'Dockerfile.nextjs',
+    directory: currentDic,
+    filename: 'Dockerfile',
   });
 };

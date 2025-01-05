@@ -125,7 +125,7 @@ LAST_BACKUP_IMAGE_ID=$(docker images --filter=reference="$APP:backup" --format "
 
 # Build a new Docker image for the application
 echo "Building the Docker image..."
-docker build -t "$APP" -f docker/Dockerfile.$WEB .
+docker build -t "$APP:latest" .
 
 # If there was a previous image, tag it as a backup
 if [ -n "$LAST_IMAGE_ID" ]; then
