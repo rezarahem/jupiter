@@ -6,7 +6,9 @@ Jupiter is a CLI tool designed to simplify the deployment of modern web applicat
 - 🚀 **Zero downtime** during deployments.
 - 🐳 **Docker-based architecture** for containerization and scalability.
 
-Currently, Jupiter supports deploying Next.js applications only.
+---
+
+**Note** Currently, Jupiter supports deploying Next.js applications only.
 
 **Note** Jupiter is actively under development and is not yet stable. Frequent updates and changes are being made to improve functionality.
 
@@ -88,21 +90,18 @@ docker --version && nginx -v && certbot --version
    create-next-app@latest
    ```
 
-   Push to a remote repo, then initialize with:
-
    ```bash
    ju init
    ```
 
    Follow the prompts to configure your deployment.
 
-4. **Deploy**  
-   Push your latest changes to the repo, then deploy with:
+4. **Deploy**
+   Finally, deploy your project:
+
    ```bash
    ju d
    ```
-
-**Note:** Ensure your remote repo is up-to-date before deploying.
 
 ---
 
