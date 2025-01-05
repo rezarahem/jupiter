@@ -1,12 +1,14 @@
 # Jupiter
 
-Jupiter is a CLI tool to simplify deploying modern web applications.
+Jupiter is a CLI tool designed to simplify the deployment of modern web applications.
 
 - 🔒 **SSL certificates** for secure communication.
 - 🚀 **Zero downtime** during deployments.
 - 🐳 **Docker-based architecture** for containerization and scalability.
 
-**Jupiter is currently in development and is not stable. It is being constantly updated.**
+Currently, Jupiter supports deploying Next.js applications only.
+
+**Note** Jupiter is actively under development and is not yet stable. Frequent updates and changes are being made to improve functionality.
 
 ## Prerequisites
 
