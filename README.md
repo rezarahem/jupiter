@@ -6,7 +6,7 @@ Jupiter is a CLI tool to simplify deploying modern web applications.
 - 🚀 **Zero downtime** during deployments.
 - 🐳 **Docker-based architecture** for containerization and scalability.
 
-**Note**: Jupiter is currently in development and is not stable. It is being constantly updated.
+**Jupiter is currently in development and is not stable. It is being constantly updated.**
 
 ## Prerequisites
 
@@ -25,69 +25,34 @@ Run the following to set up Docker, Nginx, and Certbot:
 **Docke and Docker Compose**
 
 ```bash
-sudo apt update && sudo apt upgrade -y
+sudo apt-get update
+sudo apt-get install ca-certificates curl
+sudo install -m 0755 -d /etc/apt/keyrings
+sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+sudo chmod a+r /etc/apt/keyrings/docker.asc
+
+echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
+  $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
+  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+sudo apt-get update
 ```
 
 ```bash
-sudo apt install -y \
-    ca-certificates \
-    curl \
-    gnupg \
-    lsb-release
-```
-
-```bash
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
-```
-
-```bash
-echo "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-```
-
-```bash
-sudo apt update
-```
-
-```bash
-sudo apt install -y docker-ce docker-ce-cli containerd.io
-```
-
-```bash
-sudo curl -L https://github.com/docker/compose/releases/download/v2.19.1/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose
-sudo chmod +x /usr/local/bin/docker-compose
+sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 ```
 
 **Nginx and Certbot**
 
 ```bash
-sudo apt-get update -y
-```
-
-```bash
-sudo apt-get install nginx -y
-```
-
-```bash
-sudo systemctl start nginx
-```
-
-```bash
-sudo systemctl enable nginx
+sudo apt-get update -y && sudo apt-get install nginx -y
+sudo systemctl start nginx && sudo systemctl enable nginx
 ```
 
 ```bash
 sudo apt-get install software-properties-common -y
-```
-
-```bash
 sudo add-apt-repository universe -y
-```
-
-```bash
 sudo apt-get update -y
-```
-
-```bash
 sudo apt-get install certbot python3-certbot-nginx -y
 ```
 
