@@ -22,6 +22,9 @@ export const Deploy = new Command('deploy')
     dotenv.config({ path: '.jupiter' });
 
     const APP = process.env.APP;
+    const VPS_USERNAME = process.env.VPS_USERNAME;
+    const VPS_IP = process.env.VPS_IP;
+    const SSH_PORT = process.env.SSH_PORT;
     const EMAIL = process.env.EMAIL;
     const DOMAIN = process.env.DOMAIN;
     // const REPO = process.env.REPO;
@@ -30,6 +33,9 @@ export const Deploy = new Command('deploy')
     const DOCKER_COMPOSE = hasServices() ? '1' : '0';
     if (
       !APP ||
+      !VPS_USERNAME ||
+      !VPS_IP ||
+      !SSH_PORT ||
       !EMAIL ||
       !DOMAIN ||
       // !REPO ||
@@ -60,10 +66,9 @@ export const Deploy = new Command('deploy')
       },
     });
 
-
-    if (MANUAL === '1') {
-      await cloneSource(APP);
-    }
+    await cloneSource(APP);
+    // if (MANUAL === '1') {
+    // }
 
     // await streamCommand(cmd);
   });

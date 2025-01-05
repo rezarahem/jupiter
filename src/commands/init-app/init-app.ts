@@ -18,9 +18,9 @@ export const InitApp = new Command('initialize-app')
   )
   .action(async () => {
     const web = await checkApp();
-    
+
     await addNextjs();
-    
+
     const currentDic = process.cwd();
 
     gitIint();
@@ -28,7 +28,7 @@ export const InitApp = new Command('initialize-app')
     await createDockerignore(currentDic);
 
     createJupiterFile();
-    createJupiterignoreFile(web);
+    // createJupiterignoreFile(web);
 
     const userInput = await newAppInputs();
 
