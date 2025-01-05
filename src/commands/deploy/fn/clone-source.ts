@@ -52,14 +52,14 @@ const upload = async (ssh: NodeSSH, spinner: Ora, remoteDir: string) => {
       remote: join(remoteDir, file),
     }));
 
-    // spinner.text = 'Uploading files...';
-    // await ssh.putFiles(uploads);
+    spinner.text = 'Uploading files in parallel...';
 
-    spinner.text = 'Uploading files...';
-    for (const upload of uploads) {
-      spinner.text = `Uploading: ${upload.local}`;
-      await ssh.putFile(upload.local, upload.remote);
-    }
+    await Promise.all(
+      uploads.map(async upload => {
+        spinner.text = `Uploading: ${upload.local}`;
+        await ssh.putFile(upload.local, upload.remote);
+      })
+    );
 
     spinner.succeed(`Source files uploaded successfully.`);
   } catch (error) {
@@ -67,6 +67,32 @@ const upload = async (ssh: NodeSSH, spinner: Ora, remoteDir: string) => {
     console.log(error);
   }
 };
+
+
+// const upload = async (ssh: NodeSSH, spinner: Ora, remoteDir: string) => {
+//   try {
+//     spinner.text = 'Gathering files to upload...';
+//     const ignorePatterns = await getIgnorePatterns();
+
+//     const files = await getFiles('.', ignorePatterns);
+
+//     const uploads = files.map(file => ({
+//       local: path.resolve(file),
+//       remote: join(remoteDir, file),
+//     }));
+
+//     spinner.text = 'Uploading files...';
+//     for (const upload of uploads) {
+//       spinner.text = `Uploading: ${upload.local}`;
+//       await ssh.putFile(upload.local, upload.remote);
+//     }
+
+//     spinner.succeed(`Source files uploaded successfully.`);
+//   } catch (error) {
+//     spinner.fail('Failed to upload files');
+//     console.log(error);
+//   }
+// };
 
 export const cloneSource = async (app: string) => {
   const spinner = ora('Uploading directory...').start();
