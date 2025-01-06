@@ -22,28 +22,19 @@ if [ ! -d "$apps" ]; then
   mkdir -p "$apps"
 fi
 
-if [ -d "$app" ]; then
+if [ ! -d "$app" ]; then
+  mkdir -p "$app"
+  echo "201@App folder created"
+else
   echo "409@Already in use"
   exit 0
-fi
-
-if ! command -v docker &> /dev/null; then
-  echo "Docker is not installed or not in PATH"
-  exit 1
-fi
-
-if ! docker info &> /dev/null; then
-  echo "Docker is not running"
-  exit 1
 fi
 
 for (( port1=$start_port; port1<=$end_port; port1++ )); do
   port2=$(( port1 + 1 ))
 
-  if ! docker ps --filter "publish=$port1" --format "{{.Ports}}" | grep -q "$port1" && \
-     ! docker ps --filter "publish=$port2" --format "{{.Ports}}" | grep -q "$port2"; then
-
-    mkdir -p "$app"
+  if ! lsof -i:"$port1" -sTCP:LISTEN &> /dev/null && \
+     ! lsof -i:"$port2" -sTCP:LISTEN &> /dev/null; then
     echo "200@$port1:$port2"
     exit 0
   fi
