@@ -8,7 +8,7 @@ import { createDockerignore } from './fn/create-dockerignore.js';
 import { createDockerComposeBase } from './fn/create-docker-compose-base.js';
 import { addNextjs } from './fn/add-next/add-nextjs.js';
 import { checkApp } from '../../utils/check-app.js';
-import { createBashScripts } from './fn/create-bash-scripts/create-bash-scripts.js';
+import { updateScripts } from '../update-host/fn/update-scripts.js';
 
 export const InitApp = new Command('initialize-app')
   .alias('init')
@@ -39,7 +39,7 @@ export const InitApp = new Command('initialize-app')
       },
     });
 
-    await createBashScripts();
+    await updateScripts();
 
     const app = await getAppNameAndPorts();
 

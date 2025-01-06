@@ -2,7 +2,7 @@ import path, { dirname, join } from 'path';
 import { fileURLToPath } from 'url';
 import ora, { Ora } from 'ora';
 import { NodeSSH } from 'node-ssh';
-import { getSshConnection } from '../../../../utils/get-ssh-connection.js';
+import { getSshConnection } from '../../../utils/get-ssh-connection.js';
 
 const getLocalPath = (p: string) => {
   const fileName = fileURLToPath(import.meta.url);
@@ -23,7 +23,7 @@ const uploadToJux = async (ssh: NodeSSH, spinner: Ora) => {
     spinner.text = 'Uploading scripts...';
 
     const localAlias = '../../../../../sh';
-    const remoteAlias = './jux';
+    const remoteAlias = './jupiter/jux';
 
     const files = createFileList(localAlias, remoteAlias);
 
@@ -45,7 +45,7 @@ const uploadToJux = async (ssh: NodeSSH, spinner: Ora) => {
   }
 };
 
-export const createBashScripts = async (update: boolean = false) => {
+export const updateScripts = async (update: boolean = false) => {
   const spinner = ora('Uploading scripts...').start();
   const ssh = await getSshConnection();
   try {
@@ -66,7 +66,7 @@ export const createBashScripts = async (update: boolean = false) => {
       }
     }
 
-    const jux = 'jux';
+    const jux = `${jupiter}/jux`;
 
     if (update) {
       const juxCmdUp = `test -d ${jux} && echo "exists" || echo "not exists"`;

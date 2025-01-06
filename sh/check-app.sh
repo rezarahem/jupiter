@@ -10,13 +10,8 @@ if [ -z "$1" ]; then
 fi
 
 app_name=$1
-jupiter="./jupiter"
-apps='./jupiter/apps'
-app="$apps/$app_name"
-
-if [ ! -d "$jupiter" ]; then
-  mkdir -p "$jupiter"
-fi
+apps='../apps'
+app="../apps/$app_name"
 
 if [ ! -d "$apps" ]; then
   mkdir -p "$apps"
