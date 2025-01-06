@@ -16,32 +16,32 @@ export const InitApp = new Command('initialize-app')
     'Configures the initial setup for a new application, including its environment and any required configurations.'
   )
   .action(async () => {
-    const web = await checkApp();
+    // const web = await checkApp();
 
-    await addNextjs();
+    // await addNextjs();
 
-    const currentDic = process.cwd();
+    // const currentDic = process.cwd();
 
-    gitIint();
+    // gitIint();
 
-    await createDockerignore(currentDic);
+    // await createDockerignore(currentDic);
 
     createJupiterFile();
-    // createJupiterignoreFile(web);
+    // // createJupiterignoreFile(web);
 
-    const userInput = await newAppInputs();
+    // const userInput = await newAppInputs();
 
-    await addEnvVar({
-      directory: currentDic,
-      filename: '.jupiter',
-      variables: {
-        ...userInput,
-      },
-    });
+    // await addEnvVar({
+    //   directory: currentDic,
+    //   filename: '.jupiter',
+    //   variables: {
+    //     ...userInput,
+    //   },
+    // });
 
-    await updateScripts();
+    // await updateScripts();
 
     const app = await getAppNameAndPorts();
 
-    await createDockerComposeBase(app);
+    // await createDockerComposeBase(app);
   });

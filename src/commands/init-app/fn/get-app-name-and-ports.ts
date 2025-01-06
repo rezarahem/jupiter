@@ -5,6 +5,8 @@ import { userInput } from '../../../utils/user-input.js';
 import { appNameSchema } from '../../../zod/index.js';
 import ora from 'ora';
 
+const jux = '~/jupiter/jux';
+
 export const getAppNameAndPorts = async () => {
   let shouldBreak = false;
   let app: string;
@@ -26,7 +28,7 @@ export const getAppNameAndPorts = async () => {
     try {
       const res = (
         await streamCommand(
-          `bash -c "bash ~/jux/check-app.sh ${app.toLowerCase()}"`
+          `bash -c "bash ${jux}/check-app.sh ${app.toLowerCase()}"`
         )
       ).stdout;
 

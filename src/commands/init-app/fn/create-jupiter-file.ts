@@ -5,7 +5,6 @@ export const createJupiterFile = () => {
   const filePath = path.join(process.cwd(), '.jupiter');
 
   if (fs.existsSync(filePath)) {
-    console.log('.jupiter file already exists!');
     return;
   }
 

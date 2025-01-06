@@ -20,21 +20,21 @@ fi
 
 if [ ! -d "$app" ]; then
   mkdir -p "$app"
-  echo "201@"$app_name" directory created"
+
+  for (( port1=$start_port; port1<=$end_port; port1++ )); do
+    port2=$(( port1 + 1 ))
+
+    if ! lsof -i:"$port1" -sTCP:LISTEN &> /dev/null && \
+      ! lsof -i:"$port2" -sTCP:LISTEN &> /dev/null; then
+      echo "200@$port1:$port2"
+      exit 0
+    fi
+  done
 else
   echo "409@"$app_name" is already in use"
   exit 0
 fi
 
-for (( port1=$start_port; port1<=$end_port; port1++ )); do
-  port2=$(( port1 + 1 ))
-
-  if ! lsof -i:"$port1" -sTCP:LISTEN &> /dev/null && \
-     ! lsof -i:"$port2" -sTCP:LISTEN &> /dev/null; then
-    echo "200@$port1:$port2"
-    exit 0
-  fi
-done
 
 echo "206@No ports available"
 exit 0
