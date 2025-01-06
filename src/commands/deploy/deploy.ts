@@ -1,5 +1,5 @@
 import { Command } from 'commander';
-import { checkApp } from '../../utils/check-app.js';
+import { checkWebApp } from '../../utils/check-web-app.js';
 import { streamCommand } from '../../utils/stream-command.js';
 import dotenv from 'dotenv';
 import { hasServices } from './fn/has-service.js';
@@ -17,7 +17,7 @@ export const Deploy = new Command('deploy')
   .alias('d')
   .description('Deploy the application to the specified environment')
   .action(async () => {
-    const WEB = await checkApp();
+    const WEB = await checkWebApp();
 
     dotenv.config({ path: '.jupiter' });
 

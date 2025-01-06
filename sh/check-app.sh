@@ -11,7 +11,7 @@ fi
 
 config_name=$1
 jupiter="$HOME/jupiter" 
-config="$jupiter/$config_name.config.sh"
+config="$jupiter/$config_name.config"
 
 if [ ! -d "$jupiter" ]; then
   mkdir -p "$jupiter"

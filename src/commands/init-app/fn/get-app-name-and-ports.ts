@@ -7,7 +7,7 @@ import ora from 'ora';
 
 const jux = '~/jupiter/jux';
 
-export const getAppNameAndPorts = async () => {
+export const getAppNameAndPorts = async (data: any) => {
   let shouldBreak = false;
   let app: string;
   let port1: string = '';
