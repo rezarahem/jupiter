@@ -10,18 +10,19 @@ if [ -z "$1" ]; then
 fi
 
 app_name=$1
-apps='../apps'
-app="../apps/$app_name"
+apps="$HOME/jupiter/apps" 
+app="$apps/$app_name"
 
 if [ ! -d "$apps" ]; then
   mkdir -p "$apps"
+  echo "Created apps directory at ~/jupiter"
 fi
 
 if [ ! -d "$app" ]; then
   mkdir -p "$app"
-  echo "201@App folder created"
+  echo "201@"$app_name" directory created"
 else
-  echo "409@Already in use"
+  echo "409@"$app_name" is already in use"
   exit 0
 fi
 
