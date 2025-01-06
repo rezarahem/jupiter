@@ -68,7 +68,9 @@ docker --version && nginx -v && certbot --version
 
 ## Getting Started
 
-1. **Configure SSH**  
+I'm working on it, stay tuned! 🔥🛠️🚀
+
+<!-- 1. **Configure SSH**  
    Generate an SSH key:
 
    ```bash
@@ -102,8 +104,8 @@ docker --version && nginx -v && certbot --version
 
    ```bash
    ju d
-   ```
+   ``` -->
 
----
+<!-- ---
 
-This is just the beginning! Share your thoughts or suggest features to shape Jupiter into the ultimate deployment tool. 🚀
+This is just the beginning! Share your thoughts or suggest features to shape Jupiter into the ultimate deployment tool. 🚀 -->
