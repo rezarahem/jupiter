@@ -5,21 +5,21 @@ start_port=49152
 end_port=49999
 
 if [ -z "$1" ]; then
-  echo "Please provide an app name."
+  echo "Please provide an config name."
   exit 1
 fi
 
-app_name=$1
-apps="$HOME/jupiter/apps" 
-app="$apps/$app_name"
+config_name=$1
+jupiter="$HOME/jupiter" 
+config="$jupiter/$config_name.config.sh"
 
-if [ ! -d "$apps" ]; then
-  mkdir -p "$apps"
-  echo "Created apps directory at ~/jupiter"
+if [ ! -d "$jupiter" ]; then
+  mkdir -p "$jupiter"
+  echo "Created Jupiter directory"
 fi
 
-if [ ! -d "$app" ]; then
-  mkdir -p "$app"
+if [ ! -f "$config" ]; then
+  touch "$config"
 
   for (( port1=$start_port; port1<=$end_port; port1++ )); do
     port2=$(( port1 + 1 ))
@@ -31,10 +31,9 @@ if [ ! -d "$app" ]; then
     fi
   done
 else
-  echo "409@"$app_name" is already in use"
+  echo "409@"$config_name" config already exists"
   exit 0
 fi
-
 
 echo "206@No ports available"
 exit 0
