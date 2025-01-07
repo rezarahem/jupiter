@@ -61,6 +61,9 @@ export const InitApp = new Command('initialize-app')
       vpsUsername,
     });
 
+    await createDockerignore(currentDic);
+    await createDockerComposeBase(app as string);
+
     if (app) {
       await addEnvVar({
         directory: currentDic,
@@ -70,7 +73,4 @@ export const InitApp = new Command('initialize-app')
         },
       });
     }
-    await createDockerignore(currentDic);
-    await createDockerComposeBase(app as string);
-
   });
