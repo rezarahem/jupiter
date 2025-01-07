@@ -1,34 +1,28 @@
-import path, { dirname, join } from 'path';
-import { fileURLToPath } from 'url';
+import path from 'path';
 import ora, { Ora } from 'ora';
 import { NodeSSH } from 'node-ssh';
 import { getSshConnection } from '../../../utils/get-ssh-connection.js';
+import { getScriptsPath } from './get-scripts-path.js';
 
-const getLocalPath = (p: string) => {
-  const fileName = fileURLToPath(import.meta.url);
-  const dirName = dirname(fileName);
-  return path.resolve(dirName, p);
-};
-
-const createFileList = (localAlias: string, remoteAlias: string) =>
-  ['check-app.sh', 'set-ssl.sh', 'set-reverse-proxy.sh', 'deploy.sh'].map(
-    file => ({
-      local: getLocalPath(`${localAlias}/${file}`),
-      remote: `${remoteAlias}/${file}`,
-    })
-  );
+const createFileList = (
+  files: string[],
+  remoteAlias: string = './jupiter/jux'
+) =>
+  files.map(f => ({
+    local: f,
+    remote: `${remoteAlias}/${path.basename(f)}`,
+  }));
 
 const uploadToJux = async (ssh: NodeSSH, spinner: Ora) => {
   try {
     spinner.text = 'Uploading scripts...';
-
-    const localAlias = '../../../../../sh';
-    const remoteAlias = './jupiter/jux';
-
-    const files = createFileList(localAlias, remoteAlias);
+    const remoteAlias: string = './jupiter/jux';
+    const localFiles = await getScriptsPath();
+    const files = createFileList(localFiles);
 
     await ssh.putFiles(files);
 
+    spinner.text = 'Setting executable permissions on files...';
     const chmodCommands = files.map(file =>
       ssh.execCommand(`chmod +x ${remoteAlias}/${path.basename(file.local)}`)
     );
@@ -42,7 +36,7 @@ const uploadToJux = async (ssh: NodeSSH, spinner: Ora) => {
   } catch (error) {
     spinner.fail('Failed to upload scripts');
     console.log(error);
-  }
+  } 
 };
 
 export const updateScripts = async (update: boolean = false) => {

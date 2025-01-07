@@ -17,9 +17,45 @@ export const InitApp = new Command('initialize-app')
     'Configures the initial setup for a new application, including its environment and any required configurations.'
   )
   .action(async () => {
-    // const currentDic = process.cwd();
-
     const web = await checkWebApp();
+
+    const { domain, email, repo, sshPort, vpsIp, vpsUsername } =
+      await newAppInputs();
+
+    createJupiterFile();
+
+    const currentDic = process.cwd();
+
+    await addEnvVar({
+      directory: currentDic,
+      filename: '.jupiter',
+      variables: {
+        VPS_IP: vpsIp,
+        SSH_PORT: sshPort,
+        VPS_USERNAME: vpsUsername,
+      },
+    });
+
+    await updateScripts(true);
+
+    const app = await generateAppConfig({
+      domain,
+      email,
+      repo,
+      web,
+      sshPort,
+      vpsIp,
+      vpsUsername,
+    });
+
+    if (app)
+      await addEnvVar({
+        directory: currentDic,
+        filename: '.jupiter',
+        variables: {
+          APP: app,
+        },
+      });
 
     // switch (web) {
     //   case 'nextjs':
@@ -29,13 +65,6 @@ export const InitApp = new Command('initialize-app')
     //     // await addNuxtjs();
     //     break;
     // }
-
-    const userInput = await newAppInputs();
-
-    const app = await generateAppConfig({
-      ...userInput,
-      web,
-    });
 
     // get app name
     // stream cmd
@@ -48,16 +77,7 @@ export const InitApp = new Command('initialize-app')
 
     // await updateScripts(true);
     // gitIint();
-    // createJupiterFile();
     // const app = await getAppNameAndPorts(userInput);
-
-    // await addEnvVar({
-    //   directory: currentDic,
-    //   filename: '.jupiter',
-    //   variables: {
-    //     ...userInput,
-    //   },
-    // });
 
     // await createDockerignore(currentDic);
     // await createDockerComposeBase(app);

@@ -6,7 +6,6 @@ import { userInput } from '../../../utils/user-input.js';
 import { appNameSchema } from '../../../zod/index.js';
 import ora from 'ora';
 import { capitalizeFirstLetter } from '../../../utils/capitalize-first-letter.js';
-
 const jux = '~/jupiter/jux';
 type props = {
   repo: string;
@@ -42,17 +41,6 @@ const getConnected = async (username: string, host: string, port: string) => {
     port,
     privateKey: readFileSync(privateKeyPath, 'utf-8'),
   });
-};
-
-const generateConfCmd = ({
-  variables,
-}: {
-  variables: Record<string, string>;
-}) => {
-  const envVars = Object.entries(variables)
-    .map(([key, value]) => `${key}=${value}`)
-    .join(' ');
-  return `${envVars} bash ${jux}/generate-app-conf.sh`;
 };
 
 export const generateAppConfig = async ({
@@ -115,24 +103,33 @@ export const generateAppConfig = async ({
         break;
       }
     } while (true);
+    const variables = {
+      APP: app,
+      EMAIL: email,
+      DOMAIN: domain,
+      WEB: web,
+      APOLLO: apollo,
+      ARTEMIS: artemis,
+      REPO: repo,
+    };
+    const envVars = Object.entries(variables)
+      .map(([key, value]) => `${key}=${value}`)
+      .join(' ');
+    const cmd = `${envVars} bash ${jux}/generate-app-conf.sh`;
     spinner.start('Generating the conf...');
-    const confCmd = generateConfCmd({
-      variables: {
-        APP: app,
-        EMAIL: email,
-        DOMAIN: domain,
-        WEB: web,
-        APOLLO: apollo,
-        ARTEMIS: artemis,
-        REPO: repo,
+    await ssh.execCommand(cmd, {
+      cwd: '$HOME',
+      onStdout(chunk) {
+        console.log('stdoutChunk', chunk.toString('utf8'));
+        spinner.succeed('Config file was created successfull');
+      },
+      onStderr(chunk) {
+        console.log('stderrChunk', chunk.toString('utf8'));
+        spinner.fail();
       },
     });
-    const res = await ssh.execCommand(confCmd);
-
-    spinner.succeed('Config file was created successfull');
     return app.toLowerCase();
   } catch (error) {
-    spinner.fail();
     console.log(error);
   } finally {
     ssh.dispose();
