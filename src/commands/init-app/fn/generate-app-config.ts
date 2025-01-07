@@ -117,19 +117,17 @@ export const generateAppConfig = async ({
       .join(' ');
     const cmd = `${envVars} bash ${jux}/generate-app-conf.sh`;
     spinner.start('Generating the conf...');
-    await ssh.execCommand(cmd, {
-      cwd: '$HOME',
-      onStdout(chunk) {
-        console.log('stdoutChunk', chunk.toString('utf8'));
-        spinner.succeed('Config file was created successfull');
-      },
-      onStderr(chunk) {
-        console.log('stderrChunk', chunk.toString('utf8'));
-        spinner.fail();
-      },
-    });
+
+    const res = await ssh.execCommand(cmd);
+
+    if (res.code === 1) {
+      throw new Error(res.stderr);
+    }
+
+    spinner.succeed('Config file was created successfull');
     return app.toLowerCase();
   } catch (error) {
+    spinner.fail();
     console.log(error);
   } finally {
     ssh.dispose();

@@ -16,7 +16,8 @@ export const InitApp = new Command('initialize-app')
   .description(
     'Configures the initial setup for a new application, including its environment and any required configurations.'
   )
-  .action(async () => {
+  .option('-sup --skip-update-host', 'Skip uploading scripts to the Host')
+  .action(async ops => {
     const web = await checkWebApp();
 
     const { domain, email, repo, sshPort, vpsIp, vpsUsername } =
@@ -36,7 +37,9 @@ export const InitApp = new Command('initialize-app')
       },
     });
 
-    await updateScripts(true);
+    if (!ops.skipUpdateHost) {
+      await updateScripts(true);
+    }
 
     const app = await generateAppConfig({
       domain,
@@ -48,7 +51,7 @@ export const InitApp = new Command('initialize-app')
       vpsUsername,
     });
 
-    if (app)
+    if (app) {
       await addEnvVar({
         directory: currentDic,
         filename: '.jupiter',
@@ -56,6 +59,7 @@ export const InitApp = new Command('initialize-app')
           APP: app,
         },
       });
+    }
 
     // switch (web) {
     //   case 'nextjs':
