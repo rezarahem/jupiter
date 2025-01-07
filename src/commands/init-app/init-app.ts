@@ -20,9 +20,19 @@ export const InitApp = new Command('initialize-app')
   .action(async ops => {
     const web = await checkWebApp();
 
+    switch (web) {
+      case 'nextjs':
+        await addNextjs();
+        break;
+      case 'nuxtjs':
+        // await addNuxtjs();
+        break;
+    }
+
     const { domain, email, repo, sshPort, vpsIp, vpsUsername } =
       await newAppInputs();
 
+    gitIint();
     createJupiterFile();
 
     const currentDic = process.cwd();
@@ -60,29 +70,7 @@ export const InitApp = new Command('initialize-app')
         },
       });
     }
+    await createDockerignore(currentDic);
+    await createDockerComposeBase(app as string);
 
-    // switch (web) {
-    //   case 'nextjs':
-    //     await addNextjs();
-    //     break;
-    //   case 'nuxtjs':
-    //     // await addNuxtjs();
-    //     break;
-    // }
-
-    // get app name
-    // stream cmd
-    // 1. check for scripts if not upload
-    // 2. check for app name and port if not ask for app nema again and create the config
-    // 3. update config with user input
-    // 4. enc stream cmd
-    // create .jupier with with source config
-    // fi
-
-    // await updateScripts(true);
-    // gitIint();
-    // const app = await getAppNameAndPorts(userInput);
-
-    // await createDockerignore(currentDic);
-    // await createDockerComposeBase(app);
   });
