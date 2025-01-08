@@ -3,7 +3,6 @@ import { userInput } from '../../../utils/user-input.js';
 import { branchNameSchema } from '../../../zod/index.js';
 
 export const createGithubDeployAction = async () => {
-    
   const defaultBranch = await userInput({
     prompt:
       'Enter the name of your default branch (you can always change this later): ',
@@ -15,7 +14,7 @@ export const createGithubDeployAction = async () => {
 on:
   push:
     branches:
-      - ${defaultBranch}
+      - ${defaultBranch.toLowerCase()}
 
 jobs:
   deploy:

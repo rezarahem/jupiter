@@ -15,12 +15,9 @@ export const appNameSchema = z
       'App name can only contain letters, numbers, hyphens, and underscores (no spaces).',
   });
 
-export const branchNameSchema = z
-  .string()
-  .regex(/^(feature|bugfix|hotfix|release|main|dev)\/[a-zA-Z0-9-_]+$/, {
-    message:
-      'Invalid branch name. Expected format: <type>/<name>, where type is one of feature, bugfix, hotfix, release, main, or dev.',
-  });
+export const branchNameSchema = z.string().min(1, {
+  message: 'Branch name must not be empty.',
+});
 
 export const domainSchema = z
   .string()
