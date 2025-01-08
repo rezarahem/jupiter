@@ -6,7 +6,16 @@ if [[ -z "$APP" ]]; then
   exit 1
 fi
 
+jux="$HOME/jupiter/jux"
 CONFIG_FILE="$HOME/jupiter/$APP.config"
+
+# Load the configuration file
+if [[ -f "$CONFIG_FILE" ]]; then
+  source "$CONFIG_FILE"
+else
+  echo "Error: Configuration file not found at $CONFIG_FILE."
+  exit 1
+fi
 
 if [[ -z "$DOMAIN" || -z "$EMAIL" || -z "$WEB" || -z "$APOLLO" || -z "$ARTEMIS" || -z "$REPO" ]]; then
   echo "Error: Missing required environment variables."
@@ -21,7 +30,7 @@ fi
 
 # Check if SSL certificate exists for the given domain
 if [ ! -f /etc/letsencrypt/live/$DOMAIN/fullchain.pem ]; then
-  ./jux/set-ssl.sh $DOMAIN $EMAIL
+  $jux/set-ssl.sh $DOMAIN $EMAIL
   if [ $? -eq 0 ]; then
     echo "SSL certificate successfully created for $DOMAIN"
     sleep 2
@@ -61,7 +70,7 @@ fi
 
 # Check if reverse proxy configuration exists for the given domain
 if [ ! -f /etc/nginx/sites-available/$APP ]; then
-  ./jux/set-reverse-proxy.sh $DOMAIN $APP $APOLLO $ARTEMIS
+  $jux/set-reverse-proxy.sh $DOMAIN $APP $APOLLO $ARTEMIS
   if [ $? -eq 0 ]; then
     echo "Reverse proxy successfully configured for $APP"
     sleep 2
@@ -82,8 +91,18 @@ else
   exit 1
 fi
 
-# Change directory to the project folder
-cd ~/jupiter/apps/$APP
+# Set the directory path
+appDir="$HOME/jupiter/app/$APP"
+
+# Check if the directory exists
+if [ ! -d "$appDir" ]; then
+  # If the directory does not exist, create it
+  mkdir -p "$appDir"
+  echo "Directory $appDir created."
+fi
+
+# Change into the app directory
+cd "$appDir"
 
 if [ -d ".git" ]; then
   echo "Git repository already exists. Pulling latest changes..."
