@@ -41,7 +41,7 @@ export const sshPortSchema = z
     }
   );
 
-export const vpsIpSchema = z
+export const hostIpSchema = z
   .string()
   .min(1, { message: 'IP address cannot be empty.' })
   .regex(
@@ -49,7 +49,7 @@ export const vpsIpSchema = z
     { message: 'Invalid IPv4 address.' }
   );
 
-export const vpsUsernameSchema = z
+export const hostUsernameSchema = z
   .string()
   .min(1, { message: 'Username cannot be empty.' })
   .max(32, { message: 'Username cannot be longer than 32 characters.' })

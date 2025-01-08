@@ -9,11 +9,11 @@ import { capitalizeFirstLetter } from '../../../utils/capitalize-first-letter.js
 const jux = '~/jupiter/jux';
 type props = {
   repo: string;
-  vpsIp: string;
+  hostIp: string;
   sshPort: string;
   email: string;
   domain: string;
-  vpsUsername: string;
+  hostUser: string;
   web: string;
 };
 
@@ -49,11 +49,11 @@ export const generateAppConfig = async ({
   repo,
   web,
   sshPort,
-  vpsIp,
-  vpsUsername,
+  hostIp,
+  hostUser,
 }: props) => {
   const spinner = ora('Connecting to Host...').start();
-  const ssh = await getConnected(vpsUsername, vpsIp, sshPort);
+  const ssh = await getConnected(hostUser, hostIp, sshPort);
   let shouldBreak = false;
   let app: string;
   let apollo: string = '';

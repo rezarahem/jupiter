@@ -19,7 +19,7 @@ export const InitApp = new Command('initialize-app')
   .action(async ops => {
     const web = await checkWebApp();
 
-    const { domain, email, repo, sshPort, vpsIp, vpsUsername } =
+    const { domain, email, repo, sshPort, hostIp, hostUser } =
       await newAppInputs();
 
     gitIint();
@@ -32,9 +32,9 @@ export const InitApp = new Command('initialize-app')
       directory: currentDic,
       filename: '.jupiter',
       variables: {
-        VPS_IP: vpsIp,
+        HOST_IP: hostIp,
         SSH_PORT: sshPort,
-        VPS_USERNAME: vpsUsername,
+        HOST_USERNAME: hostUser,
       },
     });
 
@@ -48,8 +48,8 @@ export const InitApp = new Command('initialize-app')
       repo,
       web,
       sshPort,
-      vpsIp,
-      vpsUsername,
+      hostUser,
+      hostIp,
     });
 
     switch (web) {
@@ -69,4 +69,6 @@ export const InitApp = new Command('initialize-app')
         APP: app as string,
       },
     });
+
+    // mkdir -p .github/workflows
   });

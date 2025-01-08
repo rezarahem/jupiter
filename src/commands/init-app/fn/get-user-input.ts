@@ -3,8 +3,8 @@ import {
   emailSchema,
   githubSshCloneString,
   sshPortSchema,
-  vpsIpSchema,
-  vpsUsernameSchema,
+  hostIpSchema,
+  hostUsernameSchema,
 } from '../../../zod/index.js';
 import { userInput } from '../../../utils/user-input.js';
 
@@ -25,15 +25,15 @@ export const newAppInputs = async () => {
     schema: emailSchema,
   });
 
-  const vpsUsername = await userInput({
-    prompt: 'Enter your VPS username account: ',
-    schema: vpsUsernameSchema,
+  const hostUser = await userInput({
+    prompt: 'Enter your HOST username account: ',
+    schema: hostUsernameSchema,
     defaultValue: 'root',
   });
 
-  const vpsIp = await userInput({
-    prompt: 'Enter your VPS IP number: ',
-    schema: vpsIpSchema,
+  const hostIp = await userInput({
+    prompt: 'Enter your HOST IP number: ',
+    schema: hostIpSchema,
   });
 
   const sshPort = await userInput({
@@ -44,10 +44,10 @@ export const newAppInputs = async () => {
 
   return {
     repo,
-    vpsIp,
+    hostIp,
     sshPort,
     email: email.toLowerCase(),
     domain: domain.toLowerCase(),
-    vpsUsername: vpsUsername.toLowerCase(),
+    hostUser: hostUser.toLowerCase(),
   };
 };

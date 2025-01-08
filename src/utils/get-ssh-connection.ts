@@ -13,11 +13,11 @@ export const getSshConnection = async () => {
     process.exit(1);
   }
 
-  const vpsUsername = process.env.VPS_USERNAME;
-  const vpsIP = process.env.VPS_IP;
+  const hostUser = process.env.HOST_USER;
+  const hostIP = process.env.HOST_IP;
   const sshPort = process.env.SSH_PORT;
 
-  if (!vpsUsername || !vpsIP || !sshPort) {
+  if (!hostUser || !hostIP || !sshPort) {
     console.error('Missing environment variables');
     process.exit(1);
   }
@@ -39,8 +39,8 @@ export const getSshConnection = async () => {
   }
 
   await ssh.connect({
-    host: vpsIP,
-    username: vpsUsername,
+    host: hostIP,
+    username: hostUser,
     port: sshPort,
     privateKey: readFileSync(privateKeyPath, 'utf-8'),
   });
