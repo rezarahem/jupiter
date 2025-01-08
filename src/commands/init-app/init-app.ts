@@ -4,11 +4,11 @@ import { createJupiterFile } from './fn/create-jupiter-file.js';
 import { newAppInputs } from './fn/get-user-input.js';
 import { addEnvVar } from '../../utils/add-env-var.js';
 import { createDockerignore } from './fn/create-dockerignore.js';
-import { createDockerComposeBase } from './fn/create-docker-compose-base.js';
 import { addNextjs } from './fn/add-next/add-nextjs.js';
 import { checkWebApp } from '../../utils/check-web-app.js';
 import { updateScripts } from '../update-host/fn/update-scripts.js';
 import { generateAppConfig } from './fn/generate-app-config.js';
+import { createGithubDeployAction } from './fn/create-github-deploy-action.js';
 
 export const InitApp = new Command('initialize-app')
   .alias('init')
@@ -34,7 +34,7 @@ export const InitApp = new Command('initialize-app')
       variables: {
         HOST_IP: hostIp,
         SSH_PORT: sshPort,
-        HOST_USERNAME: hostUser,
+        HOST_USER: hostUser,
       },
     });
 
@@ -61,7 +61,7 @@ export const InitApp = new Command('initialize-app')
         break;
     }
     await createDockerignore(currentDic);
-    await createDockerComposeBase(app as string);
+    await createGithubDeployAction();
     await addEnvVar({
       directory: currentDic,
       filename: '.jupiter',
@@ -69,6 +69,4 @@ export const InitApp = new Command('initialize-app')
         APP: app as string,
       },
     });
-
-    // mkdir -p .github/workflows
   });
