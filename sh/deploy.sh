@@ -1,15 +1,21 @@
 #!/bin/bash
 
-if [[ -z "$DOMAIN" || -z "$EMAIL" || -z "$APP" || -z "$WEB" || -z "$APOLLO" || -z "$ARTEMIS" || -z "$DOCKER_COMPOSE" || -z "$MANUAL" ]]; then
+if [[ -z "$APP" ]]; then
+  echo "Missing app name."
+  echo "APP=$APP"
+  exit 1
+fi
+
+CONFIG_FILE="$HOME/jupiter/$APP.config"
+
+if [[ -z "$DOMAIN" || -z "$EMAIL" || -z "$WEB" || -z "$APOLLO" || -z "$ARTEMIS" || -z "$REPO" ]]; then
   echo "Error: Missing required environment variables."
   echo "DOMAIN=$DOMAIN"
   echo "EMAIL=$EMAIL"
-  echo "APP=$APP"
   echo "WEB=$WEB"
   echo "APOLLO=$APOLLO"
   echo "ARTEMIS=$ARTEMIS"
-  echo "DOCKER_COMPOSE=$DOCKER_COMPOSE"
-  echo "MANUAL=$MANUAL"
+  echo "REPO=$REPO"
   exit 1
 fi
 
@@ -77,17 +83,15 @@ else
 fi
 
 # Change directory to the project folder
-cd ./jupiter/$APP
+cd ~/jupiter/apps/$APP
 
-# if [ "$MANUAL" == '0']; then
-#   if [ -d ".git" ]; then
-#     echo "Git repository already exists. Pulling latest changes..."
-#     git pull
-#   else
-#     echo "Cloning repository from $REPO into the current directory..."
-#     git clone "$REPO" .
-#   fi
-# fi
+if [ -d ".git" ]; then
+  echo "Git repository already exists. Pulling latest changes..."
+  git pull
+else
+  echo "Cloning repository from $REPO into the current directory..."
+  git clone "$REPO" .
+fi
 
 # Check if the network exists
 if docker network ls --format "{{.Name}}" | grep -q "^$APP$"; then
@@ -103,18 +107,18 @@ else
   fi
 fi
 
-if [ "$DOCKER_COMPOSE" == "1" ]; then
-  # Start Docker containers
-  sudo docker-compose up -d
+# if [ "$DOCKER_COMPOSE" == "1" ]; then
+#   # Start Docker containers
+#   sudo docker-compose up -d
 
-  if [ $? -eq 0 ]; then
-    echo "Docker containers started successfully"
-    sleep 5
-  else
-    echo "Error: Failed to start Docker containers"
-    exit 1
-  fi
-fi
+#   if [ $? -eq 0 ]; then
+#     echo "Docker containers started successfully"
+#     sleep 5
+#   else
+#     echo "Error: Failed to start Docker containers"
+#     exit 1
+#   fi
+# fi
 
 
 # Get the ID of the last built Docker image for the application
