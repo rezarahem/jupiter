@@ -28,6 +28,7 @@ if [[ -z "$DOMAIN" || -z "$EMAIL" || -z "$WEB" || -z "$APOLLO" || -z "$ARTEMIS" 
   exit 1
 fi
 
+
 # Check if SSL certificate exists for the given domain
 if [ ! -f /etc/letsencrypt/live/$DOMAIN/fullchain.pem ]; then
   $jux/set-ssl.sh $DOMAIN $EMAIL
@@ -125,20 +126,6 @@ else
     exit 1
   fi
 fi
-
-# if [ "$DOCKER_COMPOSE" == "1" ]; then
-#   # Start Docker containers
-#   sudo docker-compose up -d
-
-#   if [ $? -eq 0 ]; then
-#     echo "Docker containers started successfully"
-#     sleep 5
-#   else
-#     echo "Error: Failed to start Docker containers"
-#     exit 1
-#   fi
-# fi
-
 
 # Get the ID of the last built Docker image for the application
 LAST_IMAGE_ID=$(docker images --filter=reference="$APP:latest" --format "{{.ID}}")

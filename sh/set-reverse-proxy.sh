@@ -10,8 +10,8 @@ APP=$2
 APOLLO=$3
 ARTEMIS=$4
 
-# Stop Nginx temporarily to allow configuration changes
-sudo systemctl stop nginx
+# # Stop Nginx temporarily to allow configuration changes
+# sudo systemctl stop nginx
 
 # Create Nginx config with reverse proxy, SSL support, rate limiting, and streaming support
 sudo cat > /etc/nginx/sites-available/$APP <<EOL
@@ -61,7 +61,5 @@ EOL
 # Create symbolic link if it doesn't already exist
 sudo ln -s /etc/nginx/sites-available/$APP /etc/nginx/sites-enabled/$APP
 
-# Restart Nginx to apply the new configuration
-sudo systemctl restart nginx
-
-
+# Reload Nginx to apply the new configuration without stopping it
+sudo systemctl reload nginx

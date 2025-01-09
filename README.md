@@ -58,6 +58,8 @@ sudo apt-get install software-properties-common -y
 sudo add-apt-repository universe -y
 sudo apt-get update -y
 sudo apt-get install certbot python3-certbot-nginx -y
+sudo wget https://raw.githubusercontent.com/certbot/certbot/main/certbot-nginx/certbot_nginx/_internal/tls_configs/options-ssl-nginx.conf -P /etc/letsencrypt/
+sudo openssl dhparam -out /etc/letsencrypt/ssl-dhparams.pem 2048
 ```
 
 Verify installations:
@@ -70,7 +72,7 @@ docker --version && nginx -v && certbot --version
 
 I'm working on it, stay tuned! 🔥🛠️🚀
 
-<!-- 1. **Configure SSH**  
+<!-- 1. **Configure SSH**
    Generate an SSH key:
 
    ```bash
@@ -85,7 +87,7 @@ I'm working on it, stay tuned! 🔥🛠️🚀
    npm i -g ju
    ```
 
-3. **Initialize a Project**  
+3. **Initialize a Project**
    Create or use an existing Next.js project:
 
    ```bash
