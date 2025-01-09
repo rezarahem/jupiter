@@ -46,12 +46,18 @@ sudo apt-get update
 sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 ```
 
-**Nginx and Certbot**
+**Nginx**
 
 ```bash
-sudo apt-get update -y && sudo apt-get install nginx -y
-sudo systemctl start nginx && sudo systemctl enable nginx
+sudo apt-get update -y && \
+sudo apt-get install nginx -y && \
+echo "limit_req_zone \$binary_remote_addr zone=mylimit:10m rate=10r/s;" | \
+    sudo tee /etc/nginx/conf.d/rate_limit.conf > /dev/null && \
+sudo systemctl start nginx && \
+sudo systemctl enable nginx
 ```
+
+**Certbot**
 
 ```bash
 sudo apt-get install software-properties-common -y

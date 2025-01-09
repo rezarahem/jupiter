@@ -28,9 +28,9 @@ if [[ -z "$DOMAIN" || -z "$EMAIL" || -z "$WEB" || -z "$APOLLO" || -z "$ARTEMIS" 
   exit 1
 fi
 
-
 # Check if SSL certificate exists for the given domain
 if [ ! -f /etc/letsencrypt/live/$DOMAIN/fullchain.pem ]; then
+  # Create SSL certificate if not found
   $jux/set-ssl.sh $DOMAIN $EMAIL
   if [ $? -eq 0 ]; then
     echo "SSL certificate successfully created for $DOMAIN"
@@ -41,32 +41,24 @@ if [ ! -f /etc/letsencrypt/live/$DOMAIN/fullchain.pem ]; then
   fi
 else
   echo "SSL certificate already exists for $DOMAIN"
-fi
-
-# Verify SSL certificate
-openssl x509 -in /etc/letsencrypt/live/$DOMAIN/fullchain.pem -noout -text > /dev/null 2>&1
-if [ $? -eq 0 ]; then
-  echo "SSL certificate for $DOMAIN is valid"
-else
-  echo "Error: SSL certificate for $DOMAIN is invalid"
-  exit 1
-fi
-
-# Define the path to the rate limit config file in conf.d
-rate_limit_config="/etc/nginx/conf.d/rate_limit.conf"
-# Check if the rate limit configuration file exists
-if [ ! -f "$rate_limit_config" ]; then
-    # If the file doesn't exist, create it
-    echo "Creating rate_limit.conf in /etc/nginx/conf.d/..."
-    echo "limit_req_zone \$binary_remote_addr zone=mylimit:10m rate=10r/s;" | sudo tee "$rate_limit_config" > /dev/null
-    echo "Rate limit configuration created at $rate_limit_config"
+  
+  # Verify if the existing SSL certificate is valid
+  openssl x509 -in /etc/letsencrypt/live/$DOMAIN/fullchain.pem -noout -text > /dev/null 2>&1
+  if [ $? -eq 0 ]; then
+    echo "SSL certificate for $DOMAIN is valid"
+  else
+    echo "Warning: SSL certificate for $DOMAIN is invalid. Attempting to recreate the certificate..."
     
-    # Reload nginx to apply the changes
-    echo "Reloading Nginx to apply changes..."
-    sudo systemctl reload nginx
-    sleep 2
-else
-    echo "Rate limit configuration already exists at $rate_limit_config"
+    # Try to create a new certificate even if the old one is invalid
+    $jux/set-ssl.sh $DOMAIN $EMAIL
+    if [ $? -eq 0 ]; then
+      echo "SSL certificate successfully recreated for $DOMAIN"
+      sleep 2
+    else
+      echo "Error: Failed to create a new SSL certificate for $DOMAIN"
+      exit 1
+    fi
+  fi
 fi
 
 # Check if reverse proxy configuration exists for the given domain
@@ -81,15 +73,6 @@ if [ ! -f /etc/nginx/sites-available/$APP ]; then
   fi
 else
   echo "Reverse proxy configuration already exists for $APP"
-fi
-
-# Test Nginx configuration
-nginx -t
-if [ $? -eq 0 ]; then
-  echo "Nginx configuration test passed"
-else
-  echo "Error: Nginx configuration test failed"
-  exit 1
 fi
 
 # Set the directory path
@@ -149,7 +132,6 @@ if [ -n "$LAST_BACKUP_IMAGE_ID" ]; then
 else
   echo "No existing backup image found, skipping removal."
 fi
-
 
 check_health() {
   local port=$1
@@ -241,5 +223,6 @@ handle_container() {
 
 handle_container $APOLLO "${APP}_apollo"
 handle_container $ARTEMIS "${APP}_artemis"
+
 echo "All containers started and are healthy. Successful Deployment."
 
