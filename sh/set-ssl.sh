@@ -14,8 +14,7 @@ if ! command -v certbot &> /dev/null; then
   exit 1
 fi
 
-sudo certbot certonly --non-interactive --agree-tos -m $EMAIL -d $DOMAIN
-
+sudo certbot certonly --non-interactive --agree-tos -m $EMAIL -d $DOMAIN --nginx
 
 # Reload Nginx to apply the new SSL configuration
 sudo systemctl reload nginx
