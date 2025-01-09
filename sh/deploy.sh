@@ -76,7 +76,7 @@ else
 fi
 
 # Set the directory path
-appDir="$HOME/jupiter/app/$APP"
+appDir="$HOME/jupiter/apps/$APP"
 
 # Check if the directory exists
 if [ ! -d "$appDir" ]; then
