@@ -5,12 +5,12 @@ if [[ -z "$APP" ]]; then
   exit 1
 fi
 
-depPath="$HOME/jupiter/apps/${APP}_dep"
+depPath="$HOME/jupiter/apps/${APP}_deps"
 
 # Check if the directory exists
 if [ ! -d "$depPath" ]; then
-  mkdir -p "$depPath"
-  echo "Directory $depPath created."
+  echo "No directory $depPath exists."
+  exit 1
 fi
 
 cd "$depPath"

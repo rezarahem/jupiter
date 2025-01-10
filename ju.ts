@@ -5,6 +5,7 @@ import { InitApp } from './src/commands/init-app/init-app.js';
 import { Deploy } from './src/commands/deploy/deploy.js';
 import { UpdateHost } from './src/commands/update-host/update-host.js';
 import { InitGithubCi } from './src/commands/init-github-ci/init-github-ci.js';
+import { RunDeps } from './src/commands/run-deps/run-deps.js';
 
 program
   .name('Jupiter')
@@ -16,5 +17,6 @@ program
 program.addCommand(InitApp);
 program.addCommand(Deploy);
 program.addCommand(InitGithubCi);
+program.addCommand(RunDeps);
 program.addCommand(UpdateHost);
 program.parse();
