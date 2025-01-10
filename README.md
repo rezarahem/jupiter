@@ -1,11 +1,28 @@
 # Jupiter
 
+1. [Introduction](#introduction)
+2. [Prerequisites](#prerequisites)
+3. [VPS Setup](#vps-setup)
+4. [Getting Started](#getting-started)
+   - [Configure SSH](#configure-ssh)
+   - [Install Jupiter CLI](#install-jupiter-cli)
+   - [Initialize a Project](#initialize-a-project)
+   - [Deploy](#deploy)
+5. [CI/CD](#cicd)
+   - [Add the Github action](#add-the-github-action)
+   - [Add SSH Private Key to Repository Secrets](#add-ssh-private-key-to-repository-secrets)
+   - [Additional Required Secrets](#additional-required-secrets)
+
+---
+
+## Introduction
+
 Jupiter is a CLI tool designed to simplify the deployment of modern web applications.
 
 - 🚀 **Zero downtime** deployments.
 - 🐳 **Docker-based architecture** for containerization and scalability.
 - 🔒 **SSL certificates** for secure communication.
-- ⚡ **CI/CD** integration for automated workflows (coming soon).
+- ⚡ **CI/CD** integration for automated workflows.
 
 ---
 
@@ -17,8 +34,7 @@ Jupiter is a CLI tool designed to simplify the deployment of modern web applicat
 2. **Domain with DNS pointing to the VPS**  
    Cloudflare DNS service is recommended for DDoS protection.
 3. **GitHub Account and Repository**\
-   You will need a GitHub account for version control.
-    <!-- and integration with CI/CD pipelines. -->
+   You will need a GitHub account for version control and integration with CI/CD pipelines.
 
 ## VPS Setup
 
@@ -82,7 +98,7 @@ docker --version && nginx -v && certbot --version
 
 ## Getting Started
 
-1. **Configure SSH**
+1. #### **Configure SSH**
 
    You need to generate two SSH key pairs: one for establishing a secure connection from your local machine to your VPS, and another for authenticating your VPS with your GitHub account. It's essential to pay attention to where you generate these keys to ensure proper configuration.
 
@@ -120,13 +136,13 @@ docker --version && nginx -v && certbot --version
 
      Copy the public key and add it to your GitHub account by visiting [Add SSH Key](https://github.com/settings/ssh/new)
 
-2. **Install Jupiter CLI**
+2. #### **Install Jupiter CLI**
 
    ```bash
    npm i -g ju
    ```
 
-3. **Initialize a Project**
+3. #### **Initialize a Project**
 
    **Note** Currently, Jupiter supports deploying Next.js applications only.
 
@@ -142,7 +158,7 @@ docker --version && nginx -v && certbot --version
 
    Follow the prompts to configure your deployment.
 
-4. **Deploy**
+4. #### **Deploy**
 
    Once your project is ready, push your latest changes to GitHub and then deploy your project with the following command:
 
@@ -151,6 +167,49 @@ docker --version && nginx -v && certbot --version
    ```
 
    **Note**: If you deploy your project and notice an older version is live, it's likely because your latest changes haven't been pushed to GitHub. Ensure your commits are up-to-date and pushed before running the deployment command to reflect the most recent changes.
+
+## CI/CD
+
+1. #### **Add the Github action**
+
+   To integrate CI/CD with your deployment workflow, run the following command and follow the prompts:
+
+   ```bash
+   ju ci
+   ```
+
+2. #### **Add SSH Private Key to Repository Secrets**
+
+   Generate or reuse the SSH key you previously created for your local machine.
+
+   For simplicity, we recommend using the same SSH key. However, if you choose to generate a new key pair, be sure to add the public key to the `~/.ssh/authorized_keys` file on your VPS, just as you did for your local machine.
+
+   To retrieve the private key, run:
+
+   ```bash
+   cat ~/.ssh/id_ed25519
+   ```
+
+   Copy the private key and add it as `SSH_PRIVATE_KEY` in your repository's GitHub Action secrets. You can add it by navigating to:
+
+   `github.com/<username>/<repository-name>/settings/secrets/actions/new`
+
+   Replace username and repository-name with the appropriate values for your repository.
+
+3. #### **Additional Required Secrets**
+
+   You must also add the following repository secrets for a successful deployment:
+
+   - HOST_IP: Your VPS's IP address
+   - HOST_USER: Your VPS username
+   - HOST_PORT: SSH port
+   - APP: The name of your app, chosen during the project initialization
+
+**Note**: While you are free to choose custom names for these secrets, be aware that the `ju ci` command generates the GitHub action with the default secret names. If you use different names, ensure you also update the `deploy.yml` file at `.github/workflows/deploy.yml` to reflect the new secret names.
+
+Your CI/CD setup is now complete. Whenever you push to the branch you selected during the `ju ci` command, the deployment process will automatically trigger. You can monitor the status of your GitHub Actions by visiting:
+
+`github.com/<username>/<repository-name>/actions`
 
 ---
 
