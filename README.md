@@ -16,7 +16,7 @@ Jupiter is a CLI tool designed to simplify the deployment of modern web applicat
 1. **VPS running Ubuntu 24.04 or 22.04**
 2. **Domain with DNS pointing to the VPS**  
    Cloudflare DNS service is recommended for DDoS protection.
-3. **GitHub Account and Repository**
+3. **GitHub Account and Repository**\
    You will need a GitHub account for version control.
     <!-- and integration with CI/CD pipelines. -->
 
