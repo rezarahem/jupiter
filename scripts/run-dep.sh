@@ -15,6 +15,20 @@ fi
 
 cd "$depPath"
 
+# Check if the network exists
+if docker network ls --format "{{.Name}}" | grep -q "^$APP$"; then
+  echo "Docker network $APP already exists."
+else
+  # Create the network if it doesn't exist
+  docker network create "$APP"
+  if [ $? -eq 0 ]; then
+    echo "Docker network $APP has been created successfully."
+  else
+    echo "Failed to create Docker network $APP."
+    exit 1
+  fi
+fi
+
 if [[ ! -f "docker-compose.yml" ]]; then
   echo "docker-compose.yml does not exist in the current folder."
   exit 1
