@@ -36,7 +36,7 @@ const uploadToJux = async (ssh: NodeSSH, spinner: Ora) => {
   } catch (error) {
     spinner.fail('Failed to upload scripts');
     console.log(error);
-  } 
+  }
 };
 
 export const updateScripts = async (update: boolean = false) => {
