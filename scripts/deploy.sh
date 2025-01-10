@@ -224,4 +224,5 @@ handle_container $APOLLO "${APP}_apollo"
 handle_container $ARTEMIS "${APP}_artemis"
 
 echo "All containers started and are healthy. Successful Deployment."
+exit 0
 

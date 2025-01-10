@@ -24,12 +24,28 @@ export const RunDeps = new Command('run-deps')
       const path = await getComposePath();
       spinner.text = 'Uploading Compose file...';
       await uploadComposeFile(ssh, app as string, path as string);
-      spinner.text = 'Successfully uploaded Compose File';
-      await ssh.execCommand(`APP=${app} ~/jupiter/jux/run-dep.sh`);
-      spinner.succeed();
+      spinner.succeed('Successfully uploaded Compose File');
+      console.log('Start running dependencies');
+      const result = await ssh.execCommand(
+        `APP=${app} ~/jupiter/jux/run-dep.sh`,
+        {
+          onStdout: chunk => {
+            process.stdout.write(chunk.toString());
+          },
+          onStderr: chunk => {
+            process.stderr.write(chunk.toString());
+          },
+        }
+      );
+
+      if (result.code !== 0) {
+        throw new Error(`Command failed with exit code ${result.code}`);
+      }
     } catch (error) {
-      spinner.fail();
+      spinner.fail('Failed to run the dependencies');
       console.log(error);
       process.exit(1);
+    } finally {
+      ssh.dispose();
     }
   });

@@ -34,7 +34,7 @@ if [[ ! -f "docker-compose.yml" ]]; then
   exit 1
 fi
 
-if sudo docker-compose up -d; then
+if sudo docker compose up -d; then
   echo "All dependencies are up and running successfully."
 else
   echo "Error: Failed to start dependencies with docker-compose."
