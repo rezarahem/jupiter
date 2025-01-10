@@ -2,7 +2,6 @@
 
 if [[ -z "$APP" ]]; then
   echo "Missing app name."
-  echo "APP=$APP"
   exit 1
 fi
 
