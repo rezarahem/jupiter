@@ -2,13 +2,12 @@
 
 Jupiter is a CLI tool designed to simplify the deployment of modern web applications.
 
-- 🔒 **SSL certificates** for secure communication.
-- 🚀 **Zero downtime** during deployments.
+- 🚀 **Zero downtime** deployments.
 - 🐳 **Docker-based architecture** for containerization and scalability.
+- 🔒 **SSL certificates** for secure communication.
+- ⚡ **CI/CD** integration for automated workflows (coming soon).
 
 ---
-
-**Note** Currently, Jupiter supports deploying Next.js applications only.
 
 **Note** Jupiter is actively under development and is not yet stable. Frequent updates and changes are being made to improve functionality.
 
@@ -16,11 +15,18 @@ Jupiter is a CLI tool designed to simplify the deployment of modern web applicat
 
 1. **VPS running Ubuntu 24.04 or 22.04**
 2. **Domain with DNS pointing to the VPS**  
-   Cloudflare DNS is recommended for DDoS protection.
+   Cloudflare DNS service is recommended for DDoS protection.
+3. **GitHub Account and Repository**
+   You will need a GitHub account for version control.
+    <!-- and integration with CI/CD pipelines. -->
 
 ## VPS Setup
 
-Jupiter relies on Docker, Nginx, and Certbot.
+Jupiter relies on Docker, Nginx, Certbot.
+
+- **Docker:** For containerizing apps, ensuring consistency and easy deployment.
+- **Nginx:** Acts as a reverse proxy and load balancer for web traffic.
+- **Certbot:** Automates SSL certificate management for HTTPS security.
 
 ### Install Required Packages
 
@@ -76,16 +82,43 @@ docker --version && nginx -v && certbot --version
 
 ## Getting Started
 
-I'm working on it, stay tuned! 🔥🛠️🚀
+1. **Configure SSH**
 
-<!-- 1. **Configure SSH**
-   Generate an SSH key:
+   You need to generate two SSH key pairs: one for establishing a secure connection from your local machine to your VPS, and another for authenticating your VPS with your GitHub account. It's essential to pay attention to where you generate these keys to ensure proper configuration.
 
-   ```bash
-   ssh-keygen -t ed25519 -C "your_email@example.com"
-   ```
+   - **Local to VPS**
 
-   Add the public key to the VPS in `~/.ssh/authorized_keys`.
+     To establish a secure connection from your local machine to your VPS, generate an SSH key:
+
+     ```bash
+     ssh-keygen -t ed25519 -C "your_email@example.com"
+     ```
+
+     Retrieve the public key:
+
+     ```bash
+     cat ~/.ssh/id_ed25519.pub
+     ```
+
+     Copy the public key and add it to the `~/.ssh/authorized_keys` file on your VPS
+
+   - **VPS to Github Acount**
+
+     The process for setting up the SSH key on your VPS for GitHub is similar.
+
+     Generate an SSH key on your VPS:
+
+     ```bash
+     ssh-keygen -t ed25519 -C "your_email@example.com"
+     ```
+
+     Retrieve the public key:
+
+     ```bash
+     cat ~/.ssh/id_ed25519.pub
+     ```
+
+     Copy the public key and add it to your GitHub account by visiting [Add SSH Key](https://github.com/settings/ssh/new)
 
 2. **Install Jupiter CLI**
 
@@ -94,6 +127,9 @@ I'm working on it, stay tuned! 🔥🛠️🚀
    ```
 
 3. **Initialize a Project**
+
+   **Note** Currently, Jupiter supports deploying Next.js applications only.
+
    Create or use an existing Next.js project:
 
    ```bash
@@ -108,12 +144,14 @@ I'm working on it, stay tuned! 🔥🛠️🚀
 
 4. **Deploy**
 
-   Finally, deploy your project:
+   Once your project is ready, push your latest changes to GitHub and then deploy your project with the following command:
 
    ```bash
    ju d
-   ``` -->
+   ```
 
-<!-- ---
+   **Note**: If you deploy your project and notice an older version is live, it's likely because your latest changes haven't been pushed to GitHub. Ensure your commits are up-to-date and pushed before running the deployment command to reflect the most recent changes.
 
-This is just the beginning! Share your thoughts or suggest features to shape Jupiter into the ultimate deployment tool. 🚀 -->
+---
+
+This is just the beginning! Share your thoughts or suggest features to shape Jupiter into the ultimate deployment tool. 🚀
