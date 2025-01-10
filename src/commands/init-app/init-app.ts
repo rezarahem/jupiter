@@ -8,7 +8,6 @@ import { addNextjs } from './fn/add-next/add-nextjs.js';
 import { checkWebApp } from '../../utils/check-web-app.js';
 import { updateScripts } from '../update-host/fn/update-scripts.js';
 import { generateAppConfig } from './fn/generate-app-config.js';
-import { createGithubDeployAction } from './fn/create-github-deploy-action.js';
 
 export const InitApp = new Command('initialize-app')
   .alias('init')
@@ -61,7 +60,6 @@ export const InitApp = new Command('initialize-app')
         break;
     }
     await createDockerignore(currentDic);
-    await createGithubDeployAction();
     await addEnvVar({
       directory: currentDic,
       filename: '.jupiter',
