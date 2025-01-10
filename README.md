@@ -1,22 +1,5 @@
 # Jupiter
 
-1. [Introduction](#introduction)
-2. [Prerequisites](#prerequisites)
-3. [VPS Setup](#vps-setup)
-4. [Getting Started](#getting-started)
-   - [Configure SSH](#configure-ssh)
-   - [Install Jupiter CLI](#install-jupiter-cli)
-   - [Initialize a Project](#initialize-a-project)
-   - [Deploy](#deploy)
-5. [CI/CD](#cicd)
-   - [Add the Github action](#add-the-github-action)
-   - [Add SSH Private Key to Repository Secrets](#add-ssh-private-key-to-repository-secrets)
-   - [Additional Required Secrets](#additional-required-secrets)
-
----
-
-## Introduction
-
 Jupiter is a CLI tool designed to simplify the deployment of modern web applications.
 
 - 🚀 **Zero downtime** deployments.
@@ -24,9 +7,21 @@ Jupiter is a CLI tool designed to simplify the deployment of modern web applicat
 - 🔒 **SSL certificates** for secure communication.
 - ⚡ **CI/CD** integration for automated workflows.
 
+**Note** Jupiter is actively under development and is not yet stable. Frequent updates and changes are being made to improve functionality.
+
 ---
 
-**Note** Jupiter is actively under development and is not yet stable. Frequent updates and changes are being made to improve functionality.
+1. [Prerequisites](#prerequisites)
+2. [VPS Setup](#vps-setup)
+3. [Getting Started](#getting-started)
+   - [Configure SSH](#configure-ssh)
+   - [Install Jupiter CLI](#install-jupiter-cli)
+   - [Initialize a Project](#initialize-a-project)
+   - [Deploy](#deploy)
+4. [CI/CD](#cicd)
+   - [Add the Github action](#add-the-github-action)
+   - [Add SSH Private Key to Repository Secrets](#add-ssh-private-key-to-repository-secrets)
+   - [Additional Required Secrets](#additional-required-secrets)
 
 ## Prerequisites
 
