@@ -10,7 +10,7 @@ program
   .description(
     'Jupiter is an in-progress CLI tool designed to simplify the process of building, deploying, and managing modern web applications.'
   )
-  .version('0.0.0-dev.9', '-v, --version', 'Output the version number');
+  .version('0.0.0-dev.10', '-v, --version', 'Output the version number');
 
 program.addCommand(InitApp);
 program.addCommand(Deploy);
