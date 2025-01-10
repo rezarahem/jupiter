@@ -8,11 +8,16 @@ import { addNextjs } from './fn/add-next/add-nextjs.js';
 import { checkWebApp } from '../../utils/check-web-app.js';
 import { updateScripts } from '../update-host/fn/update-scripts.js';
 import { generateAppConfig } from './fn/generate-app-config.js';
+import { createGithubCiAction } from '../init-github-ci/fn/create-github-deploy-action.js';
 
 export const InitApp = new Command('initialize-app')
   .alias('init')
   .description(
     'Configures the initial setup for a new application, including its environment and any required configurations.'
+  )
+  .option(
+    '-ci --init-github-ci',
+    'Initialize GitHub Actions CI/CD workflows for automated deployment'
   )
   .option('-sup --skip-update-host', 'Skip uploading scripts to the Host')
   .action(async ops => {
@@ -67,4 +72,8 @@ export const InitApp = new Command('initialize-app')
         APP: app as string,
       },
     });
+
+    if (ops.initGithubCi) {
+      await createGithubCiAction();
+    }
   });
