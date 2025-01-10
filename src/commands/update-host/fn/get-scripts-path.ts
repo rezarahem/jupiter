@@ -4,7 +4,7 @@ import { fileURLToPath } from 'url';
 
 export const getScriptsPath = async () => {
   const dir = dirname(fileURLToPath(import.meta.url));
-  const relativePath = '../../../../sh/';
+  const relativePath = '../../../../scripts/';
   const scriptsPath = `${resolve(dir, relativePath)}/**/*.sh`;
   const files = await glob(scriptsPath);
   return files;
