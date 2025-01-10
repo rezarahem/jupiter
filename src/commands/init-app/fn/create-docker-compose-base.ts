@@ -6,6 +6,7 @@ export const createDockerComposeBase = async (appName: string) => {
     networks: {
       [appName]: {
         name: appName,
+        external: true,
         driver: 'bridge',
       },
     },
