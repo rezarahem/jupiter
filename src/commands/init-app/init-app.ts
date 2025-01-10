@@ -9,6 +9,7 @@ import { checkWebApp } from '../../utils/check-web-app.js';
 import { updateScripts } from '../update-host/fn/update-scripts.js';
 import { generateAppConfig } from './fn/generate-app-config.js';
 import { createGithubCiAction } from '../init-github-ci/fn/create-github-deploy-action.js';
+import { createDockerComposeBase } from './fn/create-docker-compose-base.js';
 
 export const InitApp = new Command('initialize-app')
   .alias('init')
@@ -65,6 +66,7 @@ export const InitApp = new Command('initialize-app')
         break;
     }
     await createDockerignore(currentDic);
+    await createDockerComposeBase(app as string);
     await addEnvVar({
       directory: currentDic,
       filename: '.jupiter',
