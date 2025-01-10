@@ -23,7 +23,25 @@
     "dev": "tsc -w",
     "build": "tsc"
   },
-  "keywords": [],
+  "keywords": [
+    "cli",
+    "nextjs",
+    "deployment",
+    "ci/cd",
+    "selfhost",
+    "vps",
+    "ubuntu",
+    "linux",
+    "docker",
+    "nginx",
+    "certbot",
+    "letsencrypt",
+    "typescript",
+    "javascript",
+    "ssl",
+    "zero-downtime-deployments",
+    "deploy"
+  ],
   "license": "MIT",
   "description": "",
   "devDependencies": {
