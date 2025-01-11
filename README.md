@@ -6,6 +6,7 @@ Jupiter is a CLI tool designed to simplify the deployment of modern web applicat
 - 🐳 **Docker-based architecture** for containerization and scalability.
 - 🔒 **SSL certificates** for secure communication.
 - ⚡ **CI/CD** integration for automated workflows.
+- 🧱 **Dependency management** using Docker Compose for seamless service orchestration.
 
 **Note** Jupiter is actively under development and is not yet stable. Frequent updates and changes are being made to improve functionality.
 
@@ -233,7 +234,7 @@ Jupiter simplifies the management of dependencies like databases or storage buck
 
 2. #### **Assigning the Network to Services**
 
-   Ensure that every service you add in the docker-compose.yml file is linked to the defined network.
+   Ensure that every service you add in the `docker-compose.yml` file is linked to the defined network.
 
    Example `docker-compose.yml`:
 
@@ -265,7 +266,7 @@ Jupiter simplifies the management of dependencies like databases or storage buck
 
 3. #### **Running Dependencies**
 
-   With your Docker Compose file properly configured, you can now use Jupiter to deploy your dependencies on the host system. Simply execute the following command:
+   With your Docker Compose file properly configured, you can now use Jupiter to deploy your dependencies on the host. Simply execute the following command:
 
    ```bash
    ju r
