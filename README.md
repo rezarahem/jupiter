@@ -24,6 +24,11 @@ Jupiter is a CLI tool designed to simplify the deployment of modern web applicat
    - [Add the Github action](#add-the-github-action)
    - [Add SSH Private Key to Repository Secrets](#add-ssh-private-key-to-repository-secrets)
    - [Additional Required Secrets](#additional-required-secrets)
+5. [Add Dependency](#add-dependency)
+   - [Docker Compose Network Configuration](#docker-compose-network-configuration)
+   - [Assigning the Network to Services](#assigning-the-network-to-services)
+   - [Running Dependencies](#running-dependencies)
+   - [Important Notes](#important-notes)
 
 ## Prerequisites
 
@@ -205,6 +210,72 @@ docker --version && nginx -v && certbot --version
 Your CI/CD setup is now complete. Whenever you push to the branch you selected during the `ju ci` command, the deployment process will automatically trigger. You can monitor the status of your GitHub Actions by visiting:
 
 `github.com/<username>/<repository-name>/actions`
+
+## Add Dependency
+
+Jupiter simplifies the management of dependencies like databases or storage buckets by utilizing Docker Compose. To ensure compatibility and smooth operation, please follow the rules outlined below.
+
+1. #### **Docker Compose Network Configuration**
+
+   In your `docker-compose.yml` file, it’s essential to define a network that corresponds to your project. The network configuration must match the app name selected during the Jupiter project initialization.
+
+   Example `docker-compose.yml`:
+
+   ```
+   networks:
+     <app-name>:
+       name: <app-name>
+       external: true
+       driver: bridge
+   ```
+
+   Note that the `<app-name>` should exactly match your project name, as chosen when initializing the Jupiter project. The network type must be `external`, as Jupiter does not create networks via Docker Compose. By marking the network as `external`, you allow Docker Compose to interface with the relevant Jupiter-managed network.
+
+2. #### **Assigning the Network to Services**
+
+   Ensure that every service you add in the docker-compose.yml file is linked to the defined network.
+
+   Example `docker-compose.yml`:
+
+   ```
+   services:
+      postgres:
+         image: postgres:latest
+         container_name: postgres_container
+         environment:
+            POSTGRES_USER: your_username
+            POSTGRES_PASSWORD: your_password
+            POSTGRES_DB: your_database
+         ports:
+            - '5432:5432'
+         volumes:
+            - postgres_data:/var/lib/postgresql/data
+         networks:
+            - <app-name>
+
+   volumes:
+      postgres_data:
+
+   networks:
+      <app-name>:
+         name: <app-name>
+         external: true
+         driver: bridge
+   ```
+
+3. #### **Running Dependencies**
+
+   With your Docker Compose file properly configured, you can now use Jupiter to deploy your dependencies on the host system. Simply execute the following command:
+
+   ```bash
+   ju r
+   ```
+
+#### **Important Notes:**
+
+- This command will create any new dependencies defined in the docker-compose.yml file and run them on the host.
+- If any previously created dependencies are already running, they will not be recreated. If they are stopped, they will be started again to ensure they’re running smoothly.
+- You can safely run this command as many times as needed, ensuring no duplicate dependencies or containers are created.
 
 ---
 
