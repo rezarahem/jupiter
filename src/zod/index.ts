@@ -68,3 +68,7 @@ export const githubSshCloneString = z
     message:
       'The provided GitHub SSH clone string is not valid. It should follow the pattern: git@github.com:username/repository.git',
   });
+
+export const portNumber = z
+  .string()
+  .min(1, 'Port number must be at least 1 character long');

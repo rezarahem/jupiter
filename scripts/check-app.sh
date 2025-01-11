@@ -1,9 +1,5 @@
 #!/bin/bash
 
-# This range equals 424 apps.
-# start_port=49152
-# end_port=49999
-
 if [ -z "$1" ]; then
   echo "Please provide an config name."
   exit 1
@@ -20,16 +16,6 @@ fi
 
 if [ ! -f "$config" ]; then
   touch "$config"
-
-  # for (( port1=$start_port; port1<=$end_port; port1++ )); do
-  #   port2=$(( port1 + 1 ))
-
-  #   if ! lsof -i:"$port1" -sTCP:LISTEN &> /dev/null && \
-  #     ! lsof -i:"$port2" -sTCP:LISTEN &> /dev/null; then
-  #     echo "200@$port1:$port2"
-  #     exit 0
-  #   fi
-  # done
 
   while true; do
     start_port=8000
