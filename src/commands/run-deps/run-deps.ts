@@ -4,6 +4,7 @@ import ora from 'ora';
 import dotenv from 'dotenv';
 import { getSshConnection } from '../../utils/get-ssh-connection.js';
 import { uploadComposeFile } from './upload-compose-file.js';
+import { isComposeOk } from './is-compose-ok.js';
 
 export const RunDeps = new Command('run-deps')
   .alias('r')
@@ -16,16 +17,26 @@ export const RunDeps = new Command('run-deps')
       console.error('Failed to load environment variables from .jupiter');
       process.exit(1);
     }
+    console.log('Checking docker compose validity...');
     const app = process.env.APP;
-    const spinner = ora('Connecting over ssh...').start();
+    if (!app) {
+      console.log('No App name found.');
+      process.exit(1);
+    }
+    const path = await getComposePath();
+    if (!path) {
+      console.log('No Compose file was found.');
+      process.exit(1);
+    }
+    const isDCOk = isComposeOk(path, app);
+    if (!isDCOk) process.exit(1);
+    const spinner = ora().start('Connecting over ssh...');
     const ssh = await getSshConnection();
     try {
-      spinner.text = 'Getting Compose path...';
-      const path = await getComposePath();
       spinner.text = 'Uploading Compose file...';
-      await uploadComposeFile(ssh, app as string, path as string);
+      await uploadComposeFile(ssh, app, path);
       spinner.succeed('Successfully uploaded Compose File');
-      console.log('Start running dependencies');
+      console.log('Start running dependencies...');
       const result = await ssh.execCommand(
         `APP=${app} ~/jupiter/jux/run-dep.sh`,
         {
@@ -39,10 +50,11 @@ export const RunDeps = new Command('run-deps')
       );
 
       if (result.code !== 0) {
-        throw new Error(`Command failed with exit code ${result.code}`);
+        console.log('Command failed');
+        process.exit(1);
       }
     } catch (error) {
-      spinner.fail('Failed to run the dependencies');
+      spinner.fail();
       console.log(error);
       process.exit(1);
     } finally {

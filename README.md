@@ -9,6 +9,8 @@ Jupiter is a CLI tool designed to simplify the deployment of modern web applicat
 
 **Note** Jupiter is actively under development and is not yet stable. Frequent updates and changes are being made to improve functionality.
 
+**Note** Currently, Jupiter supports deploying Next.js applications only.
+
 ---
 
 1. [Prerequisites](#prerequisites)
@@ -138,8 +140,6 @@ docker --version && nginx -v && certbot --version
    ```
 
 3. #### **Initialize a Project**
-
-   **Note** Currently, Jupiter supports deploying Next.js applications only.
 
    Create or use an existing Next.js project:
 
