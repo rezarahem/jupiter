@@ -1,7 +1,6 @@
 import { createFile } from '../../../../utils/create-file.js';
 
 export const docker = async () => {
-  
   const content = `#1
 FROM node:22-alpine AS base 
 WORKDIR /prod
@@ -9,7 +8,7 @@ RUN apk add --no-cache curl
 
 #2
 FROM base AS build 
-ENV NODE_ENV=build
+ENV NODE_ENV=production
 RUN npm config set registry https://registry.npmmirror.com
 RUN npm config set audit false
 COPY package.json package-lock.json ./
