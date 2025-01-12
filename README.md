@@ -30,6 +30,7 @@ Jupiter is a CLI tool designed to simplify the deployment of modern web applicat
    - [Assigning the Network to Services](#assigning-the-network-to-services)
    - [Running Dependencies](#running-dependencies)
    - [Important Notes](#important-notes)
+6. [Commands](#commands)
 
 ## Prerequisites
 
@@ -277,6 +278,20 @@ Jupiter simplifies the management of dependencies like databases or storage buck
 - This command will create any new dependencies defined in the docker-compose.yml file and run them on the host.
 - If any previously created dependencies are already running, they will not be recreated. If they are stopped, they will be started again to ensure they’re running smoothly.
 - You can safely run this command as many times as needed, ensuring no duplicate dependencies or containers are created.
+
+## Commands
+
+Below is a list of available commands for Jupiter CLI, along with their aliases and descriptions:
+
+| Command          | Alias  | Description                                                                                                        |
+| ---------------- | ------ | ------------------------------------------------------------------------------------------------------------------ |
+| `initialize-app` | `init` | Configures the initial setup for a new application.                                                                |
+| `deploy`         | `d`    | Deploy the application to the host.                                                                                |
+| `init-github-ci` | `ci`   | Sets up CI/CD with GitHub Actions workflows for automated deployment.                                              |
+| `run-deps`       | `r`    | Run and manage dependencies required for the application. Useful for services like databases or storage solutions. |
+| `get-open-port`  | `op`   | Fetches an open port from a remote host over SSH.                                                                  |
+| `update-host`    | `up`   | Updates the bash scripts on the remote host.                                                                       |
+| `help`           |        | Displays help for a specific command.                                                                              |
 
 ---
 

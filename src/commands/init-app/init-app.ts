@@ -13,9 +13,7 @@ import { createDockerComposeBase } from './fn/create-docker-compose-base.js';
 
 export const InitApp = new Command('initialize-app')
   .alias('init')
-  .description(
-    'Configures the initial setup for a new application, including its environment and any required configurations.'
-  )
+  .description('Configures the initial setup for a new application')
   .option(
     '-ci --init-github-ci',
     'Initialize GitHub Actions CI/CD workflows for automated deployment'

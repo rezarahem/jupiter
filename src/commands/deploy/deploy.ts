@@ -6,7 +6,7 @@ import { validateNextjsDeploy } from './fn/validate-nextjs-deploy.js';
 
 export const Deploy = new Command('deploy')
   .alias('d')
-  .description('Deploy the application to the specified environment')
+  .description('Deploy the application to the host')
   .action(async () => {
     const web = await checkWebApp();
     switch (web) {
