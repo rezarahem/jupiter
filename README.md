@@ -30,7 +30,8 @@ Jupiter is a CLI tool designed to simplify the deployment of modern web applicat
    - [Assigning the Network to Services](#assigning-the-network-to-services)
    - [Running Dependencies](#running-dependencies)
    - [Important Notes](#important-notes)
-6. [Commands](#commands)
+6. [Environment Variables](#environment-variables)
+7. [Commands](#commands)
 
 ## Prerequisites
 
@@ -215,6 +216,8 @@ Your CI/CD setup is now complete. Whenever you push to the branch you selected d
 
 ## Add Dependency
 
+<!-- docker ps --filter network=<network_name> -->
+
 Jupiter simplifies the management of dependencies like databases or storage buckets by utilizing Docker Compose. To ensure compatibility and smooth operation, please follow the rules outlined below.
 
 1. #### **Docker Compose Network Configuration**
@@ -278,6 +281,8 @@ Jupiter simplifies the management of dependencies like databases or storage buck
 - This command will create any new dependencies defined in the docker-compose.yml file and run them on the host.
 - If any previously created dependencies are already running, they will not be recreated. If they are stopped, they will be started again to ensure they’re running smoothly.
 - You can safely run this command as many times as needed, ensuring no duplicate dependencies or containers are created.
+
+## Environment Variables
 
 ## Commands
 
