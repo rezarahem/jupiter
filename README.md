@@ -32,6 +32,7 @@ Jupiter is a CLI tool designed to simplify the deployment of modern web applicat
    - [Important Notes](#important-notes)
 6. [Environment Variables](#environment-variables)
 7. [Commands](#commands)
+8. [Todo App Example](#todo-app-example)
 
 ## Prerequisites
 
@@ -301,3 +302,9 @@ Below is a list of available commands for Jupiter CLI, along with their aliases 
 ---
 
 This is just the beginning! Share your thoughts or suggest features to shape Jupiter into the ultimate deployment tool. 🚀
+
+## Todo App Example
+
+I have created a simple Todo app to demonstrate how to add dependencies and configure environment variables effectively. 
+
+### [Nextjs-Todo-Example-Jupiter](https://github.com/rezarahem/nextjs-todo-example-jupiter)
