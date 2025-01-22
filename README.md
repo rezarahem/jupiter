@@ -30,7 +30,7 @@ Jupiter is a CLI tool designed to simplify the deployment of modern web applicat
    - [Assigning the Network to Services](#assigning-the-network-to-services)
    - [Running Dependencies](#running-dependencies)
    - [Important Notes](#important-notes)
-6. [Environment Variables](#environment-variables)
+6. [Configuring Environment Variables for Production](#configuring-environment-variables-for-production)
 7. [Commands](#commands)
 8. [Todo App Example](#todo-app-example)
 
@@ -277,13 +277,36 @@ Jupiter simplifies the management of dependencies like databases or storage buck
    ju r
    ```
 
-#### **Important Notes:**
+   ##### **Important Notes:**
 
-- This command will create any new dependencies defined in the docker-compose.yml file and run them on the host.
-- If any previously created dependencies are already running, they will not be recreated. If they are stopped, they will be started again to ensure they’re running smoothly.
-- You can safely run this command as many times as needed, ensuring no duplicate dependencies or containers are created.
+   - This command will create any new dependencies defined in the docker-compose.yml file and run them on the host.
+   - If any previously created dependencies are already running, they will not be recreated. If they are stopped, they will be started again to ensure they’re running smoothly.
+   - You can safely run this command as many times as needed, ensuring no duplicate dependencies or containers are created.
 
-## Environment Variables
+## Configuring Environment Variables for Production
+
+To add environment variables to your production app, edit the `Dockerfile` located in the root directory.
+
+You need to include your environment variables in the `prod` section.
+
+`Dockerfile`
+```
+#3
+FROM base AS prod
+ENV NODE_ENV=production
+
+# Add your environment variables here
+ENV ENV_NAME=ENV_VALUE 
+
+COPY --from=build /prod/public ./public
+COPY --from=build /prod/.next/standalone ./
+COPY --from=build /prod/.next/static ./.next/static
+```
+
+Replace `ENV_NAME` and `ENV_VALUE` with your actual environment variable names and values.
+You can add as many environment variables as needed.
+
+For an example of how this works, including adding dependencies, refer to this repository: [Nextjs-Todo-Example-Jupiter](https://github.com/rezarahem/nextjs-todo-example-jupiter)
 
 ## Commands
 
