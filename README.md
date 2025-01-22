@@ -277,11 +277,11 @@ Jupiter simplifies the management of dependencies like databases or storage buck
    ju r
    ```
 
-   ##### **Important Notes:**
+### **Important Notes:**
 
-   - This command will create any new dependencies defined in the docker-compose.yml file and run them on the host.
-   - If any previously created dependencies are already running, they will not be recreated. If they are stopped, they will be started again to ensure they’re running smoothly.
-   - You can safely run this command as many times as needed, ensuring no duplicate dependencies or containers are created.
+- This command will create any new dependencies defined in the docker-compose.yml file and run them on the host.
+- If any previously created dependencies are already running, they will not be recreated. If they are stopped, they will be started again to ensure they’re running smoothly.
+- You can safely run this command as many times as needed, ensuring no duplicate dependencies or containers are created.
 
 ## Configuring Environment Variables for Production
 
