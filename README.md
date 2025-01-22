@@ -322,12 +322,13 @@ Below is a list of available commands for Jupiter CLI, along with their aliases 
 | `update-host`    | `up`   | Updates the bash scripts on the remote host.                                                                       |
 | `help`           |        | Displays help for a specific command.                                                                              |
 
----
-
-This is just the beginning! Share your thoughts or suggest features to shape Jupiter into the ultimate deployment tool. 🚀
-
 ## Todo App Example
 
 I have created a simple Todo app to demonstrate how to add dependencies and configure environment variables effectively. 
 
 ### [Nextjs-Todo-Example-Jupiter](https://github.com/rezarahem/nextjs-todo-example-jupiter)
+
+---
+
+This is just the beginning! Share your thoughts or suggest features to shape Jupiter into the ultimate deployment tool. 🚀
+
