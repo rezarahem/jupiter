@@ -9,11 +9,11 @@ import { RunDeps } from './src/commands/run-deps/run-deps.js';
 import { GetOpenPort } from './src/commands/get-open-port/get-open-port.js';
 
 program
-  .name('Jupiter')
-  .description(
-    'Jupiter is an in-progress CLI tool designed to simplify the process of building, deploying, and managing modern web applications.'
-  )
-  .version('0.0.0-dev.17', '-v, --version', 'Output the version number');
+ .name('Jupiter')
+ .description(
+  'Jupiter is an in-progress CLI tool designed to simplify the process of building, deploying, and managing modern web applications.'
+ )
+ .version('0.0.0-dev.18', '-v, --version', 'Output the version number');
 
 program.addCommand(InitApp);
 program.addCommand(Deploy);

@@ -1,11 +1,11 @@
 {
   "name": "ju",
-  "version": "0.0.0-dev.17",
+  "version": "0.0.0-dev.18",
   "main": "index.js",
   "author": "Reza Rahem <reza.rahem224@gmail.com> (https://github.com/rezarahem/)",
   "repository": {
     "type": "git",
-    "url": "https://github.com/rezarahem/jupiter"
+    "url": "git+https://github.com/rezarahem/jupiter.git"
   },
   "files": [
     "dist",
@@ -16,7 +16,7 @@
     "access": "public"
   },
   "bin": {
-    "ju": "./dist/ju.js"
+    "ju": "dist/ju.js"
   },
   "type": "module",
   "scripts": {
