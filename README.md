@@ -26,6 +26,7 @@ Jupiter is a CLI tool designed to simplify the deployment of modern web applicat
    - [Add SSH Private Key to Repository Secrets](#add-ssh-private-key-to-repository-secrets)
    - [Additional Required Secrets](#additional-required-secrets)
 5. [Add Dependency](#add-dependency)
+   - [Deps Directory](#deps-directory)
    - [Docker Compose Network Configuration](#docker-compose-network-configuration)
    - [Assigning the Network to Services](#assigning-the-network-to-services)
    - [Running Dependencies](#running-dependencies)
@@ -237,13 +238,15 @@ Your CI/CD setup is now complete. Whenever you push to the branch you selected d
 
 ## Add Dependency
 
-<!-- docker ps --filter network=<network_name> -->
-
 Jupiter simplifies the management of dependencies like databases or storage buckets by utilizing Docker Compose. To ensure compatibility and smooth operation, please follow the rules outlined below.
 
-1. #### **Docker Compose Network Configuration**
+1. #### **Deps Directory**
 
-   In your `docker-compose.yml` file, it’s essential to define a network that corresponds to your project. The network configuration must match the app name selected during the Jupiter project initialization.
+   Jupiter creates the `Deps` directory when initializing a new Jupiter app. This is where you store your Docker Compose and Dockerfiles. By default, Jupiter generates a base `docker-compose.yml` file, and you should define all your dependencies inside it. Additionally, if any dependency requires a custom build, you can create a Dockerfile for it and store it alongside the docker-compose.yml file within the Deps folder.
+
+2. #### **Docker Compose Network Configuration**
+
+   In your `docker-compose.yml` file, it’s essential to define a network that corresponds to your project.
 
    Example `docker-compose.yml`:
 
@@ -257,7 +260,7 @@ Jupiter simplifies the management of dependencies like databases or storage buck
 
    Note that the `<app-name>` should exactly match your project name, as chosen when initializing the Jupiter project. The network type must be `external`, as Jupiter does not create networks via Docker Compose. By marking the network as `external`, you allow Docker Compose to interface with the relevant Jupiter-managed network.
 
-2. #### **Assigning the Network to Services**
+3. #### **Assigning the Network to Services**
 
    Ensure that every service you add in the `docker-compose.yml` file is linked to the defined network.
 
@@ -289,7 +292,7 @@ Jupiter simplifies the management of dependencies like databases or storage buck
          driver: bridge
    ```
 
-3. #### **Running Dependencies**
+4. #### **Running Dependencies**
 
    With your Docker Compose file properly configured, you can now use Jupiter to deploy your dependencies on the host. Simply execute the following command:
 
