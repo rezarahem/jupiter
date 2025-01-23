@@ -63,6 +63,7 @@ export const InitApp = new Command('initialize-app')
     // await addNuxtjs();
     break;
   }
+  
   await createDockerignore(currentDic);
   await createDockerComposeBase(app as string);
   await addEnvVar({
