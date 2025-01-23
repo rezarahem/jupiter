@@ -1,61 +1,61 @@
 {
-  "name": "ju",
-  "version": "0.0.0-dev.19",
-  "main": "index.js",
-  "author": "Reza Rahem <reza.rahem224@gmail.com> (https://github.com/rezarahem/)",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/rezarahem/jupiter.git"
-  },
-  "files": [
-    "dist",
-    "license.md",
-    "README.md"
-  ],
-  "publishConfig": {
-    "access": "public"
-  },
-  "bin": {
-    "ju": "dist/ju.js"
-  },
-  "type": "module",
-  "scripts": {
-    "dev": "tsc -w",
-    "build": "tsc"
-  },
-  "keywords": [
-    "cli",
-    "nextjs",
-    "deployment",
-    "ci/cd",
-    "selfhost",
-    "vps",
-    "ubuntu",
-    "linux",
-    "docker",
-    "nginx",
-    "certbot",
-    "letsencrypt",
-    "typescript",
-    "javascript",
-    "ssl",
-    "zero-downtime-deployments",
-    "deploy"
-  ],
-  "license": "MIT",
-  "description": "",
-  "devDependencies": {
-    "@types/node": "^22.10.1",
-    "typescript": "^5.7.2"
-  },
-  "dependencies": {
-    "@inquirer/prompts": "^7.2.0",
-    "commander": "^12.1.0",
-    "dotenv": "^16.4.7",
-    "glob": "^11.0.0",
-    "node-ssh": "^13.2.0",
-    "ora": "^8.1.1",
-    "yaml": "^2.6.1",
-    "zod": "^3.24.0"
-  }
+ "name": "ju",
+ "version": "0.0.1",
+ "main": "index.js",
+ "author": "Reza Rahem <reza.rahem224@gmail.com> (https://github.com/rezarahem/)",
+ "repository": {
+  "type": "git",
+  "url": "git+https://github.com/rezarahem/jupiter.git"
+ },
+ "files": [
+  "dist",
+  "license.md",
+  "README.md"
+ ],
+ "publishConfig": {
+  "access": "public"
+ },
+ "bin": {
+  "ju": "dist/ju.js"
+ },
+ "type": "module",
+ "scripts": {
+  "dev": "tsc -w",
+  "build": "tsc"
+ },
+ "keywords": [
+  "cli",
+  "nextjs",
+  "deployment",
+  "ci/cd",
+  "selfhost",
+  "vps",
+  "ubuntu",
+  "linux",
+  "docker",
+  "nginx",
+  "certbot",
+  "letsencrypt",
+  "typescript",
+  "javascript",
+  "ssl",
+  "zero-downtime-deployments",
+  "deploy"
+ ],
+ "license": "MIT",
+ "description": "",
+ "devDependencies": {
+  "@types/node": "^22.10.1",
+  "typescript": "^5.7.2"
+ },
+ "dependencies": {
+  "@inquirer/prompts": "^7.2.0",
+  "commander": "^12.1.0",
+  "dotenv": "^16.4.7",
+  "glob": "^11.0.0",
+  "node-ssh": "^13.2.0",
+  "ora": "^8.1.1",
+  "yaml": "^2.6.1",
+  "zod": "^3.24.0"
+ }
 }
