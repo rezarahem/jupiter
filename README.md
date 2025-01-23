@@ -143,6 +143,12 @@ docker --version && nginx -v && certbot --version
 
      Copy the public key and add it to your GitHub account by visiting [Add SSH Key](https://github.com/settings/ssh/new)
 
+     To ensure seamless SSH access, after adding your SSH key to your GitHub account, verify the connection and save GitHub's server fingerprint to your `~/.ssh/known_hosts` file by running the following command
+
+     ```bash
+     ssh -T git@github.com
+     ```
+
 2. #### **Install Jupiter CLI**
 
    ```bash
