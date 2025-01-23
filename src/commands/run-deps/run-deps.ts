@@ -23,13 +23,18 @@ export const RunDeps = new Command('run-deps')
       console.log('No App name found.');
       process.exit(1);
     }
+    
     const path = await getComposePath();
+    
     if (!path) {
       console.log('No Compose file was found.');
       process.exit(1);
     }
+    
     const isDCOk = isComposeOk(path, app);
+    
     if (!isDCOk) process.exit(1);
+
     const spinner = ora().start('Connecting over ssh...');
     const ssh = await getSshConnection();
     try {
