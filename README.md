@@ -164,7 +164,27 @@ docker --version && nginx -v && certbot --version
 
 4. #### **Deploy**
 
-   Once your project is ready, push your latest changes to GitHub and then deploy your project with the following command:
+   **(next.js-specific)** Before deploying your project, ensure your `next.config.ts` is properly configured to support production builds and deployments. Update it to include the following settings:
+
+   ```
+   import { NextConfig } from 'next';
+   import path from 'path';
+
+   const nextConfig: NextConfig = {
+      output: 'standalone',
+      compress: false,
+      webpack: (config, { isServer }) => {
+         config.resolve.alias['@'] = path.join(\_\_dirname, './');
+         return config;
+      },
+   };
+
+   export default nextConfig;
+   ```
+
+   This configuration ensures a streamlined deployment process and optimizes your app for containerized environments.
+
+   Once your project is ready, push your latest changes to `GitHub` and then deploy your project with the following command:
 
    ```bash
    ju d
@@ -290,13 +310,14 @@ To add environment variables to your production app, edit the `Dockerfile` locat
 You need to include your environment variables in the `prod` section.
 
 `Dockerfile`
+
 ```
 #3
 FROM base AS prod
 ENV NODE_ENV=production
 
 # Add your environment variables here
-ENV ENV_NAME=ENV_VALUE 
+ENV ENV_NAME=ENV_VALUE
 
 COPY --from=build /prod/public ./public
 COPY --from=build /prod/.next/standalone ./
@@ -324,11 +345,10 @@ Below is a list of available commands for Jupiter CLI, along with their aliases 
 
 ## Todo App Example
 
-I have created a simple Todo app to demonstrate how to add dependencies and configure environment variables effectively. 
+I have created a simple Todo app to demonstrate how to add dependencies and configure environment variables effectively.
 
 ### [Nextjs-Todo-Example-Jupiter](https://github.com/rezarahem/nextjs-todo-example-jupiter)
 
 ---
 
 This is just the beginning! Share your thoughts or suggest features to shape Jupiter into the ultimate deployment tool. 🚀
-
